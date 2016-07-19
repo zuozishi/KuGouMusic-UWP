@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="酷狗音乐UWP.UserControlClass.PlayerSmall"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:酷狗音乐UWP.UserControlClass"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercont="using:酷狗音乐UWP.UserControlClass"
+    mc:Ignorable="d"
+    d:DesignHeight="63">
+
+    <Grid VerticalAlignment="Bottom" Background="#0088bd">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="Song_Progress" Grid.Row="0" Value="0" VerticalAlignment="Stretch"></ProgressBar>
+        <Grid Grid.Row="1">
+            <Image Tapped="Image_Tapped" x:Name="Singer_Image" Width="60" Height="60" Source="ms-appx:///Assets/image/songimg.png" HorizontalAlignment="Left"></Image>
+            <Grid Margin="60,0,0,0">
+                <Grid Margin="5,0,180,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{x:Null}">
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock x:Name="SongName_Text" Margin="0,0,0,2" Foreground="White" FontSize="15">酷狗音乐</TextBlock>
+                        <TextBlock x:Name="SingerName_Text" Margin="0,2,0,0" Foreground="White">传播好音乐</TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button x:Name="Play_Btn" Width="60" Height="60" Background="{x:Null}" Click="Play_Btn_Click" >
+                        <SymbolIcon Width="60" Height="60" x:Name="Play_Btn_Icon" Foreground="White" Symbol="Play" Margin="-10,-6"></SymbolIcon>
+                    </Button>
+                    <Button x:Name="Next_Btn" Width="60" Height="60" Background="{x:Null}" Click="Next_Btn_Click">
+                        <SymbolIcon Width="60" Height="60" Foreground="White" Symbol="Next" Margin="-10,-6"></SymbolIcon>
+                    </Button>
+                    <Button x:Name="List_Btn" Width="60" Height="60" Background="{x:Null}">
+                        <SymbolIcon Width="60" Height="60" Foreground="White" Symbol="List" Margin="-10,-6" />
+                        <Button.Flyout>
+                            <Flyout>
+                                <usercont:PlayLIstView Margin="-12"></usercont:PlayLIstView>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,95 @@
+﻿<Page
+    x:Class="酷狗音乐UWP.page.MVPlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:酷狗音乐UWP.page"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
+        </Grid.Background>
+        <Grid Height="50" VerticalAlignment="Top">
+            <AppBarButton Click="GoBackBtn_Clicked" Width="50" Height="50" Icon="Back" Foreground="White"></AppBarButton>
+            <StackPanel Margin="60,0,0,0" HorizontalAlignment="Left">
+                <TextBlock Margin="0,0,0,5" Name="songname_text" Foreground="White" FontSize="16"></TextBlock>
+                <TextBlock Name="singername_text" Foreground="White"></TextBlock>
+            </StackPanel>
+            <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Download" Foreground="White" HorizontalAlignment="Right"></AppBarButton>
+            <AppBarButton Width="50" Height="50" Icon="Street" Foreground="White" HorizontalAlignment="Right"></AppBarButton>
+        </Grid>
+        <MediaElement Name="media" Height="200" Margin="0,50,0,0" AreTransportControlsEnabled="True" VerticalAlignment="Top">
+            <MediaElement.TransportControls>
+                <MediaTransportControls Width="auto" IsZoomButtonVisible="False" IsCompact="True" IsVolumeButtonVisible="False" IsFullWindowButtonVisible="True" IsSeekBarVisible="True"/>
+            </MediaElement.TransportControls>
+        </MediaElement>
+        <Grid Margin="0,250,0,0">
+            <Grid Height="50" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="3" />
+                </Grid.RowDefinitions>
+                <Button x:Name="AboutMV_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="相关MV" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+                <Button x:Name="fxMVList_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="繁星MV" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            </Grid>
+            <FlipView x:Name="flipview" SelectionChanged="flipview_Changed" Margin="0,50,0,0" Background="{x:Null}">
+                <FlipViewItem>
+                    <ScrollViewer>
+                        <ListView x:Name="AboutMVListView"  Background="{x:Null}" SelectionMode="Single">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="BorderBrush" Value="#7F808080"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Visibility="Visible" Margin="0,0,0,2" Background="#BFFFFFFF" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                        <Image Width="120" Height="80" Stretch="UniformToFill" Source="{Binding thumb}" HorizontalAlignment="Left"></Image>
+                                        <StackPanel Margin="130,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock Margin="5,0,0,0" FontSize="16" Text="{Binding video_name}"></TextBlock>
+                                            <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding author_name}"/>
+                                            <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding intro}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </FlipViewItem>
+                <FlipViewItem>
+                    <ScrollViewer>
+                        <ListView x:Name="fxMVListView"  Background="{x:Null}" SelectionMode="Single">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="BorderBrush" Value="#7F808080"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Visibility="Visible" Margin="0,0,0,2" Background="#BFFFFFFF" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                        <Image Width="120" Height="80" Stretch="UniformToFill" Source="{Binding imgurl}" HorizontalAlignment="Left"></Image>
+                                        <StackPanel Margin="130,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock Margin="5,0,0,0" FontSize="16" Text="{Binding filename}"></TextBlock>
+                                            <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding intro}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </FlipViewItem>
+            </FlipView>
+        </Grid>
+    </Grid>
+</Page>

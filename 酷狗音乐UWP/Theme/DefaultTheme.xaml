@@ -1,0 +1,46 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:酷狗音乐UWP">
+    <ResourceDictionary.ThemeDictionaries >
+        <ResourceDictionary x:Key="Light">
+            <!--背景颜色-->
+            <SolidColorBrush  x:Key="Bili-Background" Color="#FFE9E9E9" />
+            <!--前景颜色-->
+            <SolidColorBrush x:Key="Bili-ForeColor" Color="#FF2095F3" />
+            <!--控件颜色-->
+            <SolidColorBrush x:Key="Bili-Color" Color="#FF2095F3" />
+            <!--深前景颜色-->
+            <SolidColorBrush x:Key="Bili-ForeColor-Dark" Color="#FF1A82D6" />
+            <!--普通字体颜色-->
+            <SolidColorBrush x:Key="Bili-FontColor" Color="#FF131313" />
+            <!--浅字体颜色-->
+            <SolidColorBrush x:Key="Bili-FontColor-Light" Color="#FF9C9C9C" />
+            <!--边框颜色-->
+            <SolidColorBrush x:Key="Bili-BorderColor" Color="Gray" />
+            <SolidColorBrush x:Key="Bili-List-Background" Color="White" />
+
+            <SolidColorBrush x:Key="Bili-MenuBack" Color="White"></SolidColorBrush>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <!--背景颜色-->
+            <SolidColorBrush x:Key="Bili-Background" Color="#FF1F1F1F" />
+            <!--前景颜色-->
+            <SolidColorBrush x:Key="Bili-ForeColor" Color="#FF323232" />
+            <!--控件颜色-->
+            <SolidColorBrush x:Key="Bili-Color" Color="#FF0487E2" />
+            <!--深前景颜色-->
+            <SolidColorBrush x:Key="Bili-ForeColor-Dark" Color="#FF373737" />
+            <!--普通字体颜色-->
+            <SolidColorBrush x:Key="Bili-FontColor" Color="White" />
+            <!--浅字体颜色-->
+            <SolidColorBrush x:Key="Bili-FontColor-Light" Color="#FFB8B8B8" />
+            <!--边框颜色-->
+            <SolidColorBrush x:Key="Bili-BorderColor" Color="Gray" />
+
+            <SolidColorBrush x:Key="Bili-List-Background" Color="#FF4B4B4B" />
+
+            <SolidColorBrush x:Key="Bili-MenuBack" Color="#FF454545"></SolidColorBrush>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

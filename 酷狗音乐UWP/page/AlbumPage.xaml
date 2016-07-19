@@ -1,0 +1,95 @@
+﻿<Page
+    x:Class="酷狗音乐UWP.page.AlbumPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:酷狗音乐UWP.page"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#FF37ADDD">
+        <Grid x:Name="albuminfo_Grid" Height="170" VerticalAlignment="Top">
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding imgurl}"/>
+            </Grid.Background>
+            <Grid Height="50" VerticalAlignment="Top">
+                <Button Click="BackBtn_Clicked" Width="50" Height="50" Background="{x:Null}">
+                    <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                </Button>
+                <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18" Text="{Binding albumname}">专辑</TextBlock>
+                <Button  Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
+                    <SymbolIcon Foreground="White" Symbol="More"></SymbolIcon>
+                </Button>
+            </Grid>
+            <Grid Margin="0,50,0,0" Height="120" VerticalAlignment="Top">
+                <Button Background="{x:Null}" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal" Height="40">
+                        <Ellipse Width="40" Height="40">
+                            <Ellipse.Fill>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="http://singerimg.kugou.com/uploadpic/pass/softhead/150/20160511/20160511175000437650.jpg"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Foreground="White" FontSize="13" Text="{Binding singername}">童可可</TextBlock>
+                            <TextBlock Foreground="White" FontSize="12" Text="{Binding publishtime}">2016-05-13 发行</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Margin="0,170,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="25" Width="150">
+            <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;" Foreground="#FFE7F4FB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,3,0,2" />
+            <TextBlock Margin="-12,3,14,2" HorizontalAlignment="Right" Foreground="#FFE7F4FB" VerticalAlignment="Center">
+                <Run Text="对多首歌曲操作"/>
+            </TextBlock>
+        </Grid>
+        <ScrollViewer Margin="0,195,0,0">
+            <ListView x:Name="SongResultList"  Background="{x:Null}" CanReorderItems="True" SelectionMode="Single">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="BorderBrush" Value="#7F808080"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Visibility="Visible" Margin="0,0,0,2" Background="#BFFFFFFF" Height="60" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                            <StackPanel Margin="15,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <TextBlock FontSize="16" Text="{Binding songname}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontSize="14" Foreground="Black" Text="{Binding singername}">
+                        									<Run Text="singername"/>
+                                    </TextBlock>
+                                    <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding album_name}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <AppBarButton Width="50" Height="50" Icon="More" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FF43BFEF"/>
+                            <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FF44BEEE"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListViewItem>
+                    <Grid Visibility="Visible" Margin="0,0,0,2" Background="#BFFFFFFF" Height="60" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                        <StackPanel Margin="15,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock FontSize="16">
+                        							<Run Text="别让我放不下"/>
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="14" Foreground="Black">
+                        								<Run Text="童可可"/>
+                                </TextBlock>
+                                <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="《啊哟青春期》电影插曲"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <AppBarButton Width="50" Height="50" Icon="More" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FF43BFEF"/>
+                        <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FF44BEEE"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    
+                </ListViewItem>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</Page>

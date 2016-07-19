@@ -1,0 +1,637 @@
+﻿<Page
+    x:Class="酷狗音乐UWP.page.YueKuPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:酷狗音乐UWP.page"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercon="using:酷狗音乐UWP.UserControlClass"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/background.jpg"/>
+        </Grid.Background>
+        <Grid Height="50" VerticalAlignment="Top">
+            <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
+                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+            </Button>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">乐库</TextBlock>
+            <Button Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
+                <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="White" />
+            </Button>
+            <Button Margin="0,0,50,0" Click="SearchBtn_Clicked" Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
+                <SymbolIcon Foreground="White" Symbol="Find"></SymbolIcon>
+            </Button>
+        </Grid>
+        <Grid Margin="0,50,0,0" Height="50" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="3" />
+            </Grid.RowDefinitions>
+            <Button x:Name="TuiJian_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="推荐" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="PaiHang_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="排行" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="GeShou_Btn" TabIndex="2" Grid.Column="2" Background="{x:Null}" Content="歌手" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="GeDan_Btn" TabIndex="3" Grid.Column="3" Background="{x:Null}" Content="歌单" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+        </Grid>
+        <Grid Margin="0,100,0,63">
+            <FlipView x:Name="YueKuView" SelectionChanged="YueKuView_SelectionChanged">
+                <FlipViewItem Visibility="Visible">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid Margin="10,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="160"/>
+                                    <RowDefinition Height="68"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <usercon:PicsFlipView x:Name="bannerView" Margin="-10,0,-10,0"></usercon:PicsFlipView>
+                                <Grid Margin="0,5,0,5" Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Clock"></SymbolIcon>
+                                            <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专区</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Download"></SymbolIcon>
+                                            <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">MV</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Margin="2,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="List"></SymbolIcon>
+                                            <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专题</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Margin="2,0,0,0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="List"></SymbolIcon>
+                                            <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专辑</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                                <Grid Visibility="Visible" Margin="0,0,0,3" Grid.Row="2">
+                                    <ListView>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                <Setter Property="BorderBrush" Value="#7F808080"/>
+                                                <Setter Property="Margin" Value="0,3,0,3"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListViewItem>
+                                            <Grid Margin="-13,0,-13,0" Height="120" Background="White">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="25"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Margin="10,0,0,0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Center">新歌首发</TextBlock>
+                                                <Image x:Name="NewSong1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://singerimg.kugou.com/uploadpic/pass/softhead/150/20150518/20150518111246757565.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
+                                                    <TextBlock x:Name="NewSong1_Text" Margin="3" Foreground="Black">
+                							<Run Text="正月十五 - 中国月亮"/>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="NewSong2_Text" Margin="3" Foreground="Black">
+                							<Run Text="朱元冰 - 回忆漩涡"/>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="NewSong3_Text" Margin="3" Foreground="Black">
+                							<Run Text="G.E.M.邓紫棋 - 红蔷薇白玫瑰"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid Margin="-13,0,-13,0" Height="120" Background="White">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="25"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Margin="10,0,0,0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Center">新碟上架</TextBlock>
+                                                <Image x:Name="NewAlbum1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://imge.kugou.com/stdmusic/150/20160713/20160713152144152151.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
+                                                    <TextBlock x:Name="NewAlbum1_Text" Margin="3" Foreground="Black">
+                							<Run Text="徐佳莹 - 《湫兮如风》"/>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="NewAlbum2_Text" Margin="3" Foreground="Black">
+                							<Run Text="陈奕迅 - 《在这个世界相遇》"/>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="NewAlbum3_Text" Margin="3" Foreground="Black">
+                							<Run Text="赖伟锋 - 《最差不过是孤独》"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </ListViewItem>
+                                    </ListView>
+                                </Grid>
+                                <Grid Background="White" Visibility="Visible" Grid.Row="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="热门歌单"/>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="更多"/>
+                                    </TextBlock>
+                                    <Grid Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid x:Name="recommend1" Margin="3" Grid.Row="0" Grid.Column="0" Height="150" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="recommend2" Margin="3" Grid.Row="0" Grid.Column="1" Height="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="recommend3" Margin="3" Grid.Row="0" Grid.Column="3" Height="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="recommend4" Margin="3" Grid.Row="1" Grid.Column="0" Height="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="recommend5" Margin="3" Grid.Row="1" Grid.Column="1" Height="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="recommend6" Margin="3" Grid.Row="1" Grid.Column="2" Height="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="20"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Image Stretch="Fill" Source="{Binding imgurl}"/>
+                                                <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                						<Run Text="{Binding play_count}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid Margin="0,0,0,5" Visibility="Visible" Grid.Row="4" Background="White">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="specialTitle" Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="主题歌单 · 思念的时光最煎熬"/>
+                                    </TextBlock>
+                                    <Grid Grid.Row="1" Height="180">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid x:Name="specialView1" Margin="3" Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                            <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                					<Run Text="{Binding play_count}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="specialView2" Margin="3" Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                            <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                					<Run Text="{Binding play_count}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="specialView3" Margin="3" Grid.Column="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding specialname}"/>
+                                            </TextBlock>
+                                            <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,0" Foreground="White">
+                					<Run Text="{Binding play_count}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid Visibility="Visible" Margin="0,0,0,5" Grid.Row="5" Background="White">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="MV歌单"/>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="更多"/>
+                                    </TextBlock>
+                                    <Grid Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid x:Name="vlist1" Tapped="vlist_Tapped" Margin="3" Grid.Row="0" Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding title}"/>
+                                            </TextBlock>
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                					<Run Text="{Binding public_time}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="vlist2" Tapped="vlist_Tapped" Margin="3" Grid.Row="0" Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding title}"/>
+                                            </TextBlock>
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                					<Run Text="{Binding public_time}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="vlist3" Tapped="vlist_Tapped" Margin="3" Grid.Row="1" Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding title}"/>
+                                            </TextBlock>
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                					<Run Text="{Binding public_time}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                        <Grid x:Name="vlist4" Tapped="vlist_Tapped" Margin="3" Grid.Row="1" Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
+                                            </Grid>
+                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                					<Run Text="{Binding title}"/>
+                                            </TextBlock>
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                					<Run Text="{Binding public_time}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid Visibility="Visible" Background="White" Grid.Row="6">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="精选专题"/>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                			<Run Text="更多"/>
+                                    </TextBlock>
+                                    <ListView x:Name="topicList" SelectionMode="Single" Grid.Row="1">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                <Setter Property="BorderBrush" Value="#7F808080"/>
+                                                <Setter Property="Margin" Value="0"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="-10,0,-10,0" Height="65">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Width="60" Height="60" Stretch="Fill" Source="{Binding picurl}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <StackPanel Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                                        <TextBlock Foreground="Black" FontSize="12">
+                							<Run Text="{Binding title}"/>
+                                                        </TextBlock>
+                                                        <TextBlock Margin="3" FontSize="12" Foreground="#FF5D5D5D">
+                							<Run Text="{Binding publishtime}"/>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </Grid>
+                            <ProgressRing x:Name="TuiJianLoadProgress" Margin="0,200,0,0" IsActive="False" Width="100" Height="100" Background="{x:Null}" VerticalAlignment="Top" />
+                        </Grid>
+                    </ScrollViewer>
+                </FlipViewItem>
+                <FlipViewItem Visibility="Visible" Background="White">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.Background>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/background.jpg"/>
+                            </Grid.Background>
+                            <ListView Margin="10,3,10,0" x:Name="PaiHangList">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="BorderBrush" Value="#7F808080"/>
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="80">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Width="70" Height="70" Stretch="Fill" Grid.Column="0" Source="{Binding imgurl}" HorizontalAlignment="Left"></Image>
+                                            <Grid Grid.Column="1" Margin="10,5">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="18"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" FontSize="14" Text="{Binding rankname}"></TextBlock>
+                                                <StackPanel Grid.Row="1">
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song1}"></TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song2}"></TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song3}"></TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListViewItem>
+                                    <Grid Height="80">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="75"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Width="70" Height="70" Stretch="Fill" Grid.Column="0" Source="http://imge.kugou.com/mcommon/150/20150408/20150408200744668027.png" HorizontalAlignment="Left"></Image>
+                                        <Grid Grid.Column="1" Margin="10,5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="18"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" FontSize="14">酷音乐流行榜</TextBlock>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">流行风向标</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">华语榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">粤语榜</TextBlock>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">韩国榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">日本榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">欧美榜</TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </ListViewItem>
+                            </ListView>
+                            <ProgressRing x:Name="PaiHangLoadProgress" IsActive="False" Width="100" Height="100" Background="{x:Null}" />
+                        </Grid>
+                    </ScrollViewer>
+                </FlipViewItem>
+                <FlipViewItem Visibility="Visible">
+                    <ScrollViewer>
+                        <ListView SelectionMode="Single" Margin="10,3,10,0">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="BorderBrush" Value="#7F808080"/>
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Margin" Value="0,0,0,5"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListViewItem>
+                                <TextBlock>我关注的歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,5,0,0">
+                                <TextBlock>华语男歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>华语女歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>华语组合</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,8,0,0">
+                                <TextBlock>韩国男歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>韩国女歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>韩国组合</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,8,0,0">
+                                <TextBlock>日本男歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>日本女歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>日本组合</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,8,0,0">
+                                <TextBlock>欧美男歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>欧美女歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,3,0,0">
+                                <TextBlock>欧美组合</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,8,0,0">
+                                <TextBlock>其他歌手</TextBlock>
+                            </ListViewItem>
+                            <ListViewItem Margin="0,8,0,0">
+                                <TextBlock>酷狗音乐人</TextBlock>
+                            </ListViewItem>
+                        </ListView>
+                    </ScrollViewer>
+                </FlipViewItem>
+                <FlipViewItem>
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid Margin="10,5,10,0" Height="30" VerticalAlignment="Top">
+                                <Button Width="80" Height="30" Content="全部分类" Foreground="White" Background="{x:Null}"></Button>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Background="White" Width="50" Height="30" Content="推荐" Foreground="#FF3FB8E7"></Button>
+                                    <TextBlock Margin="3,0,3,0" Foreground="White">|</TextBlock>
+                                    <Button Width="50" Height="30" Content="最新" Foreground="White" Background="{x:Null}"></Button>
+                                </StackPanel>
+                            </Grid>
+                            <ListView x:Name="GeDanListView" Margin="10,38,10,0">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="BorderBrush" Value="#7F808080"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Margin" Value="0,0,0,2"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="White" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                            <Image Width="80" Height="80" Stretch="UniformToFill" Source="{Binding imgurl}" HorizontalAlignment="Left"/>
+                                            <StackPanel Margin="90,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Margin="5,0,0,0" FontSize="15" Text="{Binding specialname}"></TextBlock>
+                                                <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding playcount}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <ProgressRing x:Name="GeDanLoadProgress" IsActive="False" Width="100" Height="100" Background="{x:Null}" />
+                        </Grid>
+                    </ScrollViewer>
+                </FlipViewItem>
+            </FlipView>
+        </Grid>
+        <usercon:PlayerSmall VerticalAlignment="Bottom"></usercon:PlayerSmall>
+    </Grid>
+</Page>
