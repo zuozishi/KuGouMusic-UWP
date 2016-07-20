@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Foundation.Collections;
 using Windows.Media;
 using Windows.Media.Playback;
@@ -88,6 +91,155 @@ namespace 酷狗音乐UWP.Class
                 public string singername { get; set; }
                 public string intro { get; set; }
                 public string imgurl { get; set; }
+                public List<string> pics { get; set; }
+            }
+            public static async Task<ObservableCollection<Album>> GetAlbumResult(string keyword, int page)
+            {
+                try
+                {
+                    var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                    httpclient.Url("http://mobilecdn.kugou.com/api/v3/search/album?pagesize=20&sver=2&page=" + page + "&version=8150&keyword=" + keyword);
+                    var httpresult = await httpclient.Get();
+                    var jsondata = httpresult.GetString();
+                    jsondata = jsondata.Replace("{size}", "150");
+                    jsondata = jsondata.Replace("00:00:00", "");
+                    var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
+                    var arry = obj.GetNamedObject("data").GetNamedArray("info");
+                    var resultdata = new ObservableCollection<Class.Model.SearchResultModel.Album>();
+                    foreach (var item in arry)
+                    {
+                        resultdata.Add(Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.Album>(item.ToString()));
+                    }
+                    return resultdata;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            public static async Task<ObservableCollection<SongList>> GetSonglistResult(string keyword, int page)
+            {
+                try
+                {
+                    var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                    httpclient.Url("http://mobilecdn.kugou.com/api/v3/search/special?pagesize=20&sver=2&page=" + page + "&version=8150&keyword=" + keyword);
+                    var httpresult = await httpclient.Get();
+                    var jsondata = httpresult.GetString();
+                    jsondata = jsondata.Replace("{size}", "150");
+                    var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
+                    var arry = obj.GetNamedObject("data").GetNamedArray("info");
+                    var resultdata = new ObservableCollection<Class.Model.SearchResultModel.SongList>();
+                    foreach (var item in arry)
+                    {
+                        var tempdata = Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.SongList>(item.ToString());
+                        if (tempdata.playcount > 1000)
+                        {
+                            tempdata.count = (tempdata.playcount / 10000).ToString() + "万";
+                        }
+                        else
+                        {
+                            tempdata.count = tempdata.playcount.ToString();
+                        }
+                        resultdata.Add(tempdata);
+                    }
+                    return resultdata;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            public static async Task<ObservableCollection<Lrc>> GetLrcResult(string keyword, int page)
+            {
+                try
+                {
+                    var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                    httpclient.Url("http://mobilecdn.kugou.com/api/v3/lyric/search?pagesize=20&plat=0&page=" + page + "&version=8150&keyword=" + keyword);
+                    var httpresult = await httpclient.Get();
+                    var jsondata = httpresult.GetString();
+                    jsondata = jsondata.Replace("320hash", "hash320");
+                    var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
+                    var arry = obj.GetNamedObject("data").GetNamedArray("info");
+                    var resultdata = new ObservableCollection<Class.Model.SearchResultModel.Lrc>();
+                    foreach (var item in arry)
+                    {
+                        resultdata.Add(Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.Lrc>(item.ToString()));
+                    }
+                    return resultdata;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            public static async Task<Singer> GetSingerResult(string singername)
+            {
+                try
+                {
+                    var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                    httpclient.Url("http://mobilecdn.kugou.com/api/v3/singer/info?singername=" + singername);
+                    var httpresult = await httpclient.Get();
+                    var jsondata = httpresult.GetString();
+                    jsondata = jsondata.Replace("{size}", "150");
+                    var obj = Windows.Data.Json.JsonObject.Parse(jsondata).GetNamedObject("data").ToString();
+                    var resultdata = Class.data.DataContractJsonDeSerialize<Model.SearchResultModel.Singer>(obj);
+                    var pics= await GetSingerPics(resultdata.singerid);
+                    if (pics != null)
+                    {
+                        resultdata.pics = pics;
+                    }
+                    return resultdata;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            private static async Task<List<string>> GetSingerPics(int singerid)
+            {
+                try
+                {
+                    var httpclient = new Windows.Web.Http.HttpClient();
+                    TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                    var time = Convert.ToInt64(ts.TotalMilliseconds).ToString();
+                    var key = Class.MD5.GetMd5String("1005Ilwieks28dk2k092lksi2UIkp8150" + time);
+                    var postobj = new JsonObject();
+                    var array = new JsonArray();
+                    var videodata = new JsonObject();
+                    videodata.Add("author_name", JsonValue.CreateStringValue(""));
+                    videodata.Add("author_id", JsonValue.CreateNumberValue(singerid));
+                    array.Add(videodata);
+                    postobj.Add("data", array);
+                    postobj.Add("appid", JsonValue.CreateStringValue("1005"));
+                    postobj.Add("mid", JsonValue.CreateStringValue(""));
+                    postobj.Add("type", JsonValue.CreateNumberValue(5));
+                    postobj.Add("clienttime", JsonValue.CreateStringValue("1469035332000"));
+                    postobj.Add("key", JsonValue.CreateStringValue("27b498a7d890373fadb673baa1dabf7e"));
+                    postobj.Add("clientver", JsonValue.CreateStringValue("8150"));
+                    var postdata = new Windows.Web.Http.HttpStringContent(postobj.ToString());
+                    var result = await httpclient.PostAsync(new Uri("http://kmr.service.kugou.com/v1/author_image/author"), postdata);
+                    var json = await result.Content.ReadAsStringAsync();
+                    var obj=JObject.Parse(json);
+                    var piclist = new List<string>();
+                    for (int i = 0; i < obj["data"][0][0]["imgs"]["5"].Count(); i++)
+                    {
+                        piclist.Add(obj["data"][0][0]["imgs"]["5"][i]["filename"].ToString());
+                    }
+                    for (int i = 0; i < piclist.Count; i++)
+                    {
+                        var head = "http://singerimg.kugou.com/uploadpic/mobilehead/{size}/";
+                        for (int j = 0; j < 8; j++)
+                        {
+                            head = head + (piclist[i])[j].ToString();
+                        }
+                        piclist[i] = head + "/" + piclist[i];
+                    }
+                    return piclist;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
         public class Player
@@ -99,6 +251,7 @@ namespace 酷狗音乐UWP.Class
                 public string url { get; set; }
                 public string imgurl { get; set; }
                 public string albumid { get; set; }
+                public string hash { get; set; }
                 public List<string> pics { get; set; }
             }
             public static async Task<NowPlay> GetNowPlay()

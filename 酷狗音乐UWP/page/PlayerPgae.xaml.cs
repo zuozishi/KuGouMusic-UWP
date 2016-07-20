@@ -1,5 +1,4 @@
-﻿using MicroMsg.sdk;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using 酷狗音乐UWP.Class;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -30,8 +30,12 @@ namespace 酷狗音乐UWP.page
     {
         public MediaPlayer BackgroundMedia { get; private set; }
         private DispatcherTimer ProcessTimer = new DispatcherTimer();
+        private DispatcherTimer PicTimer = new DispatcherTimer();
+        int picnum = 0;
         private Class.Model.Player.NowPlay nowplay;
         private bool ishander = true;
+        private Model.SearchResultModel.Singer singerdata;
+
         public PlayerPgae()
         {
             this.InitializeComponent();
@@ -43,6 +47,25 @@ namespace 酷狗音乐UWP.page
         {
             BackgroundMedia = Class.MediaControl.GetCurrent();
             ProcessTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            PicTimer.Interval = TimeSpan.FromSeconds(15);
+            PicTimer.Tick += (s, e) =>
+           {
+               if(PlayerFlip.SelectedIndex==1)
+               {
+                   if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                   {
+                       if (picnum == singerdata.pics.Count - 1)
+                       {
+                           picnum = 0;
+                       }
+                       else
+                       {
+                           picnum = picnum + 1;
+                       }
+                       mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[picnum].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
+                   }
+               }
+           };
             ProcessTimer.Tick += async (s, e) =>
             {
                 ishander = false;
@@ -200,10 +223,12 @@ namespace 酷狗音乐UWP.page
                     case 0:
                         Page1_Icon.Fill = new SolidColorBrush(Colors.White);
                         Page2_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));
+                        mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri("ms-appx:///Assets/background.jpg") }, Stretch = Stretch.Fill };
                         break;
                     case 1:
                         Page1_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));
                         Page2_Icon.Fill = new SolidColorBrush(Colors.White);
+                        LoadPics();
                         break;
                     default:
                         break;
@@ -212,6 +237,27 @@ namespace 酷狗音乐UWP.page
             catch (Exception)
             {
                 
+            }
+        }
+
+        private async void LoadPics()
+        {
+            if(singerdata==null)
+            {
+                var nowplay = await Class.Model.Player.GetNowPlay();
+                singerdata = await Class.Model.SearchResultModel.GetSingerResult(nowplay.singername);
+                if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                {
+                    mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[0].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
+                    PicTimer.Start();
+                }
+            }
+            else
+            {
+                if(singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                {
+                    mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[picnum].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
+                }
             }
         }
 

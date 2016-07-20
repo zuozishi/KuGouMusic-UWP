@@ -34,7 +34,7 @@ namespace 酷狗音乐UWP.page
             init();
         }
 
-        private void init()
+        private async void init()
         {
             var localSettings = ApplicationData.Current.LocalSettings;
             if (localSettings.Values.ContainsKey("uid"))
@@ -43,6 +43,7 @@ namespace 酷狗音乐UWP.page
             }
             else
             {
+                await Task.Delay(2000);
                 Frame.Navigate(typeof(page.LoginPage));
             }
             GetCloudList();

@@ -30,7 +30,7 @@ namespace 酷狗音乐UWP.UserControlClass
         
         public void LoadData()
         {
-            LoadBanner();
+            //LoadBanner();
         }
 
         private async void LoadBanner()

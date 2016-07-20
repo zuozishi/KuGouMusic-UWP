@@ -35,8 +35,30 @@ namespace 酷狗音乐UWP.page
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var albumid = e.Parameter.ToString();
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var applicationView = ApplicationView.GetForCurrentView();
+                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
+                statusBar.BackgroundOpacity = 0;
+            }
             albuminfo_Grid.DataContext = await GetAlbumInfo(albumid);
             SongList.ItemsSource = await GetSongList(albumid);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var applicationView = ApplicationView.GetForCurrentView();
+                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
+                statusBar.BackgroundOpacity = 100;
+            }
         }
 
         private async Task<Album_Info> GetAlbumInfo(string albumid)

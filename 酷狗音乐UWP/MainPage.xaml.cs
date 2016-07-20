@@ -77,6 +77,8 @@ namespace 酷狗音乐UWP
             var localSettings = ApplicationData.Current.LocalSettings;
             if(!localSettings.Values.ContainsKey("isfirst"))
             {
+                localSettings.Values["StartVoice"] = false;
+                localSettings.Values["StartVoiceId"] = 0;
                 var datafolder=await appfolder.CreateFolderAsync("Data");
                 await appfolder.CreateFolderAsync("Temp");
                 await datafolder.CreateFileAsync("localfolders.json");
@@ -101,7 +103,29 @@ namespace 酷狗音乐UWP
             titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
             KanPagePanel.LoadData();
             await init_local_list();
+            CheckFeedBack();
             LoadProgress.IsActive = false;
+        }
+
+        private async void CheckFeedBack()
+        {
+            try
+            {
+                var userInfo = await JyUserInfo.JyUserInfoManager.QuickLogin("e4e6005e3145b90b4edd99c0d0d35af9");
+                if (userInfo.isLoginSuccess)
+                {
+                    var feedback = new JyUserFeedback.JyUserFeedbackSDKManager();
+                    var msgnum = await feedback.GetNewFeedBackRemindCount("e4e6005e3145b90b4edd99c0d0d35af9", userInfo.U_Key);
+                    if (msgnum > 0)
+                    {
+                        await new Windows.UI.Popups.MessageDialog("您收到" + msgnum + "条反馈回复,请到设置->反馈查看").ShowAsync();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
         }
 
         private async Task init_local_list()
@@ -273,6 +297,11 @@ namespace 酷狗音乐UWP
         private void CloudMuiscBtn_Clicked(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(page.MyMusicListPage));
+        }
+
+        private void SettingBtnClicked(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(page.SettingPage));
         }
     }
 }

@@ -79,14 +79,14 @@ namespace 酷狗音乐UWP.page
         {
             var httpclient = new Windows.Web.Http.HttpClient();
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var time = Convert.ToInt64(ts.TotalSeconds).ToString();
+            var time = Convert.ToInt64(ts.TotalMilliseconds).ToString();
             var key = Class.MD5.GetMd5String("1005Ilwieks28dk2k092lksi2UIkp8150" + time);
             var postobj = new JsonObject();
             postobj.Add("appid", JsonValue.CreateStringValue("1005"));
             postobj.Add("mid", JsonValue.CreateStringValue(""));
-            postobj.Add("clienttime", JsonValue.CreateStringValue("1468832378"));
-            postobj.Add("key", JsonValue.CreateStringValue("15b07bf1cbe69ed15ce31d667399477d"));
             postobj.Add("clientver", JsonValue.CreateStringValue("8150"));
+            postobj.Add("clienttime", JsonValue.CreateStringValue("1469035332000"));
+            postobj.Add("key", JsonValue.CreateStringValue("27b498a7d890373fadb673baa1dabf7e"));
             var array = new JsonArray();
             var videodata = new JsonObject();
             videodata.Add("video_hash", JsonValue.CreateStringValue(hash));

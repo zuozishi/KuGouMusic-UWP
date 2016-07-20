@@ -137,10 +137,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Page.Resources>
 
-    <Grid Background="#FF42BBEA">
+    <Grid x:Name="mainGrid">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
+        </Grid.Background>
         <Grid Height="50" VerticalAlignment="Top">
             <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
                 <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>

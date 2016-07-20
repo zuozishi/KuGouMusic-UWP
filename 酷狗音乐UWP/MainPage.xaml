@@ -263,12 +263,12 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill" ImageSource="Assets/background.jpg"/>
         </Grid.Background>
         <Grid Height="50" VerticalAlignment="Top">
-            <Button Width="50" Height="50" Background="{x:Null}">
+            <Button Click="SettingBtnClicked" Width="50" Height="50" Background="{x:Null}">
                 <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="White" />
             </Button>
             <Grid Width="250" Height="50">

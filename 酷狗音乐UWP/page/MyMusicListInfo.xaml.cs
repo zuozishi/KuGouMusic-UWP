@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -69,25 +70,29 @@ namespace 酷狗音乐UWP.page
             var list = sender as ListView;
             var song = list.SelectedItem as MusicData;
             string url = "";
+            string hash = "";
             if (song.hash_sq != "")
             {
                 url = await kugou.get_song_url(song.hash_sq);
+                hash = song.hash_sq;
             }
             else
             {
                 if (song.hash_320 != "")
                 {
                     url = await kugou.get_song_url(song.hash_320);
+                    hash = song.hash_320;
                 }
                 else
                 {
                     if (song.hash != "")
                     {
                         url = await kugou.get_song_url(song.hash);
+                        hash = song.hash;
                     }
                 }
             }
-            if (url != "")
+            if (url!=null&&url != "")
             {
                 var music = new Class.Model.Player.NowPlay();
                 var filename = song.moredata.filename;
@@ -113,9 +118,14 @@ namespace 酷狗音乐UWP.page
                     music.imgurl = "ms-appx:///Assets/image/songimg.png";
                 }
                 music.url = url;
+                music.hash = hash;
                 music.albumid = "";
                 await Class.Model.Player.SetNowPlay(music);
                 Class.Model.PlayList.Add(music, true);
+            }
+            else
+            {
+                await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
             }
             LoadProess.IsActive = false;
         }

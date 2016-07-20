@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using 酷狗音乐UWP.Class;
+using static 酷狗音乐UWP.Class.Model.SearchResultModel;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -577,7 +579,7 @@ namespace 酷狗音乐UWP.UserControlClass
                                     }
                                 }
                             }
-                            if (url != "")
+                            if (url!=null&&url != "")
                             {
                                 var music = new Class.Model.Player.NowPlay();
                                 music.title = song.filename;
@@ -603,6 +605,10 @@ namespace 酷狗音乐UWP.UserControlClass
                                 }
                                 await Class.Model.Player.SetNowPlay(music);
                                 Class.Model.PlayList.Add(music, true);
+                            }
+                            else
+                            {
+                                await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
                             }
                         }
                         SongLoadProgress.IsActive = false;
@@ -682,104 +688,6 @@ namespace 酷狗音乐UWP.UserControlClass
         {
             var grid = sender as StackPanel;
             grid.Background = new SolidColorBrush();
-        }
-
-        public static async Task<ObservableCollection<Class.Model.SearchResultModel.Album>> GetAlbumResult(string keyword, int page)
-        {
-            try
-            {
-                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-                httpclient.Url("http://mobilecdn.kugou.com/api/v3/search/album?pagesize=20&sver=2&page=" + page + "&version=8150&keyword=" + keyword);
-                var httpresult = await httpclient.Get();
-                var jsondata = httpresult.GetString();
-                jsondata = jsondata.Replace("{size}", "150");
-                jsondata = jsondata.Replace("00:00:00", "");
-                var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
-                var arry = obj.GetNamedObject("data").GetNamedArray("info");
-                var resultdata = new ObservableCollection<Class.Model.SearchResultModel.Album>();
-                foreach (var item in arry)
-                {
-                    resultdata.Add(Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.Album>(item.ToString()));
-                }
-                return resultdata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        public static async Task<ObservableCollection<Class.Model.SearchResultModel.SongList>> GetSonglistResult(string keyword, int page)
-        {
-            try
-            {
-                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-                httpclient.Url("http://mobilecdn.kugou.com/api/v3/search/special?pagesize=20&sver=2&page="+page+"&version=8150&keyword=" + keyword);
-                var httpresult = await httpclient.Get();
-                var jsondata = httpresult.GetString();
-                jsondata = jsondata.Replace("{size}", "150");
-                var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
-                var arry = obj.GetNamedObject("data").GetNamedArray("info");
-                var resultdata = new ObservableCollection<Class.Model.SearchResultModel.SongList>();
-                foreach (var item in arry)
-                {
-                    var tempdata = Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.SongList>(item.ToString());
-                    if (tempdata.playcount > 1000)
-                    {
-                        tempdata.count = (tempdata.playcount / 10000).ToString() + "万";
-                    }
-                    else
-                    {
-                        tempdata.count = tempdata.playcount.ToString();
-                    }
-                    resultdata.Add(tempdata);
-                }
-                return resultdata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        public static async Task<ObservableCollection<Class.Model.SearchResultModel.Lrc>> GetLrcResult(string keyword, int page)
-        {
-            try
-            {
-                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-                httpclient.Url("http://mobilecdn.kugou.com/api/v3/lyric/search?pagesize=20&plat=0&page=" + page + "&version=8150&keyword=" + keyword);
-                var httpresult = await httpclient.Get();
-                var jsondata = httpresult.GetString();
-                jsondata = jsondata.Replace("320hash", "hash320");
-                var obj = Windows.Data.Json.JsonObject.Parse(jsondata);
-                var arry = obj.GetNamedObject("data").GetNamedArray("info");
-                var resultdata = new ObservableCollection<Class.Model.SearchResultModel.Lrc>();
-                foreach (var item in arry)
-                {
-                    resultdata.Add(Class.data.DataContractJsonDeSerialize<Class.Model.SearchResultModel.Lrc>(item.ToString()));
-                }
-                return resultdata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        public static async Task<Class.Model.SearchResultModel.Singer> GetSingerResult(string singername)
-        {
-            try
-            {
-                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-                httpclient.Url("http://mobilecdn.kugou.com/api/v3/singer/info?singername=" + singername);
-                var httpresult = await httpclient.Get();
-                var jsondata = httpresult.GetString();
-                jsondata = jsondata.Replace("{size}", "150");
-                var obj = Windows.Data.Json.JsonObject.Parse(jsondata).GetNamedObject("data").ToString();
-                var resultdata = Class.data.DataContractJsonDeSerialize<Model.SearchResultModel.Singer>(obj);
-                return resultdata;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
     }
 }

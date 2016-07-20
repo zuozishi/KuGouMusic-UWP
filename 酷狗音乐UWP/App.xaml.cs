@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,6 +25,8 @@ namespace 酷狗音乐UWP
     /// </summary>
     sealed partial class App : Application
     {
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        StorageFolder appFolder = ApplicationData.Current.LocalFolder;
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -78,7 +82,36 @@ namespace 酷狗音乐UWP
                 }
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                PlayWelcomeVoice();
                 // 确保当前窗口处于活动状态
+                //Window.Current.Activate();
+            }
+        }
+
+        private async void PlayWelcomeVoice()
+        {
+            var isopen = (bool)localSettings.Values["StartVoice"];
+            if (isopen)
+            {
+                var media = new MediaElement();
+                media.AutoPlay = true;
+                media.AudioCategory = AudioCategory.Alerts;
+                var id = (int)localSettings.Values["StartVoiceId"];
+                if (id == 0)
+                {
+                    var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/welcome.mp3"));
+                    media.SetSource(await file.OpenReadAsync(), file.ContentType);
+                }
+                else
+                {
+                    var file = await (await appFolder.CreateFolderAsync("WelcomeVoice", CreationCollisionOption.OpenIfExists)).GetFileAsync(id.ToString() + ".mp3");
+                    media.SetSource(await file.OpenReadAsync(), file.ContentType);
+                }
+                await Task.Delay(3000);
+                Window.Current.Activate();
+            }
+            else
+            {
                 Window.Current.Activate();
             }
         }
