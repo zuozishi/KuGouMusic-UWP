@@ -27,12 +27,24 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="lightBlue" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="wechat">
+        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.TitleUpdateTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <Task Type="timer" />
+            <Task Type="pushNotification" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.backmedia">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+        <uap:Extension Category="windows.fileOpenPicker">
+          <uap:FileOpenPicker>
             <uap:SupportedFileTypes>
-              <uap:FileType>.wxc001eb4178cfeca3</uap:FileType>
+              <uap:SupportsAnyFileType />
             </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
+          </uap:FileOpenPicker>
         </uap:Extension>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="musicfile">
@@ -43,26 +55,11 @@
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
-        </uap:Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.backmedia">
-          <BackgroundTasks>
-            <Task Type="audio" />
-          </BackgroundTasks>
-        </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.TitleUpdateTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-            <Task Type="timer" />
-            <Task Type="pushNotification" />
-          </BackgroundTasks>
-        </Extension>
       </Extensions>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Match="http://m.kugou.com" Type="include" WindowsRuntimeAccess="all" />
+        <uap:Rule Match="http://*.kugou.com" Type="include" WindowsRuntimeAccess="all" />
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
   <Capabilities>

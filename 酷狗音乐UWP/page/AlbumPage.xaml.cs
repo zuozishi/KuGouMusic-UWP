@@ -35,8 +35,8 @@ namespace 酷狗音乐UWP.page
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var albumid = e.Parameter.ToString();
-            var albuminfo = await GetAlbumInfo(albumid);
-            albuminfo_Grid.DataContext = albuminfo;
+            albuminfo_Grid.DataContext = await GetAlbumInfo(albumid);
+            SongList.ItemsSource = await GetSongList(albumid);
         }
 
         private async Task<Album_Info> GetAlbumInfo(string albumid)
@@ -49,7 +49,43 @@ namespace 酷狗音乐UWP.page
             var data = Class.data.DataContractJsonDeSerialize<Album_Info>(obj.GetNamedObject("data").ToString());
             data.publishtime = data.publishtime.Replace("00:00:00", "");
             data.publishtime = data.publishtime + "发行";
+            GetSingerInfo(data.singerid);
             return data;
+        }
+
+        public async Task<List<SongData>> GetSongList(string albumid)
+        {
+            var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+            httpclient.Url("http://mobilecdn.kugou.com/api/v3/album/song?pagesize=-1&plat=0&page=1&version=8150&albumid=" + albumid);
+            var json = (await httpclient.Get()).GetString();
+            json = json.Replace("320hash", "hash320");
+            var obj = Windows.Data.Json.JsonObject.Parse(json);
+            var data = Class.data.DataContractJsonDeSerialize<List<SongData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
+            foreach (var item in data)
+            {
+                item.filename = item.filename.Replace(" ", "");
+                item.title = item.filename.Split('-')[1];
+                item.singername = item.filename.Split('-')[0];
+                if(item.mvhash=="")
+                {
+                    item.hasmv = "Collapsed";
+                }
+                else
+                {
+                    item.hasmv = "Visible";
+                }
+            }
+            return data;
+        }
+
+        public async void GetSingerInfo(string singerid)
+        {
+            var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+            httpclient.Url("http://mobilecdn.kugou.com/api/v3/singer/info?singerid=" + singerid);
+            var json = (await httpclient.Get()).GetString();
+            json = json.Replace("{size}", "150");
+            var obj = Windows.Data.Json.JsonObject.Parse(json);
+            singerimg.ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(obj.GetNamedObject("data").GetNamedString("imgurl")) };
         }
 
         public class Album_Info
@@ -60,6 +96,18 @@ namespace 酷狗音乐UWP.page
             public string intro { get; set; }
             public string imgurl { get; set; }
             public string publishtime { get; set; }
+        }
+
+        public class SongData
+        {
+            public string filename { get; set; }
+            public string title { get; set; }
+            public string singername { get; set; }
+            public string hash { get; set; }
+            public string mvhash { get; set; }
+            public string hasmv { get; set; }
+            public string sqhash { get; set; }
+            public string hash320 { get; set; }
         }
 
         private void BackBtn_Clicked(object sender, RoutedEventArgs e)

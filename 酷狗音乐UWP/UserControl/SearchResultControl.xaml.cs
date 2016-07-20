@@ -579,7 +579,6 @@ namespace 酷狗音乐UWP.UserControlClass
                             }
                             if (url != "")
                             {
-                                Class.MediaControl.GetCurrent().Pause();
                                 var music = new Class.Model.Player.NowPlay();
                                 music.title = song.filename;
                                 music.url = url;

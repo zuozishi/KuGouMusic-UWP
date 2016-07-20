@@ -197,7 +197,8 @@ namespace 酷狗音乐UWP
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.WebPage), "http://m.kugou.com/song/static/index.html");
+            //Frame.Navigate(typeof(page.WebPage), "http://m.kugou.com/song/static/index.html");
+            Frame.Navigate(typeof(page.LoginPage));
         }
 
         private void TopBtn_Clicked(object sender, RoutedEventArgs e)
@@ -262,6 +263,16 @@ namespace 酷狗音乐UWP
         private void YueKuBtn_Clicked(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(page.YueKuPage));
+        }
+
+        private void DownloadBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(page.DownloadPage));
+        }
+
+        private void CloudMuiscBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(page.MyMusicListPage));
         }
     }
 }

@@ -163,6 +163,10 @@
     </Compile>
     <Compile Include="Class\data.cs" />
     <Compile Include="Class\DataCenter.cs" />
+    <Compile Include="Class\DownloadManager.cs" />
+    <Compile Include="Class\DownLoad\BackgroundDownload.cs" />
+    <Compile Include="Class\DownLoad\DownloadedToast.cs" />
+    <Compile Include="Class\DownLoad\TransferModel.cs" />
     <Compile Include="Class\HanziToPin.cs" />
     <Compile Include="Class\localmusic.cs" />
     <Compile Include="Class\LrcManager.cs" />
@@ -181,14 +185,26 @@
     <Compile Include="page\device.xaml.cs">
       <DependentUpon>device.xaml</DependentUpon>
     </Compile>
+    <Compile Include="page\DownloadPage.xaml.cs">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="page\index\music.xaml.cs">
       <DependentUpon>music.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\MVListPage.xaml.cs">
       <DependentUpon>MVListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\MVPlayer.xaml.cs">
       <DependentUpon>MVPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\MyMusicListInfo.xaml.cs">
+      <DependentUpon>MyMusicListInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\MyMusicListPage.xaml.cs">
+      <DependentUpon>MyMusicListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\PlayerPageLite.xaml.cs">
       <DependentUpon>PlayerPageLite.xaml</DependentUpon>
@@ -280,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Class\DownloadResourcePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -292,7 +312,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="page\DownloadPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="page\index\music.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="page\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +329,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="page\MVPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="page\MyMusicListInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="page\MyMusicListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -364,11 +400,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncHttpClient.UWP">
-      <HintPath>..\..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
     </Reference>
-    <Reference Include="mediaservice, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\mediaservice\bin\Release\mediaservice.winmd</HintPath>
+    <Reference Include="mediaservice">
+      <HintPath>..\mediaservice\bin\Debug\mediaservice.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

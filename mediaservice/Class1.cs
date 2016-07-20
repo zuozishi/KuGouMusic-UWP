@@ -128,7 +128,7 @@ namespace mediaservice
                     stmp.IsPauseEnabled = true;
                     stmp.IsNextEnabled = true;
                     stmp.IsPreviousEnabled = true;
-                    if (Math.Floor(mediaplayer.NaturalDuration.TotalSeconds)==Math.Floor(mediaplayer.Position.TotalSeconds))
+                    if (Math.Floor(mediaplayer.NaturalDuration.TotalSeconds)-3<=Math.Floor(mediaplayer.Position.TotalSeconds))
                     {
                         Next(stmp, mediaplayer);
                     }
