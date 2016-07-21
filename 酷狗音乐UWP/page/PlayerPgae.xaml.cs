@@ -9,6 +9,7 @@ using Windows.Foundation.Collections;
 using Windows.Media.Playback;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,7 +47,7 @@ namespace 酷狗音乐UWP.page
         private async void init()
         {
             BackgroundMedia = Class.MediaControl.GetCurrent();
-            ProcessTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            ProcessTimer.Interval = TimeSpan.FromSeconds(60);
             PicTimer.Interval = TimeSpan.FromSeconds(15);
             PicTimer.Tick += (s, e) =>
            {
@@ -114,6 +115,37 @@ namespace 酷狗音乐UWP.page
                 PlayBtn.Icon = new SymbolIcon(Symbol.Play);
             }
             BackgroundMedia.CurrentStateChanged += BackgroundMedia_CurrentStateChanged;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var applicationView = ApplicationView.GetForCurrentView();
+                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
+                statusBar.BackgroundOpacity = 0;
+                applicationView.TryEnterFullScreenMode();
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var applicationView = ApplicationView.GetForCurrentView();
+                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
+                statusBar.BackgroundOpacity = 100;
+                if(applicationView.IsFullScreenMode)
+                {
+                    applicationView.ExitFullScreenMode();
+                }
+            }
         }
 
         private async void Cyc_Btn_Click(object sender, RoutedEventArgs e)

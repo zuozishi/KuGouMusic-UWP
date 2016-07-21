@@ -206,7 +206,7 @@
                             <Border x:Name="BorderElement" BorderBrush="{x:Null}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="1"/>
                             <ContentPresenter x:Name="HeaderContentPresenter" Grid.ColumnSpan="3" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" FontWeight="Normal" Margin="0,0,0,8" Grid.Row="0" TextWrapping="Wrap" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
                             <ScrollViewer x:Name="ContentElement" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled" Foreground="#FF44BEEF"/>
-                            <ContentControl x:Name="PlaceholderTextContentPresenter" Grid.ColumnSpan="3" Content="{TemplateBinding PlaceholderText}" Foreground="#FF44BEEF" IsHitTestVisible="False" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1"/>
+                            <ContentControl x:Name="PlaceholderTextContentPresenter" Grid.ColumnSpan="3" Content="{TemplateBinding PlaceholderText}" Foreground="{ThemeResource KuGou-BackgroundColor}" IsHitTestVisible="False" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1"/>
                             <Button x:Name="DeleteButton" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" FontSize="{TemplateBinding FontSize}" IsTabStop="False" Margin="{ThemeResource HelperButtonThemePadding}" MinWidth="34" Grid.Row="1" Style="{StaticResource DeleteButtonStyle}" Visibility="Collapsed" VerticalAlignment="Stretch"/>
                             <Button x:Name="QueryButton" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="2" FontSize="{TemplateBinding FontSize}" IsTabStop="False" Margin="{ThemeResource HelperButtonThemePadding}" MinWidth="34" Grid.Row="1" Style="{StaticResource QueryButtonStyle}" VerticalAlignment="Stretch"/>
                         </Grid>
@@ -234,7 +234,7 @@
                                     <Border.RenderTransform>
                                         <TranslateTransform x:Name="UpwardTransform"/>
                                     </Border.RenderTransform>
-                                    <ListView x:Name="SuggestionsList" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}" BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}" DisplayMemberPath="{TemplateBinding DisplayMemberPath}" IsItemClickEnabled="True" ItemTemplate="{TemplateBinding ItemTemplate}" ItemContainerStyle="{TemplateBinding ItemContainerStyle}" ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" MaxHeight="{ThemeResource AutoSuggestListMaxHeight}" Margin="{ThemeResource AutoSuggestListMargin}" Padding="{ThemeResource AutoSuggestListPadding}" Background="#BF44BEEF">
+                                    <ListView x:Name="SuggestionsList" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}" BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}" DisplayMemberPath="{TemplateBinding DisplayMemberPath}" IsItemClickEnabled="True" ItemTemplate="{TemplateBinding ItemTemplate}" ItemContainerStyle="{TemplateBinding ItemContainerStyle}" ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" MaxHeight="{ThemeResource AutoSuggestListMaxHeight}" Margin="{ThemeResource AutoSuggestListMargin}" Padding="{ThemeResource AutoSuggestListPadding}" Background="{ThemeResource KuGou-BackgroundColor1}">
                                         <ListView.ItemContainerTransitions>
                                             <TransitionCollection/>
                                         </ListView.ItemContainerTransitions>
@@ -263,13 +263,10 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
-    <Grid x:Name="mainGrid">
-        <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/background.jpg"/>
-        </Grid.Background>
+    <Grid x:Name="mainGrid" Background="{ThemeResource KuGou-Background}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button Click="SettingBtnClicked" Width="50" Height="50" Background="{x:Null}">
-                <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="White" />
+                <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="{ThemeResource KuGou-Foreground}" />
             </Button>
             <Grid Width="250" Height="50">
                 <Grid.ColumnDefinitions>
@@ -279,24 +276,24 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="Ting_Btn" Click="TopBtn_Clicked" TabIndex="0" Foreground="White" BorderBrush="White" Grid.Column="0" Background="{x:Null}" Content="听" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
-                <Button x:Name="Kan_Btn" Click="TopBtn_Clicked"  TabIndex="1" Grid.Column="2" Background="{x:Null}" Content="看" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
-                <Button x:Name="Chang_Btn" Click="TopBtn_Clicked"  TabIndex="2" Grid.Column="4" Background="{x:Null}" Content="唱" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
+                <Button x:Name="Ting_Btn" Click="TopBtn_Clicked" TabIndex="0" Foreground="{ThemeResource KuGou-Foreground}" BorderBrush="{ThemeResource KuGou-Foreground}" Grid.Column="0" Background="{x:Null}" Content="听" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
+                <Button x:Name="Kan_Btn" Click="TopBtn_Clicked"  TabIndex="1" Grid.Column="2" Background="{x:Null}" Content="看" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
+                <Button x:Name="Chang_Btn" Click="TopBtn_Clicked"  TabIndex="2" Grid.Column="4" Background="{x:Null}" Content="唱" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,4"></Button>
             </Grid>
             <Button Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right" Click="Button_Click">
-                <SymbolIcon Margin="-10,-6" Width="50" Height="50" Symbol="Contact2" Foreground="White"></SymbolIcon>
+                <SymbolIcon Margin="-10,-6" Width="50" Height="50" Symbol="Contact2" Foreground="{ThemeResource KuGou-Foreground}"></SymbolIcon>
             </Button>
         </Grid>
-        <FlipView x:Name="flipview1" SelectionChanged="flipview1_SelectionChanged" Margin="0,55,0,0">
+        <FlipView x:Name="flipview1" SelectionChanged="flipview1_SelectionChanged" Margin="0,50,0,0">
             <FlipViewItem Visibility="Visible">
                 <Grid Name="Ting_Grid" Margin="0,0,0,63">
                     <Grid Margin="15,0,15,0" VerticalAlignment="Top">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="55"/>
                             <RowDefinition Height="60"/>
-                            <RowDefinition Height="65"/>
                         </Grid.RowDefinitions>
-                        <AutoSuggestBox x:Name="SearchBox" Grid.Row="0" QueryIcon="Find" Foreground="#CC44BEEF" PlaceholderText="搜索音乐、歌手、专辑、MV、歌词、歌单" VerticalAlignment="Center" Style="{StaticResource AutoSuggestBoxStyle1}" TextChanged="SearchBox_TextChanged" QuerySubmitted="SearchBox_QuerySubmitted" RenderTransformOrigin="0.5,0.5">
+                        <AutoSuggestBox x:Name="SearchBox" Grid.Row="0" QueryIcon="Find" Foreground="{ThemeResource KuGou-BackgroundColor}" PlaceholderText="搜索音乐、歌手、专辑、MV、歌词、歌单" VerticalAlignment="Center" Style="{StaticResource AutoSuggestBoxStyle1}" TextChanged="SearchBox_TextChanged" QuerySubmitted="SearchBox_QuerySubmitted" RenderTransformOrigin="0.5,0.5">
                             <AutoSuggestBox.RenderTransform>
                                 <CompositeTransform/>
                             </AutoSuggestBox.RenderTransform>
@@ -311,14 +308,14 @@
                             </Grid.ColumnDefinitions>
                             <Button Click="YueKuBtn_Clicked" Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <SymbolIcon Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Audio"></SymbolIcon>
-                                    <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">乐库</TextBlock>
+                                    <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Audio"></SymbolIcon>
+                                    <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">乐库</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Margin="2,0,0,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <SymbolIcon Width="30" Height="50" Foreground="#FF44BEEF" Symbol="World"></SymbolIcon>
-                                    <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">电台</TextBlock>
+                                    <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="World"></SymbolIcon>
+                                    <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">电台</TextBlock>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -333,33 +330,34 @@
                             </Grid.ColumnDefinitions>
                             <Button Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <SymbolIcon Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Clock"></SymbolIcon>
-                                    <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">最近</TextBlock>
+                                    <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Clock"></SymbolIcon>
+                                    <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">最近</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Click="DownloadBtn_Clicked" Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <SymbolIcon Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Download"></SymbolIcon>
-                                    <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">下载</TextBlock>
+                                    <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Download"></SymbolIcon>
+                                    <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">下载</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Click="CloudMuiscBtn_Clicked" Margin="2,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <SymbolIcon Width="30" Height="50" Foreground="#FF44BEEF" Symbol="List"></SymbolIcon>
-                                    <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">歌单</TextBlock>
+                                    <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="List"></SymbolIcon>
+                                    <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">歌单</TextBlock>
                                 </StackPanel>
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid Margin="0,180,0,0" Name="Local_List_Grid">
+                    <Grid Margin="0,170,0,0" Name="Local_List_Grid">
                         <SemanticZoom>
                             <SemanticZoom.ZoomedInView>
-                                <ListView SelectionChanged="LocalList_Selecyion" SelectionMode="Extended"  x:Name="ZoomInView">
+                                <ListView Margin="15,0,15,0" SelectionChanged="LocalList_Selecyion" SelectionMode="Extended"  x:Name="ZoomInView">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                             <Setter Property="BorderBrush" Value="#7F808080"/>
-                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="Background" Value="{ThemeResource KuGou-List-Background}"/>
+                                            <Setter Property="Margin" Value="0,0,0,3"/>
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.GroupStyle>
@@ -375,12 +373,12 @@
                                     </ListView.GroupStyle>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid Margin="0,2,0,2" Height="60" Background="White" VerticalAlignment="Top">
+                                            <Grid Height="60" VerticalAlignment="Top">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <SymbolIcon Visibility="{Binding isplay}" Width="50" Height="50" Foreground="Black" Symbol="Play"></SymbolIcon>
+                                                    <SymbolIcon Visibility="{Binding isplay}" Width="50" Height="50" Foreground="{ThemeResource KuGou-Front1}" Symbol="Play"></SymbolIcon>
                                                     <StackPanel Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding Title}" FontSize="14"></TextBlock>
-                                                        <TextBlock Text="{Binding songer}" FontSize="12"></TextBlock>
+                                                        <TextBlock Foreground="{ThemeResource KuGou-Front1}" Text="{Binding Title}" FontSize="14"></TextBlock>
+                                                        <TextBlock Foreground="{ThemeResource KuGou-Front1}" Text="{Binding songer}" FontSize="12"></TextBlock>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </Grid>
@@ -401,8 +399,8 @@
                             </SemanticZoom.ZoomedOutView>
                         </SemanticZoom>
                         <StackPanel Margin="0,0,15,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" CanDrag="True">
-                            <Button Background="#FF44BEEF" Width="50" Height="50" CanDrag="True">
-                                <SymbolIcon Symbol="Setting" Foreground="White"></SymbolIcon>
+                            <Button Background="{ThemeResource KuGou-BackgroundColor}" Width="50" Height="50" CanDrag="True">
+                                <SymbolIcon Symbol="Setting" Foreground="{ThemeResource KuGou-Foreground}"></SymbolIcon>
                                 <Button.Flyout>
                                     <Flyout>
                                         <Flyout.FlyoutPresenterStyle>
@@ -412,8 +410,8 @@
                                             </Style>
                                         </Flyout.FlyoutPresenterStyle>
                                         <StackPanel Width="50" Margin="0,-13,-13,-13">
-                                            <AppBarButton Click="AddLocalFolderBtn_Clicked" Icon="Add" Foreground="White" Width="50" Height="50" Background="#FF2291BD"></AppBarButton>
-                                            <AppBarButton Click="LocalListRefreshBtn_Clicked" Margin="0,5,0,0" Icon="Refresh" Foreground="White" Width="50" Height="50" Background="#FF3788A8"></AppBarButton>
+                                            <AppBarButton Foreground="{ThemeResource KuGou-Foreground}" Click="AddLocalFolderBtn_Clicked" Icon="Add" Width="50" Height="50" Background="{ThemeResource KuGou-BackgroundColor}"></AppBarButton>
+                                            <AppBarButton Foreground="{ThemeResource KuGou-Foreground}" Click="LocalListRefreshBtn_Clicked" Margin="0,5,0,0" Icon="Refresh" Width="50" Height="50" Background="{ThemeResource KuGou-BackgroundColor}"></AppBarButton>
                                         </StackPanel>
                                     </Flyout>
                                 </Button.Flyout>

@@ -8,20 +8,17 @@
     xmlns:usercon="using:酷狗音乐UWP.UserControlClass"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/background.jpg"/>
-        </Grid.Background>
+    <Grid Background="{ThemeResource KuGou-Background}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
                 <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
             </Button>
-            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">乐库</TextBlock>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">乐库</TextBlock>
             <Button Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="White" />
+                <FontIcon Margin="-10,-6" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Foreground="{ThemeResource KuGou-Foreground}" />
             </Button>
             <Button Margin="0,0,50,0" Click="SearchBtn_Clicked" Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="Find"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Find"></SymbolIcon>
             </Button>
         </Grid>
         <Grid Margin="0,50,0,0" Height="50" VerticalAlignment="Top">
@@ -35,10 +32,10 @@
                 <RowDefinition/>
                 <RowDefinition Height="3" />
             </Grid.RowDefinitions>
-            <Button x:Name="TuiJian_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="推荐" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-            <Button x:Name="PaiHang_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="排行" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-            <Button x:Name="GeShou_Btn" TabIndex="2" Grid.Column="2" Background="{x:Null}" Content="歌手" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-            <Button x:Name="GeDan_Btn" TabIndex="3" Grid.Column="3" Background="{x:Null}" Content="歌单" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="TuiJian_Btn" BorderBrush="{ThemeResource KuGou-Foreground}" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="推荐" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="PaiHang_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="排行" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="GeShou_Btn" TabIndex="2" Grid.Column="2" Background="{x:Null}" Content="歌手" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+            <Button x:Name="GeDan_Btn" TabIndex="3" Grid.Column="3" Background="{x:Null}" Content="歌单" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
         </Grid>
         <Grid Margin="0,100,0,63">
             <FlipView x:Name="YueKuView" SelectionChanged="YueKuView_SelectionChanged">
@@ -66,25 +63,25 @@
                                     </Grid.ColumnDefinitions>
                                     <Button Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Clock"></SymbolIcon>
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Clock"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专区</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <Button Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="Download"></SymbolIcon>
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Download"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">MV</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <Button Margin="2,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="List"></SymbolIcon>
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="List"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专题</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <Button Margin="2,0,0,0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="#FF44BEEF" Symbol="List"></SymbolIcon>
+                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="List"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专辑</TextBlock>
                                         </StackPanel>
                                     </Button>
@@ -108,7 +105,7 @@
                                                     <ColumnDefinition Width="100"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Margin="10,0,0,0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Center">新歌首发</TextBlock>
+                                                <TextBlock Margin="10,0,0,0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Center">新歌首发</TextBlock>
                                                 <Image x:Name="NewSong1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://singerimg.kugou.com/uploadpic/pass/softhead/150/20150518/20150518111246757565.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
                                                     <TextBlock x:Name="NewSong1_Text" Margin="3" Foreground="Black">
@@ -133,7 +130,7 @@
                                                     <ColumnDefinition Width="100"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Margin="10,0,0,0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Center">新碟上架</TextBlock>
+                                                <TextBlock Margin="10,0,0,0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Center">新碟上架</TextBlock>
                                                 <Image x:Name="NewAlbum1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://imge.kugou.com/stdmusic/150/20160713/20160713152144152151.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
                                                     <TextBlock x:Name="NewAlbum1_Text" Margin="3" Foreground="Black">
@@ -155,10 +152,10 @@
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="热门歌单"/>
                                     </TextBlock>
-                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="更多"/>
                                     </TextBlock>
                                     <Grid Grid.Row="1">
@@ -274,7 +271,7 @@
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock x:Name="specialTitle" Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock x:Name="specialTitle" Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="主题歌单 · 思念的时光最煎熬"/>
                                     </TextBlock>
                                     <Grid Grid.Row="1" Height="180">
@@ -338,10 +335,10 @@
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="MV歌单"/>
                                     </TextBlock>
-                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="更多"/>
                                     </TextBlock>
                                     <Grid Grid.Row="1">
@@ -420,10 +417,10 @@
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF42BBEA" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="精选专题"/>
                                     </TextBlock>
-                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="#FF56C0EC" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
+                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Grid.Row="0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="15">
                 			<Run Text="更多"/>
                                     </TextBlock>
                                     <ListView x:Name="topicList" SelectionMode="Single" Grid.Row="1">

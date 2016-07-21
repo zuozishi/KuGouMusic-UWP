@@ -7,14 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="#FF42BBEA">
+    <Grid Background="{ThemeResource KuGou-BackgroundColor}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
-                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
             </Button>
-            <TextBlock x:Name="Title_Text" Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">正在加载</TextBlock>
+            <TextBlock x:Name="Title_Text" Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">正在加载</TextBlock>
             <Button  Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="More"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="More"></SymbolIcon>
             </Button>
         </Grid>
         <WebView x:Name="webview" Margin="0,50,0,0"></WebView>

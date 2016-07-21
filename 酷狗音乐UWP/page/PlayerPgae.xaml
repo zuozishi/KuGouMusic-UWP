@@ -139,89 +139,88 @@
         </Style>
     </Page.Resources>
 
-    <Grid x:Name="mainGrid">
-        <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
-        </Grid.Background>
-        <Grid Height="50" VerticalAlignment="Top">
-            <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
-                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
-            </Button>
-            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">正在播放</TextBlock>
-            <Button Click="SearchBtn_Clicked" Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="Find"></SymbolIcon>
-            </Button>
-        </Grid>
-        <Grid Margin="0,50,0,250">
-            <FlipView x:Name="PlayerFlip" SelectionChanged="FlipView_SelectionChanged">
-                <FlipViewItem Visibility="Visible">
-                    <Image x:Name="Album_Img" Source="ms-appx:///Assets/image/albumimg2.png" Stretch="Fill"></Image>
-                </FlipViewItem>
-                <FlipViewItem>
-                    <ScrollViewer Background="{x:Null}" BorderBrush="{x:Null}">
-                        <usercon:LrcViewPanel x:Name="lrcpanel"></usercon:LrcViewPanel>
-                        <!--<StackPanel x:Name="LrcPanel"/>-->
-                    </ScrollViewer>
-                </FlipViewItem>
-            </FlipView>
-        </Grid>
-        <Grid VerticalAlignment="Bottom" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Rectangle x:Name="Page1_Icon" Margin="0,0,5,0" Width="8" Height="8" Fill="White"></Rectangle>
-                <Rectangle x:Name="Page2_Icon" Width="8" Height="8" Fill="#7FFFFFFF"></Rectangle>
-            </StackPanel>
-            <Slider x:Name="SongSlider" Grid.Row="1" Value="0" VerticalAlignment="Top" ValueChanged="SongSlider_ValueChanged" Style="{StaticResource SliderStyle1}"></Slider>
-            <Grid Grid.Row="2">
-                <TextBlock x:Name="ThisTime_Text" Foreground="White" HorizontalAlignment="Left">00:00</TextBlock>
-                <TextBlock x:Name="NowLrc_Text" Foreground="White" HorizontalAlignment="Center"></TextBlock>
-                <TextBlock x:Name="AllTime_Text" Foreground="White" HorizontalAlignment="Right">00:00</TextBlock>
+    <Grid x:Name="mainGrid" Background="{ThemeResource KuGou-Background}">
+        <Grid Background="#33ACACAC">
+            <Grid Height="50" VerticalAlignment="Top">
+                <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
+                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
+                </Button>
+                <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">正在播放</TextBlock>
+                <Button Click="SearchBtn_Clicked" Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
+                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Find"></SymbolIcon>
+                </Button>
             </Grid>
-            <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="SongName_Text" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">酷狗音乐</TextBlock>
-                <TextBlock x:Name="SingerName_Text" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Margin="0,50,0,250">
+                <FlipView x:Name="PlayerFlip" SelectionChanged="FlipView_SelectionChanged">
+                    <FlipViewItem Visibility="Visible">
+                        <Image x:Name="Album_Img" Source="ms-appx:///Assets/image/albumimg2.png" Stretch="Fill"></Image>
+                    </FlipViewItem>
+                    <FlipViewItem>
+                        <ScrollViewer Background="{x:Null}" BorderBrush="{x:Null}">
+                            <usercon:LrcViewPanel x:Name="lrcpanel"></usercon:LrcViewPanel>
+                            <!--<StackPanel x:Name="LrcPanel"/>-->
+                        </ScrollViewer>
+                    </FlipViewItem>
+                </FlipView>
+            </Grid>
+            <Grid VerticalAlignment="Bottom" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="15"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle x:Name="Page1_Icon" Margin="0,0,5,0" Width="8" Height="8" Fill="White"></Rectangle>
+                    <Rectangle x:Name="Page2_Icon" Width="8" Height="8" Fill="#7FFFFFFF"></Rectangle>
+                </StackPanel>
+                <Slider x:Name="SongSlider" Grid.Row="1" Value="0" VerticalAlignment="Top" ValueChanged="SongSlider_ValueChanged" Style="{StaticResource SliderStyle1}"></Slider>
+                <Grid Grid.Row="2">
+                    <TextBlock x:Name="ThisTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Left">00:00</TextBlock>
+                    <TextBlock x:Name="NowLrc_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="AllTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Right">00:00</TextBlock>
+                </Grid>
+                <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="SongName_Text" Foreground="{ThemeResource KuGou-Foreground}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">酷狗音乐</TextBlock>
+                    <TextBlock x:Name="SingerName_Text" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
                 	<Run Text="传播好音乐"/>
-                </TextBlock>
-            </StackPanel>
-            <Grid Grid.Row="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <AppBarButton Grid.Column="0" Icon="Add" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                <AppBarButton Grid.Column="1" Icon="Street" Click="ShareBtn_Clicked" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                <AppBarButton Grid.Column="2" Icon="Download" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                <AppBarButton Grid.Column="3" Icon="More" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-            </Grid>
-            <Grid Grid.Row="6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <AppBarButton Grid.Column="0" x:Name="Cyc_Btn" Click="Cyc_Btn_Click" Icon="RepeatAll" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                <AppBarButton Grid.Column="1" Icon="Previous" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PreviousBtn_Click"></AppBarButton>
-                <AppBarButton x:Name="PlayBtn" Grid.Column="2" Icon="Pause" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayBtn_Click"></AppBarButton>
-                <AppBarButton Grid.Column="3" Icon="Next" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="NextBtn_Click"></AppBarButton>
-                <AppBarButton Grid.Column="4" Icon="List" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <AppBarButton.Flyout>
-                        <Flyout>
-                            <usercon:PlayLIstView Margin="-12"></usercon:PlayLIstView>
-                        </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                    </TextBlock>
+                </StackPanel>
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <AppBarButton Grid.Column="0" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="1" Icon="Street" Click="ShareBtn_Clicked" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="2" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="3" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <AppBarButton Grid.Column="0" x:Name="Cyc_Btn" Click="Cyc_Btn_Click" Icon="RepeatAll" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="1" Icon="Previous" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PreviousBtn_Click"></AppBarButton>
+                    <AppBarButton x:Name="PlayBtn" Grid.Column="2" Icon="Pause" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayBtn_Click"></AppBarButton>
+                    <AppBarButton Grid.Column="3" Icon="Next" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="NextBtn_Click"></AppBarButton>
+                    <AppBarButton Grid.Column="4" Icon="List" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <usercon:PlayLIstView Margin="-12"></usercon:PlayLIstView>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -7,17 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="mainGrid">
-        <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
-        </Grid.Background>
+    <Grid x:Name="mainGrid" Background="{ThemeResource KuGou-Background}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button Width="50" Height="50" Background="{x:Null}">
-                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
             </Button>
-            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18" Text="{Binding title}">MV</TextBlock>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18" Text="{Binding title}">MV</TextBlock>
             <Button Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="Find"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Find"></SymbolIcon>
             </Button>
         </Grid>
         <Grid Margin="0,50,0,0">
@@ -42,11 +39,11 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="White" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="{ThemeResource KuGou-List-Background}" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
                                     <Image Width="120" Height="80" Stretch="UniformToFill" Source="{Binding pic}" HorizontalAlignment="Left"/>
                                     <StackPanel Margin="130,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <TextBlock Margin="5,0,0,0" FontSize="15" Text="{Binding name}"></TextBlock>
-                                        <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="#FFBBBBBB" Text="{Binding singer}"/>
+                                        <TextBlock Margin="5,0,0,0" Foreground="{ThemeResource KuGou-Front1}" FontSize="15" Text="{Binding name}"></TextBlock>
+                                        <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singer}"/>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>

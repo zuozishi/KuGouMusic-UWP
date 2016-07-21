@@ -42,7 +42,7 @@ namespace 酷狗音乐UWP.page
             switch (num)
             {
                 case 0:
-                    Frame.Navigate(typeof(page.Setting.OnlineQuSet));
+                    Frame.Navigate(typeof(page.Setting.WelcomeSet));
                     break;
                 case 4:
                     var userInfo = await JyUserInfo.JyUserInfoManager.QuickLogin("e4e6005e3145b90b4edd99c0d0d35af9");

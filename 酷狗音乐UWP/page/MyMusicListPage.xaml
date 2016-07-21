@@ -9,17 +9,14 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid>
-            <Grid.Background>
-                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
-            </Grid.Background>
+        <Grid Background="{ThemeResource KuGou-Background}">
             <Grid Height="50" VerticalAlignment="Top">
                 <Button Click="BackBtn_Clicked" Width="50" Height="50" Background="{x:Null}">
-                    <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
                 </Button>
-                <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">我的歌单</TextBlock>
+                <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">我的歌单</TextBlock>
                 <Button  Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                    <SymbolIcon Foreground="White" Symbol="More"></SymbolIcon>
+                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="More"></SymbolIcon>
                 </Button>
             </Grid>
             <Grid Margin="0,50,0,63">
@@ -31,7 +28,7 @@
                             <RowDefinition Height="25"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="10,0,10,0" Grid.Row="0">自建的歌单(<Run x:Name="MyListNum">0</Run>)</TextBlock>
+                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">自建的歌单(<Run x:Name="MyListNum">0</Run>)</TextBlock>
                         <ListView SelectionMode="Single" x:Name="MyMusicList" Grid.Row="1">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -42,7 +39,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0,2,0,2" Height="53" Background="White">
+                                    <Grid Margin="0,2,0,2" Height="53" Background="{ThemeResource KuGou-List-Background}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="53"/>
                                             <ColumnDefinition/>
@@ -54,15 +51,15 @@
                                                 <RowDefinition/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Text="{Binding title}"></TextBlock>
-                                            <TextBlock FontSize="13" Grid.Row="1" Foreground="#FF898989"><Run Text="{Binding moredata.listfilecount}"></Run>首</TextBlock>
+                                            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}" HorizontalAlignment="Left" Text="{Binding title}"></TextBlock>
+                                            <TextBlock FontSize="13" Grid.Row="1" Foreground="{ThemeResource KuGou-Front2}"><Run Text="{Binding moredata.listfilecount}"></Run>首</TextBlock>
                                         </Grid>
                                         <AppBarButton Width="53" Height="53" Grid.Column="2" Icon="More" Margin="0,4,0,-4"></AppBarButton>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <TextBlock Margin="10,0,10,0" Grid.Row="2">收藏的歌单(<Run x:Name="CloudListNum">0</Run>)</TextBlock>
+                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">收藏的歌单(<Run x:Name="CloudListNum">0</Run>)</TextBlock>
                         <ListView Grid.Row="3" SelectionMode="Single" x:Name="CloudMusicList">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -73,7 +70,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0,2,0,2" Height="53" Background="White">
+                                    <Grid Margin="0,2,0,2" Height="53" Background="{ThemeResource KuGou-List-Background}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="53"/>
                                             <ColumnDefinition/>
@@ -85,8 +82,8 @@
                                                 <RowDefinition/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Text="{Binding title}"></TextBlock>
-                                            <TextBlock FontSize="13" Grid.Row="1" Foreground="#FF898989"><Run Text="{Binding moredata.listfilecount}"></Run>首</TextBlock>
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Text="{Binding title}"></TextBlock>
+                                            <TextBlock FontSize="13" Grid.Row="1" Foreground="{ThemeResource KuGou-Front2}"><Run Text="{Binding moredata.listfilecount}"></Run>首</TextBlock>
                                         </Grid>
                                         <AppBarButton Width="53" Height="53" Grid.Column="2" Icon="More" Margin="0,4,0,-4"></AppBarButton>
                                     </Grid>

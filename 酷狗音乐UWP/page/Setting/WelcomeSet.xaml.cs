@@ -24,14 +24,14 @@ namespace 酷狗音乐UWP.page.Setting
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class OnlineQuSet : Page
+    public sealed partial class WelcomeSet : Page
     {
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         StorageFolder appFolder = ApplicationData.Current.LocalFolder;
         private ObservableCollection<VoiceData> voicedata;
         private AsyncHttpClient httpclient;
 
-        public OnlineQuSet()
+        public WelcomeSet()
         {
             this.InitializeComponent();
             init();

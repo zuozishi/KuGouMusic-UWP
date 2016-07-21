@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="63">
 
-    <Grid VerticalAlignment="Bottom" Background="#0088bd">
+    <Grid VerticalAlignment="Bottom" Background="{ThemeResource KuGou-BackgroundColor2}">
         <Grid.RowDefinitions>
             <RowDefinition Height="3"/>
             <RowDefinition Height="60"/>
@@ -20,19 +20,19 @@
             <Grid Margin="60,0,0,0">
                 <Grid Margin="5,0,180,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{x:Null}">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <TextBlock x:Name="SongName_Text" Margin="0,0,0,2" Foreground="White" FontSize="15">酷狗音乐</TextBlock>
-                        <TextBlock x:Name="SingerName_Text" Margin="0,2,0,0" Foreground="White">传播好音乐</TextBlock>
+                        <TextBlock x:Name="SongName_Text" Margin="0,0,0,2" Foreground="{ThemeResource KuGou-Foreground}" FontSize="15">酷狗音乐</TextBlock>
+                        <TextBlock x:Name="SingerName_Text" Margin="0,2,0,0" Foreground="{ThemeResource KuGou-Foreground}">传播好音乐</TextBlock>
                     </StackPanel>
                 </Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <Button x:Name="Play_Btn" Width="60" Height="60" Background="{x:Null}" Click="Play_Btn_Click" >
-                        <SymbolIcon Width="60" Height="60" x:Name="Play_Btn_Icon" Foreground="White" Symbol="Play" Margin="-10,-6"></SymbolIcon>
+                        <SymbolIcon Width="60" Height="60" x:Name="Play_Btn_Icon" Foreground="{ThemeResource KuGou-Foreground}" Symbol="Play" Margin="-10,-6"></SymbolIcon>
                     </Button>
                     <Button x:Name="Next_Btn" Width="60" Height="60" Background="{x:Null}" Click="Next_Btn_Click">
-                        <SymbolIcon Width="60" Height="60" Foreground="White" Symbol="Next" Margin="-10,-6"></SymbolIcon>
+                        <SymbolIcon Width="60" Height="60" Foreground="{ThemeResource KuGou-Foreground}" Symbol="Next" Margin="-10,-6"></SymbolIcon>
                     </Button>
                     <Button x:Name="List_Btn" Width="60" Height="60" Background="{x:Null}">
-                        <SymbolIcon Width="60" Height="60" Foreground="White" Symbol="List" Margin="-10,-6" />
+                        <SymbolIcon Width="60" Height="60" Foreground="{ThemeResource KuGou-Foreground}" Symbol="List" Margin="-10,-6" />
                         <Button.Flyout>
                             <Flyout>
                                 <usercont:PlayLIstView Margin="-12"></usercont:PlayLIstView>

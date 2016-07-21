@@ -104,11 +104,11 @@
         </Grid.Background>
         <Grid Height="50" VerticalAlignment="Top">
             <Button Click="BackBtn_Clicked" Width="50" Height="50" Background="{x:Null}">
-                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
             </Button>
-            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">下载管理</TextBlock>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">下载管理</TextBlock>
             <Button  Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="More"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="More"></SymbolIcon>
             </Button>
         </Grid>
         <Grid Margin="0,50,0,63">
@@ -122,9 +122,9 @@
                     <RowDefinition/>
                     <RowDefinition Height="3" />
                 </Grid.RowDefinitions>
-                <Button x:Name="SongList_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="单曲" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-                <Button x:Name="MVList_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="MV" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-                <Button x:Name="BanZouList_Btn" TabIndex="2" Grid.Column="2" Background="{x:Null}" Content="伴奏" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+                <Button x:Name="SongList_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="单曲" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+                <Button x:Name="MVList_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="MV" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+                <Button x:Name="BanZouList_Btn" TabIndex="2" Grid.Column="2" Background="{x:Null}" Content="伴奏" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
             </Grid>
             <FlipView Margin="0,50,0,0" Background="{x:Null}">
                 <FlipViewItem>
@@ -136,7 +136,7 @@
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="10,0,10,0" Grid.Row="0">正在下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">正在下载(<Run>0</Run>)</TextBlock>
                             <ListView x:Name="SongDowningList" Grid.Row="1">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -151,7 +151,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <TextBlock Margin="10,0,10,0" Grid.Row="2">已下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">已下载(<Run>0</Run>)</TextBlock>
                             <ListView Grid.Row="3" x:Name="LocalSongList">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">

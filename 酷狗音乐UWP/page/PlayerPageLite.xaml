@@ -9,9 +9,9 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="https://secure-img2.last.fm/i/u/300x300/bf7173b4f6bd4525995bbf718d9c578c.png"/>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
         </Grid.Background>
-        <Grid Background="#33575757">
+        <Grid>
             
         </Grid>
     </Grid>

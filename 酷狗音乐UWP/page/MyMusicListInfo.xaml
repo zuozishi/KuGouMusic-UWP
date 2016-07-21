@@ -8,22 +8,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/background.jpg"/>
-        </Grid.Background>
+    <Grid Background="{ThemeResource KuGou-Background}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button Click="BackBtn_Clicked" Width="50" Height="50" Background="{x:Null}">
-                <SymbolIcon Foreground="White" Symbol="Back"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
             </Button>
-            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18">我的歌单</TextBlock>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">我的歌单</TextBlock>
             <Button  Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
-                <SymbolIcon Foreground="White" Symbol="More"></SymbolIcon>
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="More"></SymbolIcon>
             </Button>
         </Grid>
         <StackPanel Margin="0,50,0,0" Orientation="Horizontal" x:Name="MoreSongsContorl" HorizontalAlignment="Right" VerticalAlignment="Top" Height="25">
-            <SymbolIcon x:Name="MoreSongsIcon" Width="20" Height="20" Symbol="Edit" Foreground="White"></SymbolIcon>
-            <TextBlock x:Name="MoreSongsText" Margin="5,0,15,0" HorizontalAlignment="Right" Foreground="#FFE7F4FB" VerticalAlignment="Center">
+            <SymbolIcon x:Name="MoreSongsIcon" Width="20" Height="20" Symbol="Edit" Foreground="{ThemeResource KuGou-Foreground}"></SymbolIcon>
+            <TextBlock x:Name="MoreSongsText" Margin="5,0,15,0" HorizontalAlignment="Right" Foreground="{ThemeResource KuGou-Foreground}" VerticalAlignment="Center">
                                 	<Run Text="对多首歌曲操作"/>
             </TextBlock>
         </StackPanel>
@@ -39,15 +36,15 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="0,2,0,2" Height="45" Background="White">
+                            <Grid Margin="0,2,0,2" Height="45" Background="{ThemeResource KuGou-List-Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
-                                <AppBarButton Grid.Column="0" Width="45" Height="45" Icon="Add"/>
-                                <TextBlock FontSize="16" Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding moredata.filename}"></TextBlock>
-                                <AppBarButton Grid.Column="2" Width="45" Height="45" Icon="More"/>
+                                <AppBarButton Foreground="{ThemeResource KuGou-Front1}" Grid.Column="0" Width="45" Height="45" Icon="Add"/>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}" FontSize="16" Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding moredata.filename}"></TextBlock>
+                                <AppBarButton Foreground="{ThemeResource KuGou-Front1}" Grid.Column="2" Width="45" Height="45" Icon="More"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

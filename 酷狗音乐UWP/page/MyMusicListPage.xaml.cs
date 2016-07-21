@@ -31,10 +31,9 @@ namespace 酷狗音乐UWP.page
         public MyMusicListPage()
         {
             this.InitializeComponent();
-            init();
         }
 
-        private async void init()
+        private void init()
         {
             var localSettings = ApplicationData.Current.LocalSettings;
             if (localSettings.Values.ContainsKey("uid"))
@@ -43,10 +42,14 @@ namespace 酷狗音乐UWP.page
             }
             else
             {
-                await Task.Delay(2000);
                 Frame.Navigate(typeof(page.LoginPage));
             }
             GetCloudList();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            init();
         }
 
         private async void GetCloudList()

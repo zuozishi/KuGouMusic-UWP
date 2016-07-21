@@ -89,17 +89,18 @@ namespace 酷狗音乐UWP
                 localSettings.Values["isfirst"] = true;
             }
             //await Class.Model.PlayList.Clear();
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 statusBar.ForegroundColor = Colors.White;
-                statusBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
+                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
                 statusBar.BackgroundOpacity = 100;
             }
             //电脑标题栏颜色
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
-            titleBar.ButtonBackgroundColor = Color.FromArgb(1, 68, 190, 239);
+            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
             titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
             KanPagePanel.LoadData();
             await init_local_list();
@@ -144,22 +145,24 @@ namespace 酷狗音乐UWP
         private void flipview1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = sender as FlipView;
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
             switch (flipview.SelectedIndex)
             {
                 case 0:
-                    Ting_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                    
+                    Ting_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                     Kan_Btn.BorderBrush = null;
                     Chang_Btn.BorderBrush = null;
                     break;
                 case 1:
                     Ting_Btn.BorderBrush = null;
-                    Kan_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                    Kan_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                     Chang_Btn.BorderBrush = null;
                     break;
                 case 2:
                     Ting_Btn.BorderBrush = null;
                     Kan_Btn.BorderBrush = null;
-                    Chang_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                    Chang_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                     break;
                 default:
                     break;

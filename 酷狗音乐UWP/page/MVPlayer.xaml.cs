@@ -174,14 +174,15 @@ namespace 酷狗音乐UWP.page
         private void flipview_Changed(object sender, SelectionChangedEventArgs e)
         {
             var view = sender as FlipView;
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
             switch (view.SelectedIndex)
             {
                 case 0:
-                    AboutMV_Btn.BorderBrush= new SolidColorBrush(Colors.White);
+                    AboutMV_Btn.BorderBrush= (SolidColorBrush)Theme["KuGou-Foreground"];
                     fxMVList_Btn.BorderBrush = new SolidColorBrush(Colors.Transparent);
                     break;
                 case 1:
-                    AboutMV_Btn.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                    AboutMV_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                     fxMVList_Btn.BorderBrush = new SolidColorBrush(Colors.White);
                     break;
                 default:
