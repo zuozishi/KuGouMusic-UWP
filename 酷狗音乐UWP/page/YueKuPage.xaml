@@ -96,7 +96,7 @@
                                             </Style>
                                         </ListView.ItemContainerStyle>
                                         <ListViewItem>
-                                            <Grid Margin="-13,0,-13,0" Height="120" Background="White">
+                                            <Grid Margin="-13,0,-13,0" Height="120" Background="{ThemeResource KuGou-List-Background}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="25"/>
                                                     <RowDefinition/>
@@ -108,20 +108,20 @@
                                                 <TextBlock Margin="10,0,0,0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Center">新歌首发</TextBlock>
                                                 <Image x:Name="NewSong1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://singerimg.kugou.com/uploadpic/pass/softhead/150/20150518/20150518111246757565.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
-                                                    <TextBlock x:Name="NewSong1_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewSong1_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="正月十五 - 中国月亮"/>
                                                     </TextBlock>
-                                                    <TextBlock x:Name="NewSong2_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewSong2_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="朱元冰 - 回忆漩涡"/>
                                                     </TextBlock>
-                                                    <TextBlock x:Name="NewSong3_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewSong3_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="G.E.M.邓紫棋 - 红蔷薇白玫瑰"/>
                                                     </TextBlock>
                                                 </StackPanel>
                                             </Grid>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid Margin="-13,0,-13,0" Height="120" Background="White">
+                                            <Grid Margin="-13,0,-13,0" Height="120" Background="{ThemeResource KuGou-List-Background}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="25"/>
                                                     <RowDefinition/>
@@ -133,13 +133,13 @@
                                                 <TextBlock Margin="10,0,0,0" Foreground="{ThemeResource KuGou-BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Center">新碟上架</TextBlock>
                                                 <Image x:Name="NewAlbum1_Img" Grid.Row="1" Width="80" Height="80" Stretch="Fill" Source="http://imge.kugou.com/stdmusic/150/20160713/20160713152144152151.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Top">
-                                                    <TextBlock x:Name="NewAlbum1_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewAlbum1_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="徐佳莹 - 《湫兮如风》"/>
                                                     </TextBlock>
-                                                    <TextBlock x:Name="NewAlbum2_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewAlbum2_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="陈奕迅 - 《在这个世界相遇》"/>
                                                     </TextBlock>
-                                                    <TextBlock x:Name="NewAlbum3_Text" Margin="3" Foreground="Black">
+                                                    <TextBlock x:Name="NewAlbum3_Text" Margin="3" Foreground="{ThemeResource KuGou-Front1}">
                 							<Run Text="赖伟锋 - 《最差不过是孤独》"/>
                                                     </TextBlock>
                                                 </StackPanel>
@@ -147,7 +147,7 @@
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
-                                <Grid Background="White" Visibility="Visible" Grid.Row="3">
+                                <Grid Background="{ThemeResource KuGou-List-Background}" Visibility="Visible" Grid.Row="3">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
@@ -266,7 +266,7 @@
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid Margin="0,0,0,5" Visibility="Visible" Grid.Row="4" Background="White">
+                                <Grid Margin="0,5,0,5" Visibility="Visible" Grid.Row="4" Background="{ThemeResource KuGou-List-Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
@@ -330,7 +330,7 @@
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid Visibility="Visible" Margin="0,0,0,5" Grid.Row="5" Background="White">
+                                <Grid Visibility="Visible" Margin="0,0,0,5" Grid.Row="5" Background="{ThemeResource KuGou-List-Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
@@ -361,7 +361,7 @@
                                             <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -376,7 +376,7 @@
                                             <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -391,7 +391,7 @@
                                             <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -406,13 +406,13 @@
                                             <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid Visibility="Visible" Background="White" Grid.Row="6">
+                                <Grid Visibility="Visible" Background="{ThemeResource KuGou-List-Background}" Grid.Row="6">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="auto"/>
@@ -433,17 +433,17 @@
                                         </ListView.ItemContainerStyle>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Margin="-10,0,-10,0" Height="65">
+                                                <Grid Background="{ThemeResource KuGou-List-Background}" Margin="-10,0,-10,0" Height="65">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="60"/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
                                                     <Image Width="60" Height="60" Stretch="Fill" Source="{Binding picurl}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                     <StackPanel Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                                        <TextBlock Foreground="Black" FontSize="12">
+                                                        <TextBlock Foreground="{ThemeResource KuGou-Front1}" FontSize="12">
                 							<Run Text="{Binding title}"/>
                                                         </TextBlock>
-                                                        <TextBlock Margin="3" FontSize="12" Foreground="#FF5D5D5D">
+                                                        <TextBlock Margin="3" FontSize="12" Foreground="{ThemeResource KuGou-Front2}">
                 							<Run Text="{Binding publishtime}"/>
                                                         </TextBlock>
                                                     </StackPanel>
@@ -457,18 +457,15 @@
                         </Grid>
                     </ScrollViewer>
                 </FlipViewItem>
-                <FlipViewItem Visibility="Visible" Background="White">
+                <FlipViewItem Visibility="Visible">
                     <ScrollViewer>
                         <Grid>
-                            <Grid.Background>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/background.jpg"/>
-                            </Grid.Background>
                             <ListView Margin="10,3,10,0" x:Name="PaiHangList">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                         <Setter Property="BorderBrush" Value="#7F808080"/>
-                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Background" Value="{ThemeResource KuGou-List-Background}"/>
                                         <Setter Property="Margin" Value="0,0,0,5"/>
                                     </Style>
                                 </ListView.ItemContainerStyle>
@@ -485,11 +482,11 @@
                                                     <RowDefinition Height="18"/>
                                                     <RowDefinition/>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Row="0" FontSize="14" Text="{Binding rankname}"></TextBlock>
+                                                <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="0" FontSize="14" Text="{Binding rankname}"></TextBlock>
                                                 <StackPanel Grid.Row="1">
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song1}"></TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song2}"></TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C" Text="{Binding song3}"></TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding song1}"></TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding song2}"></TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding song3}"></TextBlock>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
@@ -507,21 +504,21 @@
                                                 <RowDefinition Height="18"/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" FontSize="14">酷音乐流行榜</TextBlock>
+                                            <TextBlock Grid.Row="0" Foreground="{ThemeResource KuGou-Front1}" FontSize="14">酷音乐流行榜</TextBlock>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel Grid.Column="0">
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">流行风向标</TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">华语榜</TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">粤语榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">流行风向标</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">华语榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">粤语榜</TextBlock>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1">
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">韩国榜</TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">日本榜</TextBlock>
-                                                    <TextBlock FontSize="12" Foreground="#FF6C6C6C">欧美榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">韩国榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">日本榜</TextBlock>
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource KuGou-Front2}">欧美榜</TextBlock>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
@@ -539,54 +536,54 @@
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                     <Setter Property="BorderBrush" Value="#7F808080"/>
-                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Background" Value="{ThemeResource KuGou-List-Background}"/>
                                     <Setter Property="Margin" Value="0,0,0,5"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListViewItem>
-                                <TextBlock>我关注的歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">我关注的歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,5,0,0">
-                                <TextBlock>华语男歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">华语男歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>华语女歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">华语女歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>华语组合</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">华语组合</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,8,0,0">
-                                <TextBlock>韩国男歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">韩国男歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>韩国女歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">韩国女歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>韩国组合</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">韩国组合</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,8,0,0">
-                                <TextBlock>日本男歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">日本男歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>日本女歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">日本女歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>日本组合</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">日本组合</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,8,0,0">
-                                <TextBlock>欧美男歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">欧美男歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>欧美女歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">欧美女歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,3,0,0">
-                                <TextBlock>欧美组合</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">欧美组合</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,8,0,0">
-                                <TextBlock>其他歌手</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">其他歌手</TextBlock>
                             </ListViewItem>
                             <ListViewItem Margin="0,8,0,0">
-                                <TextBlock>酷狗音乐人</TextBlock>
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}">酷狗音乐人</TextBlock>
                             </ListViewItem>
                         </ListView>
                     </ScrollViewer>
@@ -597,9 +594,9 @@
                             <Grid Margin="10,5,10,0" Height="30" VerticalAlignment="Top">
                                 <Button Width="80" Height="30" Content="全部分类" Foreground="White" Background="{x:Null}"></Button>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Background="White" Width="50" Height="30" Content="推荐" Foreground="#FF3FB8E7"></Button>
-                                    <TextBlock Margin="3,0,3,0" Foreground="White">|</TextBlock>
-                                    <Button Width="50" Height="30" Content="最新" Foreground="White" Background="{x:Null}"></Button>
+                                    <Button Background="{ThemeResource KuGou-Foreground}" Width="50" Height="30" Content="推荐" Foreground="{ThemeResource KuGou-BackgroundColor}"></Button>
+                                    <TextBlock Margin="3,0,3,0" Foreground="{ThemeResource KuGou-Foreground}">|</TextBlock>
+                                    <Button Width="50" Height="30" Content="最新" Foreground="{ThemeResource KuGou-Foreground}" Background="{x:Null}"></Button>
                                 </StackPanel>
                             </Grid>
                             <ListView x:Name="GeDanListView" Margin="10,38,10,0">
@@ -613,11 +610,11 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="White" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                        <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="{ThemeResource KuGou-List-Background}" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
                                             <Image Width="80" Height="80" Stretch="UniformToFill" Source="{Binding imgurl}" HorizontalAlignment="Left"/>
                                             <StackPanel Margin="90,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock Margin="5,0,0,0" FontSize="15" Text="{Binding specialname}"></TextBlock>
-                                                <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="#FFBBBBBB" Text="{Binding playcount}"/>
+                                                <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding specialname}"></TextBlock>
+                                                <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding playcount}"/>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>

@@ -66,8 +66,8 @@ namespace 酷狗音乐UWP.page
             {
                 media.Source = new Uri(data.sq.downurl);
             }
-            LoadAboutData(hash);
-            LoadfxData(data.songname);
+            //LoadAboutData(hash);
+            //LoadfxData(data.songname);
         }
 
         private void LoadfxData(string title)

@@ -248,6 +248,7 @@ namespace 酷狗音乐UWP.page
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = sender as FlipView;
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
             try
             {
                 switch (flipview.SelectedIndex)
@@ -255,7 +256,7 @@ namespace 酷狗音乐UWP.page
                     case 0:
                         Page1_Icon.Fill = new SolidColorBrush(Colors.White);
                         Page2_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));
-                        mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri("ms-appx:///Assets/background.jpg") }, Stretch = Stretch.Fill };
+                        mainGrid.Background = (ImageBrush)Theme["KuGou-Background"];
                         break;
                     case 1:
                         Page1_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));

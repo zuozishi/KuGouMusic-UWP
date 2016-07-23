@@ -133,7 +133,20 @@ namespace 酷狗音乐UWP.page
             {
                 PaiHangList.Items.Add(item);
             }
+            PaiHangList.SelectionMode = ListViewSelectionMode.Single;
+            PaiHangList.SelectionChanged += PaiHangList_SelectionChanged;
             PaiHangLoadProgress.IsActive = false;
+        }
+
+        private void PaiHangList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            if(list.SelectedIndex!=-1)
+            {
+                var data = list.SelectedItem as ViewMode.PaiHang;
+                Frame.Navigate(typeof(page.YueKu.SongBanner), Class.data.ToJsonData(data));
+                list.SelectedIndex = -1;
+            }
         }
 
         public async void LoadGeDan(string categoryid = "")

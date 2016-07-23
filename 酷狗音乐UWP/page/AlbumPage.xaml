@@ -76,6 +76,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
+        <ProgressRing x:Name="LoadProcess" Width="100" Height="100"></ProgressRing>
         <usercon:PlayerSmall VerticalAlignment="Bottom"></usercon:PlayerSmall>
     </Grid>
 </Page>

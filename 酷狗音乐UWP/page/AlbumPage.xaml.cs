@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using 酷狗音乐UWP.Class;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -34,6 +35,7 @@ namespace 酷狗音乐UWP.page
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            LoadProcess.IsActive = true;
             var albumid = e.Parameter.ToString();
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -46,6 +48,22 @@ namespace 酷狗音乐UWP.page
             }
             albuminfo_Grid.DataContext = await GetAlbumInfo(albumid);
             SongList.ItemsSource = await GetSongList(albumid);
+            SongList.SelectionMode = ListViewSelectionMode.Single;
+            SongList.SelectionChanged += SongList_SelectionChanged;
+            LoadProcess.IsActive = false;
+        }
+
+        private async void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadProcess.IsActive = true;
+            var list = sender as ListView;
+            if(list.SelectedItem!=null)
+            {
+                var song = list.SelectedItem as SongData;
+                await song.AddToPlayList(true);
+                list.SelectedIndex = -1;
+            }
+            LoadProcess.IsActive = false;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -120,7 +138,7 @@ namespace 酷狗音乐UWP.page
             public string publishtime { get; set; }
         }
 
-        public class SongData
+        public class SongData:Class.Model.ISong
         {
             public string filename { get; set; }
             public string title { get; set; }
@@ -130,6 +148,86 @@ namespace 酷狗音乐UWP.page
             public string hasmv { get; set; }
             public string sqhash { get; set; }
             public string hash320 { get; set; }
+            public async Task<string> GetUrl()
+            {
+                if (hash != "")
+                {
+                    switch (Class.Setting.Qu.GetType())
+                    {
+                        case Class.Setting.Qu.Type.low:
+                            return await Class.kugou.get_musicurl_by_hash(hash);
+                        case Class.Setting.Qu.Type.mid:
+                            if (hash320 != "")
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash320);
+                            }
+                            else
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            }
+                        case Class.Setting.Qu.Type.high:
+                            if (sqhash != null)
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(sqhash);
+                            }
+                            else
+                            {
+                                if (hash320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            }
+                        default:
+                            return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            public async Task<Class.Model.Player.NowPlay> GetNowPlay()
+            {
+                var music = new Class.Model.Player.NowPlay();
+                music.title = filename;
+                music.url = await GetUrl();
+                music.albumid = "";
+                if (singername.Length > 0)
+                {
+                    music.singername = singername;
+                    var singer = await Class.Model.SearchResultModel.GetSingerResult(singername);
+                    if (singer == null)
+                    {
+                        music.imgurl = "ms-appx:///Assets/image/songimg.png";
+                    }
+                    else
+                    {
+                        music.imgurl = singer.imgurl;
+                    }
+                }
+                else
+                {
+                    music.singername = "未知歌手";
+                    music.imgurl = "ms-appx:///Assets/image/songimg.png";
+                }
+                return music;
+            }
+            public async Task AddToPlayList(bool isplay)
+            {
+                var nowplay = await this.GetNowPlay();
+                if (nowplay.url == null || nowplay.url == "")
+                {
+                    await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                }
+                else
+                {
+                    await Class.Model.PlayList.Add(nowplay, isplay);
+                }
+            }
         }
 
         private void BackBtn_Clicked(object sender, RoutedEventArgs e)

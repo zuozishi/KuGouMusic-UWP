@@ -24,6 +24,8 @@ namespace 酷狗音乐UWP.page
     public sealed partial class SettingPage : Page
     {
         private JyUserFeedbackSDKManager feedback;
+        public delegate void GoBackHandler();
+        public event GoBackHandler ChangeTheme;
 
         public SettingPage()
         {
@@ -44,6 +46,11 @@ namespace 酷狗音乐UWP.page
                 case 0:
                     Frame.Navigate(typeof(page.Setting.WelcomeSet));
                     break;
+                case 1:
+                    break;
+                case 2:
+                    Frame.Navigate(typeof(page.Setting.ListenQuSet));
+                    break;
                 case 4:
                     var userInfo = await JyUserInfo.JyUserInfoManager.QuickLogin("e4e6005e3145b90b4edd99c0d0d35af9");
                     if (userInfo.isLoginSuccess)
@@ -60,6 +67,7 @@ namespace 酷狗音乐UWP.page
                 default:
                     break;
             }
+            list.SelectedIndex = -1;
         }
 
         private async void JyFeedbackControl_FeedbackImageRequested()

@@ -82,12 +82,12 @@ namespace 酷狗音乐UWP.UserControlClass
                 SingerInfo_Text.Text = String.Format("歌曲 {0}/ 专辑 {1}/MV {2}",singerdata.songcount,singerdata.albumcount,singerdata.mvcount);
                 SingerGrid.Visibility = Visibility.Visible;
                 SongScrollViewer.Margin = new Thickness() { Top=100};
-                MoreSongsContorl.Margin = new Thickness() { Top = 72 };
+                MoreSongsContorl.Margin = new Thickness() { Top = 70 };
             }
             else
             {
                 SingerGrid.Visibility = Visibility.Collapsed;
-                SongScrollViewer.Margin = new Thickness() { Top = 25 };
+                SongScrollViewer.Margin = new Thickness() { Top = 30 };
                 MoreSongsContorl.Margin = new Thickness();
             }
         }
@@ -184,10 +184,11 @@ namespace 酷狗音乐UWP.UserControlClass
                     isfirst = false;
                     return;
                 }
+                var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
                 switch (ResultView.SelectedIndex)
                 {
                     case 0:
-                        Song_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        Song_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         MV_Btn.BorderBrush = null;
                         Album_Btn.BorderBrush = null;
                         SongList_Btn.BorderBrush = null;
@@ -195,7 +196,7 @@ namespace 酷狗音乐UWP.UserControlClass
                         break;
                     case 1:
                         Song_Btn.BorderBrush = null;
-                        MV_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        MV_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         Album_Btn.BorderBrush = null;
                         SongList_Btn.BorderBrush = null;
                         Lrc_Btn.BorderBrush = null;
@@ -203,7 +204,7 @@ namespace 酷狗音乐UWP.UserControlClass
                     case 2:
                         Song_Btn.BorderBrush = null; ;
                         MV_Btn.BorderBrush = null;
-                        Album_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        Album_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         SongList_Btn.BorderBrush = null;
                         Lrc_Btn.BorderBrush = null;
                         break;
@@ -211,7 +212,7 @@ namespace 酷狗音乐UWP.UserControlClass
                         Song_Btn.BorderBrush = null;
                         MV_Btn.BorderBrush = null;
                         Album_Btn.BorderBrush = null;
-                        SongList_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        SongList_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         Lrc_Btn.BorderBrush = null;
                         break;
                     case 4:
@@ -219,7 +220,7 @@ namespace 酷狗音乐UWP.UserControlClass
                         MV_Btn.BorderBrush = null;
                         Album_Btn.BorderBrush = null;
                         SongList_Btn.BorderBrush = null;
-                        Lrc_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        Lrc_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         break;
                     default:
                         break;
@@ -560,57 +561,9 @@ namespace 酷狗音乐UWP.UserControlClass
                         if (obj.SelectedItem != null)
                         {
                             var song = obj.SelectedItem as Model.SearchResultModel.Song;
-                            string url = "";
-                            if (song.sqhash != "")
-                            {
-                                url = await kugou.get_song_url(song.sqhash);
-                            }
-                            else
-                            {
-                                if (song.hash320 != "")
-                                {
-                                    url = await kugou.get_song_url(song.hash320);
-                                }
-                                else
-                                {
-                                    if (song.hash != "")
-                                    {
-                                        url = await kugou.get_song_url(song.hash);
-                                    }
-                                }
-                            }
-                            if (url!=null&&url != "")
-                            {
-                                var music = new Class.Model.Player.NowPlay();
-                                music.title = song.filename;
-                                music.url = url;
-                                music.albumid = song.album_id;
-                                if (song.singername.Length > 0)
-                                {
-                                    music.singername = song.singername;
-                                    var singer = await GetSingerResult(song.singername);
-                                    if (singer == null)
-                                    {
-                                        music.imgurl = "ms-appx:///Assets/image/songimg.png";
-                                    }
-                                    else
-                                    {
-                                        music.imgurl = singer.imgurl;
-                                    }
-                                }
-                                else
-                                {
-                                    music.singername = "未知歌手";
-                                    music.imgurl = "ms-appx:///Assets/image/songimg.png";
-                                }
-                                await Class.Model.Player.SetNowPlay(music);
-                                Class.Model.PlayList.Add(music, true);
-                            }
-                            else
-                            {
-                                await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
-                            }
+                            await song.AddToPlayList(true);
                         }
+                        obj.SelectedIndex = -1;
                         SongLoadProgress.IsActive = false;
                     }
                     break;
@@ -621,6 +574,7 @@ namespace 酷狗音乐UWP.UserControlClass
                         var mv = (Model.SearchResultModel.MV)obj1.SelectedItem;
                         mainframe.Navigate(typeof(page.MVPlayer), mv.hash);
                     }
+                    obj1.SelectedIndex = -1;
                     break;
                 case 2:
                     var obj2 = sender as GridView;
@@ -629,6 +583,7 @@ namespace 酷狗音乐UWP.UserControlClass
                         var album = (Model.SearchResultModel.Album)obj2.SelectedItem;
                         mainframe.Navigate(typeof(page.AlbumPage), album.albumid);
                     }
+                    obj2.SelectedIndex = -1;
                     break;
                 default:
                     break;
@@ -663,25 +618,6 @@ namespace 酷狗音乐UWP.UserControlClass
             var data = Convert.FromBase64String(content);
             json = System.Text.ASCIIEncoding.UTF8.GetString(data);
             return json;
-        }
-
-        private void MoreSongsContorl_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            var grid = sender as StackPanel;
-            grid.Background = new SolidColorBrush(Color.FromArgb(50, 255, 255, 255));
-            SongResultList.IsMultiSelectCheckBoxEnabled = true;
-            if(SongResultList.SelectionMode == ListViewSelectionMode.Single)
-            {
-                SongResultList.SelectionMode = ListViewSelectionMode.Multiple;
-                MoreSongsIcon.Symbol = Symbol.Accept;
-                MoreSongsText.Text = "完成";
-            }
-            else
-            {
-                SongResultList.SelectionMode = ListViewSelectionMode.Single;
-                MoreSongsIcon.Symbol = Symbol.Edit;
-                MoreSongsText.Text = "对多首歌曲操作";
-            }
         }
 
         private void MoreSongsContorl_PointerExited(object sender, PointerRoutedEventArgs e)

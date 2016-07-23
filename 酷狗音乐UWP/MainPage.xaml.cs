@@ -46,6 +46,55 @@ namespace 酷狗音乐UWP
             注册后台服务();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ChangeTheme();
+        }
+
+        private void ChangeTheme()
+        {
+            Class.Setting.Theme.NowTheme = Class.Setting.Theme.Type.Default;
+            ResourceDictionary newDictionary = new ResourceDictionary();
+            switch (Class.Setting.Theme.NowTheme)
+            {
+                case Class.Setting.Theme.Type.Default:
+                    newDictionary.Source = new Uri("ms-appx:///Theme/DefaultTheme.xaml", UriKind.RelativeOrAbsolute);
+                    Application.Current.Resources.MergedDictionaries.Clear();
+                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                    break;
+                case Class.Setting.Theme.Type.BiShuiLan:
+                    newDictionary.Source = new Uri("ms-appx:///Theme/BiShuiLanTheme.xaml", UriKind.RelativeOrAbsolute);
+                    Application.Current.Resources.MergedDictionaries.Clear();
+                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                    break;
+                case Class.Setting.Theme.Type.StarNight:
+                    newDictionary.Source = new Uri("ms-appx:///Theme/StarNightTheme.xaml", UriKind.RelativeOrAbsolute);
+                    Application.Current.Resources.MergedDictionaries.Clear();
+                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                    break;
+                case Class.Setting.Theme.Type.Rabbit:
+                    newDictionary.Source = new Uri("ms-appx:///Theme/RabbitTheme.xaml", UriKind.RelativeOrAbsolute);
+                    Application.Current.Resources.MergedDictionaries.Clear();
+                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                    break;
+                default:
+                    break;
+            }
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+                statusBar.BackgroundOpacity = 100;
+            }
+            //电脑标题栏颜色
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
+        }
+
         private void 注册后台服务()
         {
             try
@@ -79,29 +128,16 @@ namespace 酷狗音乐UWP
             {
                 localSettings.Values["StartVoice"] = false;
                 localSettings.Values["StartVoiceId"] = 0;
-                var datafolder=await appfolder.CreateFolderAsync("Data");
-                await appfolder.CreateFolderAsync("Temp");
-                await datafolder.CreateFileAsync("localfolders.json");
-                await datafolder.CreateFileAsync("locallist.json");
-                await datafolder.CreateFileAsync("nowplay.json");
-                await datafolder.CreateFileAsync("nowplay.lrc");
-                await datafolder.CreateFileAsync("playlist.json");
+                var datafolder=await appfolder.CreateFolderAsync("Data",CreationCollisionOption.ReplaceExisting);
+                await appfolder.CreateFolderAsync("Temp", CreationCollisionOption.ReplaceExisting);
+                await datafolder.CreateFileAsync("localfolders.json", CreationCollisionOption.ReplaceExisting);
+                await datafolder.CreateFileAsync("locallist.json", CreationCollisionOption.ReplaceExisting);
+                await datafolder.CreateFileAsync("nowplay.json", CreationCollisionOption.ReplaceExisting);
+                await datafolder.CreateFileAsync("nowplay.lrc", CreationCollisionOption.ReplaceExisting);
+                await datafolder.CreateFileAsync("playlist.json", CreationCollisionOption.ReplaceExisting);
                 localSettings.Values["isfirst"] = true;
             }
             //await Class.Model.PlayList.Clear();
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.White;
-                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-                statusBar.BackgroundOpacity = 100;
-            }
-            //电脑标题栏颜色
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = Color.FromArgb(1, 68, 190, 239);
-            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
             KanPagePanel.LoadData();
             await init_local_list();
             CheckFeedBack();
@@ -240,21 +276,25 @@ namespace 酷狗音乐UWP
             {
                 LoadProgress.IsActive = true;
                 var list = sender as ListView;
-                if (list.SelectedItem != null)
+                if(list.SelectedIndex!=-1)
                 {
-                    var data = list.SelectedItem as Music;
-                    var nowplay = new Class.Model.Player.NowPlay();
-                    if(data.path==null&&data.path=="")
+                    if (list.SelectedItem != null)
                     {
-                        LoadProgress.IsActive = false;
-                        return;
+                        var data = list.SelectedItem as Music;
+                        var nowplay = new Class.Model.Player.NowPlay();
+                        if (data.path == null && data.path == "")
+                        {
+                            LoadProgress.IsActive = false;
+                            return;
+                        }
+                        nowplay.url = data.path;
+                        nowplay.title = data.Title;
+                        nowplay.singername = data.songer;
+                        nowplay.albumid = "";
+                        nowplay.imgurl = "ms-appx:///Assets/image/songimg.png";
+                        await Class.Model.PlayList.Add(nowplay, true);
                     }
-                    nowplay.url = data.path;
-                    nowplay.title = data.Title;
-                    nowplay.singername = data.songer;
-                    nowplay.albumid = "";
-                    nowplay.imgurl = "ms-appx:///Assets/image/songimg.png";
-                    await Class.Model.PlayList.Add(nowplay, true);
+                    list.SelectedIndex = -1;
                 }
                 LoadProgress.IsActive = false;
             }

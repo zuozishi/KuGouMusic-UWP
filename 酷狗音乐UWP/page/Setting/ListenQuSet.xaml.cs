@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,25 @@ namespace 酷狗音乐UWP.page.Setting
         public ListenQuSet()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SIMQuList.SelectedIndex = (int)Class.Setting.Qu.SIM;
+            WiFiQuList.SelectedIndex=(int)Class.Setting.Qu.WLAN;
+        }
+
+        private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listview = sender as ListView;
+            if(listview.Name== "SIMQuList")
+            {
+                Class.Setting.Qu.SIM = (Class.Setting.Qu.Type)listview.SelectedIndex;
+            }
+            else
+            {
+                Class.Setting.Qu.WLAN = (Class.Setting.Qu.Type)listview.SelectedIndex;
+            }
         }
 
         private void BackBtn_Clicked(object sender, RoutedEventArgs e)

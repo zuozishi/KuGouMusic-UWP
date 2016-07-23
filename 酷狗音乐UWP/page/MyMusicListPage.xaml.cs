@@ -43,6 +43,7 @@ namespace 酷狗音乐UWP.page
             else
             {
                 Frame.Navigate(typeof(page.LoginPage));
+                return;
             }
             GetCloudList();
         }

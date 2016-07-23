@@ -68,64 +68,11 @@ namespace 酷狗音乐UWP.page
         {
             LoadProess.IsActive = false;
             var list = sender as ListView;
-            var song = list.SelectedItem as MusicData;
-            string url = "";
-            string hash = "";
-            if (song.hash_sq != "")
+            if(list.SelectedItem!=null)
             {
-                url = await kugou.get_song_url(song.hash_sq);
-                hash = song.hash_sq;
-            }
-            else
-            {
-                if (song.hash_320 != "")
-                {
-                    url = await kugou.get_song_url(song.hash_320);
-                    hash = song.hash_320;
-                }
-                else
-                {
-                    if (song.hash != "")
-                    {
-                        url = await kugou.get_song_url(song.hash);
-                        hash = song.hash;
-                    }
-                }
-            }
-            if (url!=null&&url != "")
-            {
-                var music = new Class.Model.Player.NowPlay();
-                var filename = song.moredata.filename;
-                if (filename.Contains("-"))
-                {
-                    var spits = filename.Split('-');
-                    music.title = spits[1].Replace(" ", "");
-                    music.singername = spits[0].Replace(" ", "");
-                    var singer = await GetSingerResult(music.singername);
-                    if (singer == null)
-                    {
-                        music.imgurl = "ms-appx:///Assets/image/songimg.png";
-                    }
-                    else
-                    {
-                        music.imgurl = singer.imgurl;
-                    }
-                }
-                else
-                {
-                    music.title = song.moredata.filename;
-                    music.singername = "未知歌手";
-                    music.imgurl = "ms-appx:///Assets/image/songimg.png";
-                }
-                music.url = url;
-                music.hash = hash;
-                music.albumid = "";
-                await Class.Model.Player.SetNowPlay(music);
-                Class.Model.PlayList.Add(music, true);
-            }
-            else
-            {
-                await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                var song = list.SelectedItem as MusicData;
+                await song.AddToPlayList(true);
+                list.SelectedIndex = -1;
             }
             LoadProess.IsActive = false;
         }
@@ -184,13 +131,102 @@ namespace 酷狗音乐UWP.page
             public string filename { get; set; }
             public string hash { get; set; }
         }
-        public class MusicData
+        public class MusicData:Class.Model.ISong
         {
             public HashData moredata { get; set; }
             public string hash { get; set; }
             public string hash_sq { get; set; }
             public string mvhash { get; set; }
             public string hash_320 { get; set; }
+            public async Task<string> GetUrl()
+            {
+                try
+                {
+                    if (hash != "")
+                    {
+                        switch (Class.Setting.Qu.GetType())
+                        {
+                            case Class.Setting.Qu.Type.low:
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            case Class.Setting.Qu.Type.mid:
+                                if (hash_320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash_320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            case Class.Setting.Qu.Type.high:
+                                if (hash_sq != null)
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash_sq);
+                                }
+                                else
+                                {
+                                    if (hash_320 != "")
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash_320);
+                                    }
+                                    else
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash);
+                                    }
+                                }
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            public async Task<Model.Player.NowPlay> GetNowPlay()
+            {
+                var music = new Class.Model.Player.NowPlay();
+                if (moredata.filename.Contains("-"))
+                {
+                    var spits = moredata.filename.Split('-');
+                    music.title = spits[1].Replace(" ", "");
+                    music.singername = spits[0].Replace(" ", "");
+                    var singer = await GetSingerResult(music.singername);
+                    if (singer == null)
+                    {
+                        music.imgurl = "ms-appx:///Assets/image/songimg.png";
+                    }
+                    else
+                    {
+                        music.imgurl = singer.imgurl;
+                    }
+                }
+                else
+                {
+                    music.title = moredata.filename;
+                    music.singername = "未知歌手";
+                    music.imgurl = "ms-appx:///Assets/image/songimg.png";
+                }
+                music.url = await GetUrl();
+                music.albumid = "";
+                return music;
+            }
+            public async Task AddToPlayList(bool isplay)
+            {
+                var nowplay = await this.GetNowPlay();
+                if (nowplay.url == null || nowplay.url == "")
+                {
+                    await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                }
+                else
+                {
+                    await Class.Model.PlayList.Add(nowplay, isplay);
+                }
+            }
         }
     }
 }
