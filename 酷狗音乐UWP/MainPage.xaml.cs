@@ -46,55 +46,6 @@ namespace 酷狗音乐UWP
             注册后台服务();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            ChangeTheme();
-        }
-
-        private void ChangeTheme()
-        {
-            Class.Setting.Theme.NowTheme = Class.Setting.Theme.Type.Default;
-            ResourceDictionary newDictionary = new ResourceDictionary();
-            switch (Class.Setting.Theme.NowTheme)
-            {
-                case Class.Setting.Theme.Type.Default:
-                    newDictionary.Source = new Uri("ms-appx:///Theme/DefaultTheme.xaml", UriKind.RelativeOrAbsolute);
-                    Application.Current.Resources.MergedDictionaries.Clear();
-                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
-                    break;
-                case Class.Setting.Theme.Type.BiShuiLan:
-                    newDictionary.Source = new Uri("ms-appx:///Theme/BiShuiLanTheme.xaml", UriKind.RelativeOrAbsolute);
-                    Application.Current.Resources.MergedDictionaries.Clear();
-                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
-                    break;
-                case Class.Setting.Theme.Type.StarNight:
-                    newDictionary.Source = new Uri("ms-appx:///Theme/StarNightTheme.xaml", UriKind.RelativeOrAbsolute);
-                    Application.Current.Resources.MergedDictionaries.Clear();
-                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
-                    break;
-                case Class.Setting.Theme.Type.Rabbit:
-                    newDictionary.Source = new Uri("ms-appx:///Theme/RabbitTheme.xaml", UriKind.RelativeOrAbsolute);
-                    Application.Current.Resources.MergedDictionaries.Clear();
-                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
-                    break;
-                default:
-                    break;
-            }
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.White;
-                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-                statusBar.BackgroundOpacity = 100;
-            }
-            //电脑标题栏颜色
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
-        }
-
         private void 注册后台服务()
         {
             try
@@ -137,6 +88,19 @@ namespace 酷狗音乐UWP
                 await datafolder.CreateFileAsync("playlist.json", CreationCollisionOption.ReplaceExisting);
                 localSettings.Values["isfirst"] = true;
             }
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+                statusBar.BackgroundOpacity = 100;
+            }
+            //电脑标题栏颜色
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
+            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
             //await Class.Model.PlayList.Clear();
             KanPagePanel.LoadData();
             await init_local_list();
@@ -261,7 +225,7 @@ namespace 酷狗音乐UWP
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //Frame.Navigate(typeof(page.WebPage), "http://m.kugou.com/song/static/index.html");
-            Frame.Navigate(typeof(page.LoginPage));
+            Frame.Navigate(typeof(page.SingerPage),"89958");
         }
 
         private void TopBtn_Clicked(object sender, RoutedEventArgs e)

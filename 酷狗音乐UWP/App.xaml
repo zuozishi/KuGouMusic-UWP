@@ -9,39 +9,39 @@
             <ResourceDictionary.ThemeDictionaries >
                 <ResourceDictionary x:Key="Light">
                     <!--背景图片-->
-                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/Skin/StarNight/background.jpg"/>
+                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/background.jpg"/>
                     <!--背景颜色-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF193155"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF43BDEE"/>
                     <!--背景颜色透明点-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#C8193155"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#BF2C9BCC"/>
                     <!--背景颜色深点-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF152D50"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF016E9B"/>
                     <!--标题栏前景颜色-->
                     <SolidColorBrush x:Key="KuGou-Foreground" Color="White"/>
                     <!--文字颜色1-->
-                    <SolidColorBrush x:Key="KuGou-Front1" Color="White"/>
+                    <SolidColorBrush x:Key="KuGou-Front1" Color="Black"/>
                     <!--文字颜色2-->
-                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FFB9B9B9"/>
+                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
                     <!--ListView背景色-->
-                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#64676767"/>
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <!--背景图片-->
-                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/Skin/StarNight/background.jpg"/>
+                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/background.jpg"/>
                     <!--背景颜色-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF193155"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF43BDEE"/>
                     <!--背景颜色透明点-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#C8193155"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#BF2C9BCC"/>
                     <!--背景颜色深点-->
-                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF152D50"/>
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF016E9B"/>
                     <!--标题栏前景颜色-->
                     <SolidColorBrush x:Key="KuGou-Foreground" Color="White"/>
                     <!--文字颜色1-->
-                    <SolidColorBrush x:Key="KuGou-Front1" Color="White"/>
+                    <SolidColorBrush x:Key="KuGou-Front1" Color="Black"/>
                     <!--文字颜色2-->
-                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FFB9B9B9"/>
+                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
                     <!--ListView背景色-->
-                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#64676767"/>
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

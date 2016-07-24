@@ -101,6 +101,32 @@ namespace 酷狗音乐UWP.Class
                 set
                 {
                     localSettings.Values["Theme"] = (int)value;
+                    ResourceDictionary newDictionary = new ResourceDictionary();
+                    switch (value)
+                    {
+                        case Class.Setting.Theme.Type.Default:
+                            newDictionary.Source = new Uri("ms-appx:///Theme/DefaultTheme.xaml");
+                            Application.Current.Resources.MergedDictionaries.Clear();
+                            Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                            break;
+                        case Class.Setting.Theme.Type.BiShuiLan:
+                            newDictionary.Source = new Uri("ms-appx:///Theme/BiShuiLanTheme.xaml");
+                            Application.Current.Resources.MergedDictionaries.Clear();
+                            Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                            break;
+                        case Class.Setting.Theme.Type.StarNight:
+                            newDictionary.Source = new Uri("ms-appx:///Theme/StarNightTheme.xaml");
+                            Application.Current.Resources.MergedDictionaries.Clear();
+                            Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                            break;
+                        case Class.Setting.Theme.Type.Rabbit:
+                            newDictionary.Source = new Uri("ms-appx:///Theme/RabbitTheme.xaml");
+                            Application.Current.Resources.MergedDictionaries.Clear();
+                            Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

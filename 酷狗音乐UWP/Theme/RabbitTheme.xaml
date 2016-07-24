@@ -5,7 +5,7 @@
     <ResourceDictionary.ThemeDictionaries >
         <ResourceDictionary x:Key="Light">
             <!--背景图片-->
-            <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/Skin/Rabbit/background.jpg"/>
+            <ImageBrush x:Key="KuGou-Background" ImageSource="Skin/Rabbit/background.jpg"/>
             <!--背景颜色-->
             <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FFAEC56D"/>
             <!--背景颜色透明点-->
@@ -23,7 +23,7 @@
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <!--背景图片-->
-            <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/Skin/Rabbit/background.jpg"/>
+            <ImageBrush x:Key="KuGou-Background" ImageSource="Skin/Rabbit/background.jpg"/>
             <!--背景颜色-->
             <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FFAEC56D"/>
             <!--背景颜色透明点-->
