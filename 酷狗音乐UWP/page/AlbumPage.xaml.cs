@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using 酷狗音乐UWP.Class;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -226,6 +225,56 @@ namespace 酷狗音乐UWP.page
                 else
                 {
                     await Class.Model.PlayList.Add(nowplay, isplay);
+                }
+            }
+            public async Task AddToDownloadList()
+            {
+                var url = await GetDownUrl();
+                if (url != null && url != "")
+                {
+                    await KG_ClassLibrary.BackgroundDownload.Start(filename, url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                }
+            }
+            public async Task<string> GetDownUrl()
+            {
+                if (hash != "")
+                {
+                    switch (Class.Setting.DownQu.GetType())
+                    {
+                        case Class.Setting.DownQu.Type.low:
+                            return await Class.kugou.get_musicurl_by_hash(hash);
+                        case Class.Setting.DownQu.Type.mid:
+                            if (hash320 != "")
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash320);
+                            }
+                            else
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            }
+                        case Class.Setting.DownQu.Type.high:
+                            if (sqhash != null)
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(sqhash);
+                            }
+                            else
+                            {
+                                if (hash320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            }
+                        default:
+                            return null;
+                    }
+                }
+                else
+                {
+                    return null;
                 }
             }
         }

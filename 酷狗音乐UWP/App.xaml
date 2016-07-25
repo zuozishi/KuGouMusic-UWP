@@ -3,10 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:酷狗音乐UWP"
-    RequestedTheme="Dark">
+    RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.ThemeDictionaries >
+            <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <!--背景图片-->
                     <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/background.jpg"/>
@@ -23,7 +23,7 @@
                     <!--文字颜色2-->
                     <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
                     <!--ListView背景色-->
-                    <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <!--背景图片-->
@@ -41,7 +41,7 @@
                     <!--文字颜色2-->
                     <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
                     <!--ListView背景色-->
-                    <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

@@ -36,16 +36,32 @@ namespace KG_ClassLibrary
             {
                 Uri uri = new Uri(Uri.EscapeUriString(url), UriKind.RelativeOrAbsolute);
                 BackgroundDownloader downloader = new BackgroundDownloader();
+                string extname = "";
                 if (folder==null)
                 {
                     folder = await KnownFolders.MusicLibrary.CreateFolderAsync("kgdownload", CreationCollisionOption.OpenIfExists);
                     switch (type)
                     {
                         case DownloadType.song:
+                            switch (酷狗音乐UWP.Class.Setting.DownQu.GetType())
+                            {
+                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.low:
+                                    extname = ".mp3";
+                                    break;
+                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.mid:
+                                    extname = ".mp3";
+                                    break;
+                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.high:
+                                    extname = ".flac";
+                                    break;
+                                default:
+                                    break;
+                            }
                             folder = await folder.CreateFolderAsync("song", CreationCollisionOption.OpenIfExists);
                             downloader.TransferGroup = BackgroundTransferGroup.CreateGroup("song");
                             break;
                         case DownloadType.mv:
+                            extname = ".mp4";
                             folder = await folder.CreateFolderAsync("mv", CreationCollisionOption.OpenIfExists);
                             downloader.TransferGroup = BackgroundTransferGroup.CreateGroup("mv");
                             break;
@@ -61,7 +77,7 @@ namespace KG_ClassLibrary
                     downloader.TransferGroup = BackgroundTransferGroup.CreateGroup("other");
                 }
                 //string name = uri.ToString().Substring(uri.ToString().LastIndexOf("/"), uri.ToString().Length);
-                string name = filename;
+                string name = filename + extname; ;
                 StorageFile file = await folder.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
                 downloader.FailureToastNotification = DownloadedToast.Done(filename, DownloadedToast.DownResult.Fa);
                 downloader.SuccessToastNotification = DownloadedToast.Done(filename, DownloadedToast.DownResult.Su);

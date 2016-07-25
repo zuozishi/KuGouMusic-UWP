@@ -51,7 +51,10 @@ namespace 酷狗音乐UWP.page
                 case 2:
                     Frame.Navigate(typeof(page.Setting.ListenQuSet));
                     break;
-                case 4:
+                case 3:
+                    Frame.Navigate(typeof(page.Setting.DownloadQuSet));
+                    break;
+                case 5:
                     var userInfo = await JyUserInfo.JyUserInfoManager.QuickLogin("e4e6005e3145b90b4edd99c0d0d35af9");
                     if (userInfo.isLoginSuccess)
                     {

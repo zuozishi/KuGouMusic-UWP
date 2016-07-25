@@ -9,13 +9,13 @@
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="unlrcview">
             <Setter Property="Margin" Value="3"></Setter>
-            <Setter Property="Foreground" Value="#FF9ACCE2"></Setter>
+            <Setter Property="Foreground" Value="{ThemeResource KuGou-Front2}"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         </Style>
         <Style TargetType="TextBlock" x:Key="islrcview">
             <Setter Property="Margin" Value="3"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Foreground" Value="{ThemeResource KuGou-Foreground}"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         </Style>

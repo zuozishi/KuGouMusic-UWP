@@ -54,9 +54,12 @@ namespace 酷狗音乐UWP.page.YueKu
             var list = sender as ListView;
             if(list.SelectedIndex!=-1)
             {
-                var data = list.SelectedItem as SongData;
-                await data.AddToPlayList(true);
-                SongListView.SelectedIndex = -1;
+                if (list.SelectionMode != ListViewSelectionMode.Multiple && list.SelectedItem != null)
+                {
+                    var data = list.SelectedItem as SongData;
+                    await data.AddToPlayList(true);
+                    SongListView.SelectedIndex = -1;
+                }
             }
             SongLoadProgress.IsActive = false;
         }
@@ -212,6 +215,56 @@ namespace 酷狗音乐UWP.page.YueKu
                     await Class.Model.PlayList.Add(nowplay, isplay);
                 }
             }
+            public async Task AddToDownloadList()
+            {
+                var url = await GetDownUrl();
+                if (url != null && url != "")
+                {
+                    await KG_ClassLibrary.BackgroundDownload.Start(filename, url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                }
+            }
+            public async Task<string> GetDownUrl()
+            {
+                if (hash != "")
+                {
+                    switch (Class.Setting.DownQu.GetType())
+                    {
+                        case Class.Setting.DownQu.Type.low:
+                            return await Class.kugou.get_musicurl_by_hash(hash);
+                        case Class.Setting.DownQu.Type.mid:
+                            if (hash320 != "")
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash320);
+                            }
+                            else
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            }
+                        case Class.Setting.DownQu.Type.high:
+                            if (sqhash != null)
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(sqhash);
+                            }
+                            else
+                            {
+                                if (hash320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            }
+                        default:
+                            return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         public class SongDataList
@@ -245,10 +298,43 @@ namespace 酷狗音乐UWP.page.YueKu
             if(SongListView.SelectionMode == ListViewSelectionMode.Single)
             {
                 SongListView.SelectionMode = ListViewSelectionMode.Multiple;
+                MoreSongBox.Show();
+                MoreSongBox.BtnClickedEvent += MoreSongBox_BtnClickedEvent;
             }
             else
             {
                 SongListView.SelectionMode = ListViewSelectionMode.Single;
+                MoreSongBox.Hidden();
+            }
+        }
+
+        private async void MoreSongBox_BtnClickedEvent(UserControlClass.SongMultipleBox.BtnType type)
+        {
+            if (SongListView.SelectedItems != null && SongListView.SelectedItems.Count > 0)
+            {
+                SongLoadProgress.IsActive = true;
+                switch (type)
+                {
+                    case UserControlClass.SongMultipleBox.BtnType.NextPlay:
+                        foreach (var item in SongListView.SelectedItems)
+                        {
+                            var song = item as SongData;
+                            await song.AddToPlayList(false);
+                        }
+                        break;
+                    case UserControlClass.SongMultipleBox.BtnType.Download:
+                        foreach (var item in SongListView.SelectedItems)
+                        {
+                            var song = item as SongData;
+                            await song.AddToDownloadList();
+                        }
+                        break;
+                    case UserControlClass.SongMultipleBox.BtnType.AddToList:
+                        break;
+                    default:
+                        break;
+                }
+                SongLoadProgress.IsActive = false;
             }
         }
     }

@@ -221,6 +221,9 @@
     <Compile Include="page\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="page\Setting\DownloadQuSet.xaml.cs">
+      <DependentUpon>DownloadQuSet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="page\Setting\ListenQuSet.xaml.cs">
       <DependentUpon>ListenQuSet.xaml</DependentUpon>
     </Compile>
@@ -233,11 +236,17 @@
     <Compile Include="page\SingerPage.xaml.cs">
       <DependentUpon>SingerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="page\SongListPage.xaml.cs">
+      <DependentUpon>SongListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="page\WebPage.xaml.cs">
       <DependentUpon>WebPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\YueKuPage.xaml.cs">
       <DependentUpon>YueKuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\YueKu\SingerListPage.xaml.cs">
+      <DependentUpon>SingerListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\YueKu\SongBanner.xaml.cs">
       <DependentUpon>SongBanner.xaml</DependentUpon>
@@ -260,6 +269,9 @@
     </Compile>
     <Compile Include="UserControl\SearchResultControl.xaml.cs">
       <DependentUpon>SearchResultControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\SongMultipleBox.xaml.cs">
+      <DependentUpon>SongMultipleBox.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +384,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="page\Setting\DownloadQuSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="page\Setting\ListenQuSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -388,11 +404,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="page\SongListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="page\WebPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="page\YueKuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="page\YueKu\SingerListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -441,6 +465,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\SearchResultControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\SongMultipleBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

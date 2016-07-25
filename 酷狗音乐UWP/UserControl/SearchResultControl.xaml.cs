@@ -35,6 +35,7 @@ namespace 酷狗音乐UWP.UserControlClass
         public ObservableCollection<Model.SearchResultModel.Lrc> LrcData { get; private set; }
         public Frame mainframe;
         private object o = new object();
+        private Singer singerdata;
 
         public SearchResultControl()
         {
@@ -74,8 +75,8 @@ namespace 酷狗音乐UWP.UserControlClass
         }
         public async Task LoadSinger()
         {
-            var singerdata = await GetSingerResult(keyword);
-            if (singerdata!=null)
+            singerdata = await GetSingerResult(keyword);
+            if (singerdata!=null&&singerdata.pics!=null)
             {
                 SingerName_Text.Text = singerdata.singername;
                 Singer_Image.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource=new Uri(singerdata.imgurl)};
@@ -147,9 +148,10 @@ namespace 酷狗音乐UWP.UserControlClass
                         SonglistData = await GetSonglistResult(keyword, songlistpage);
                         if(SonglistData!=null)
                         {
-                            foreach (var item in AlbumData)
+                            SonglistResultList.Items.Clear();
+                            foreach (var item in SonglistData)
                             {
-                                AlbumResultList.Items.Add(item);
+                                SonglistResultList.Items.Add(item);
                             }
                         }
                         SonglistLoadProgress.IsActive = false;
@@ -541,6 +543,58 @@ namespace 酷狗音乐UWP.UserControlClass
                                 });
                             }
                         }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void SingerGrid_Click(object sender, RoutedEventArgs e)
+        {
+            if (singerdata != null)
+            {
+                var frame = Window.Current.Content as Frame;
+                frame.Navigate(typeof(page.SingerPage), singerdata.singerid);
+            }
+        }
+
+        private void MoreSongsContorl_Click(object sender, RoutedEventArgs e)
+        {
+            if (SongResultList.SelectionMode == ListViewSelectionMode.Single)
+            {
+                SongResultList.SelectionMode = ListViewSelectionMode.Multiple;
+                MoreSongBox.Show();
+                MoreSongBox.BtnClickedEvent += MoreSongBox_BtnClickedEvent;
+            }
+            else
+            {
+                SongResultList.SelectionMode = ListViewSelectionMode.Single;
+                MoreSongBox.Hidden();
+            }
+        }
+
+        private async void MoreSongBox_BtnClickedEvent(SongMultipleBox.BtnType type)
+        {
+            if(SongResultList.SelectedItems!=null&& SongResultList.SelectedItems.Count > 0)
+            {
+                switch (type)
+                {
+                    case SongMultipleBox.BtnType.NextPlay:
+                        foreach (var item in SongResultList.SelectedItems)
+                        {
+                            var song = item as Model.SearchResultModel.Song;
+                            await song.AddToPlayList(false);
+                        }
+                        break;
+                    case SongMultipleBox.BtnType.Download:
+                        foreach (var item in SongResultList.SelectedItems)
+                        {
+                            var song = item as Model.SearchResultModel.Song;
+                            await song.AddToDownloadList();
+                        }
+                        break;
+                    case SongMultipleBox.BtnType.AddToList:
                         break;
                     default:
                         break;

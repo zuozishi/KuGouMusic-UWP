@@ -115,6 +115,56 @@ namespace 酷狗音乐UWP.Class
                         await Class.Model.PlayList.Add(nowplay, isplay);
                     }
                 }
+                public async Task AddToDownloadList()
+                {
+                    var url = await GetDownUrl();
+                    if (url != null && url != "")
+                    {
+                        await KG_ClassLibrary.BackgroundDownload.Start(filename, url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                    }
+                }
+                public async Task<string> GetDownUrl()
+                {
+                    if (hash != "")
+                    {
+                        switch (Class.Setting.DownQu.GetType())
+                        {
+                            case Setting.DownQu.Type.low:
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            case Setting.DownQu.Type.mid:
+                                if (hash320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            case Setting.DownQu.Type.high:
+                                if (sqhash != null)
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(sqhash);
+                                }
+                                else
+                                {
+                                    if (hash320 != "")
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash320);
+                                    }
+                                    else
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash);
+                                    }
+                                }
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
             }
             public class MV
             {
@@ -783,13 +833,22 @@ namespace 酷狗音乐UWP.Class
                             string firstword = "";
                             if ((await item.Properties.GetMusicPropertiesAsync()).Title != "")
                             {
+                                string head = "";
+                                if((await item.Properties.GetMusicPropertiesAsync()).Title[0]==' ')
+                                {
+                                    head = (await item.Properties.GetMusicPropertiesAsync()).Title[0].ToString();
+                                }
+                                else
+                                {
+                                    head = (await item.Properties.GetMusicPropertiesAsync()).Title[1].ToString();
+                                }
                                 try
                                 {
-                                    firstword = PinYIn.SpellCodeHelper.GetFirstPYLetter((await item.Properties.GetMusicPropertiesAsync()).Title[0].ToString());
+                                    firstword = PinYIn.SpellCodeHelper.GetFirstPYLetter(head);
                                 }
                                 catch (Exception)
                                 {
-                                    firstword = (await item.Properties.GetMusicPropertiesAsync()).Title[0].ToString();
+                                    firstword = head;
                                 }
                             }
                             else
@@ -916,6 +975,8 @@ namespace 酷狗音乐UWP.Class
             Task<string> GetUrl();
             Task<Class.Model.Player.NowPlay> GetNowPlay();
             Task AddToPlayList(bool isplay);
+            Task AddToDownloadList();
+            Task<string> GetDownUrl();
         }
     }
 }

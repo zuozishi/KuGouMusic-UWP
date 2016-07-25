@@ -190,7 +190,6 @@ namespace 酷狗音乐UWP.UserControlClass
                 LrcTimeLines.Add(TimeSpan.FromMilliseconds(item.Key));
                 lrcdatapanel.Children.Add(textblock);
             }
-            
             if(Class.MediaControl.GetCurrent().CurrentState==Windows.Media.Playback.MediaPlayerState.Playing)
             {
                 LrcUpdateTimer.Start();

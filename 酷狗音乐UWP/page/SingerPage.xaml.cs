@@ -35,6 +35,7 @@ namespace 酷狗音乐UWP.page
         public SingerPage()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -97,7 +98,7 @@ namespace 酷狗音乐UWP.page
         private async void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var list = sender as ListView;
-            if (list.SelectedItem != null)
+            if (list.SelectionMode!= ListViewSelectionMode.Multiple && list.SelectedItem != null)
             {
                 var data = list.SelectedItem as SongListData.SongData;
                 LoadProcess.IsActive = true;
@@ -290,6 +291,56 @@ namespace 酷狗音乐UWP.page
                         await Class.Model.PlayList.Add(nowplay, isplay);
                     }
                 }
+                public async Task AddToDownloadList()
+                {
+                    var url = await GetDownUrl();
+                    if (url != null && url != "")
+                    {
+                        await KG_ClassLibrary.BackgroundDownload.Start(filename, url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                    }
+                }
+                public async Task<string> GetDownUrl()
+                {
+                    if (hash != "")
+                    {
+                        switch (Class.Setting.DownQu.GetType())
+                        {
+                            case Class.Setting.DownQu.Type.low:
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            case Class.Setting.DownQu.Type.mid:
+                                if (hash320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            case Class.Setting.DownQu.Type.high:
+                                if (sqhash != null)
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(sqhash);
+                                }
+                                else
+                                {
+                                    if (hash320 != "")
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash320);
+                                    }
+                                    else
+                                    {
+                                        return await Class.kugou.get_musicurl_by_hash(hash);
+                                    }
+                                }
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
             }
             public SongListData(string id)
             {
@@ -479,6 +530,70 @@ namespace 酷狗音乐UWP.page
         {
             var btn = sender as Button;
             flipview.SelectedIndex = btn.TabIndex;
+        }
+
+        private async void SongSortChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ComboBox;
+            if (songlistdata != null)
+            {
+                songlistdata.sort = (SongListData.SortType)list.SelectedIndex;
+                LoadProcess.IsActive = true;
+                songlistdata.List.Clear();
+                songlistdata.page = 0;
+                await songlistdata.LoadData();
+                LoadProcess.IsActive = false;
+            }
+        }
+
+        private void MoreSongBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (songlistdata != null && songlistdata.List.Count > 0)
+            {
+                if(SongList.SelectionMode==ListViewSelectionMode.Single)
+                {
+                    SongList.SelectionMode = ListViewSelectionMode.Multiple;
+                    MoreSongBox.Show();
+                    MoreSongBox.BtnClickedEvent += MoreSongBox_BtnClickedEvent;
+                }
+                else
+                {
+                    SongList.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.Hidden();
+                }
+            }
+        }
+
+        private async void MoreSongBox_BtnClickedEvent(UserControlClass.SongMultipleBox.BtnType type)
+        {
+            LoadProcess.IsActive = true;
+            if (SongList.SelectedItems != null && SongList.SelectedItems.Count > 0)
+            {
+                switch (type)
+                {
+                    case UserControlClass.SongMultipleBox.BtnType.NextPlay:
+                        foreach (var item in SongList.SelectedItems)
+                        {
+                            var song = item as SongListData.SongData;
+                            await song.AddToPlayList(false);
+                        }
+                        break;
+                    case UserControlClass.SongMultipleBox.BtnType.Download:
+                        foreach (var item in SongList.SelectedItems)
+                        {
+                            var song = item as SongListData.SongData;
+                            await song.AddToDownloadList();
+                        }
+                        break;
+                    case UserControlClass.SongMultipleBox.BtnType.AddToList:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            MoreSongBox.Hidden();
+            SongList.SelectionMode = ListViewSelectionMode.Single;
+            LoadProcess.IsActive = false;
         }
     }
 }

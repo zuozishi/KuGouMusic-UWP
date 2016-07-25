@@ -28,9 +28,8 @@ namespace 酷狗音乐UWP.page
     {
         public TuiJianData alldata { get; private set; }
         public List<ViewMode.PaiHang> paihangdata { get; private set; }
-        public ObservableCollection<GeDanData> GeDanListData { get; private set; }
-        string gd_sort = "3", gd_page = "1";
         private List<BannerData> bannerdata;
+        private GeDanList gedandata;
 
         public YueKuPage()
         {
@@ -152,21 +151,65 @@ namespace 酷狗音乐UWP.page
         public async void LoadGeDan(string categoryid = "")
         {
             GeDanLoadProgress.IsActive = true;
-            var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-            httpclient.Url("http://mobilecdn.kugou.com/api/v3/category/special?pagesize=20&withsong=0&plat=0&categoryid="+ categoryid + "&sort="+gd_sort+"&page="+gd_page);
-            var json = (await httpclient.Get()).GetString();
-            json = json.Replace("{size}", "150");
-            var obj = Windows.Data.Json.JsonObject.Parse(json);
-            GeDanListData = Class.data.DataContractJsonDeSerialize<ObservableCollection<GeDanData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
-            foreach (var item in GeDanListData)
-            {
-                if(double.Parse(item.playcount)>10000)
-                {
-                    item.playcount = Math.Floor(double.Parse(item.playcount) / 10000).ToString() + "万";
-                }
-            }
-            GeDanListView.ItemsSource = GeDanListData;
+            LoadGeDanType();
+            gedandata = new GeDanList();
+            await gedandata.LoadData();
+            GeDanSortBox.SelectionChanged += GeDanSortBox_SelectionChanged;
+            GeDanListView.ItemsSource = gedandata.List;
             GeDanLoadProgress.IsActive = false;
+        }
+
+        private async void LoadGeDanType()
+        {
+            var firstmenu = new MenuFlyoutItem() { Text = "全部分类", Tag = "" };
+            firstmenu.Click += GeDanTypeClicked;
+            GeDanTypeMenu.Items.Add(firstmenu);
+            var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+            httpclient.Url("http://mobilecdn.kugou.com/api/v3/tag/list?pid=0&plat=0&apiver=2");
+            var json = (await httpclient.Get()).GetString();
+            var obj = Windows.Data.Json.JsonObject.Parse(json);
+            var data = Class.data.DataContractJsonDeSerialize<List<GeDanTypeData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
+            data.RemoveAt(0);
+            foreach (var group in data)
+            {
+                var list = new MenuFlyoutSubItem();
+                list.Text = group.name;
+                foreach (var item in group.children)
+                {
+                    var menu = new MenuFlyoutItem();
+                    menu.Text = item.name;
+                    menu.Tag = item.special_tag_id;
+                    menu.Click += GeDanTypeClicked;
+                    list.Items.Add(menu);
+                }
+                GeDanTypeMenu.Items.Add(list);
+            }
+        }
+
+        private async void GeDanTypeClicked(object sender, RoutedEventArgs e)
+        {
+            var menu = sender as MenuFlyoutItem;
+            if (gedandata != null)
+            {
+                GeDanLoadProgress.IsActive = true;
+                gedandata.page = 0;
+                gedandata.categoryid = menu.Tag.ToString();
+                gedandata.List.Clear();
+                GeDanTypeBtn.Content = menu.Text;
+                await gedandata.LoadData();
+                GeDanLoadProgress.IsActive = false;
+            }
+        }
+
+        public class GeDanTypeData
+        {
+            public string name { get; set; }
+            public List<Data> children { get; set; }
+            public class Data
+            {
+                public string name { get; set; }
+                public string special_tag_id { get; set; }
+            }
         }
 
         private void TopicList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -232,7 +275,7 @@ namespace 酷狗音乐UWP.page
                         PaiHang_Btn.BorderBrush = new SolidColorBrush();
                         GeShou_Btn.BorderBrush = new SolidColorBrush();
                         GeDan_Btn.BorderBrush = new SolidColorBrush(Colors.White);
-                        if (GeDanListData == null)
+                        if (gedandata == null)
                         {
                             LoadGeDan();
                         }
@@ -354,12 +397,99 @@ namespace 酷狗音乐UWP.page
             Frame.Navigate(typeof(page.MVListPage), data.vid);
         }
 
+        private void SingerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            switch (list.SelectedIndex)
+            {
+                case 1:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "1", "1","华语男歌手" });
+                    break;
+                case 2:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "1", "2", "华语女歌手" });
+                    break;
+                case 3:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "1", "3", "华语组合" });
+                    break;
+                default:
+                    break;
+            }
+            list.SelectedIndex = -1;
+        }
+
         public class GeDanData
         {
             public string specialid { get; set; }
             public string specialname { get; set; }
             public string playcount { get; set; }
             public string imgurl { get; set; }
+        }
+
+        public class GeDanList
+        {
+            public ObservableCollection<GeDanData> List=new ObservableCollection<GeDanData>();
+            public int page = 0;
+            public string categoryid = "";
+            public Type sort = Type.最热;
+            public enum Type
+            {
+                最新=2,最热=3
+            }
+            public async Task LoadData()
+            {
+                page = page + 1;
+                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                httpclient.Url("http://mobilecdn.kugou.com/api/v3/category/special?pagesize=20&withsong=0&plat=0&categoryid=" + categoryid + "&sort=" + ((int)sort).ToString() + "&page=" + page.ToString());
+                var json = (await httpclient.Get()).GetString();
+                json = json.Replace("{size}", "150");
+                var obj = Windows.Data.Json.JsonObject.Parse(json);
+                var data = Class.data.DataContractJsonDeSerialize<ObservableCollection<GeDanData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
+                foreach (var item in data)
+                {
+                    if (double.Parse(item.playcount) > 10000)
+                    {
+                        item.playcount = Math.Floor(double.Parse(item.playcount) / 10000).ToString() + "万";
+                    }
+                    List.Add(item);
+                }
+            }
+        }
+
+        private async void GeDanSortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var box = sender as ComboBox;
+            GeDanLoadProgress.IsActive = true;
+            switch (box.SelectedIndex)
+            {
+                case 0:
+                    gedandata.page = 0;
+                    gedandata.List.Clear();
+                    gedandata.sort = GeDanList.Type.最新;
+                    await gedandata.LoadData();
+                    break;
+                case 1:
+                    gedandata.page = 0;
+                    gedandata.List.Clear();
+                    gedandata.sort = GeDanList.Type.最热;
+                    await gedandata.LoadData();
+                    break;
+                default:break;
+            }
+            GeDanLoadProgress.IsActive = false;
+        }
+
+        private async void GeDanLoadMore(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var view = sender as ScrollViewer;
+            if (view.VerticalOffset == view.ScrollableHeight)
+            {
+                if (!GeDanLoadProgress.IsActive)
+                {
+                    GeDanLoadProgress.IsActive = true;
+                    await gedandata.LoadData();
+                    GeDanLoadProgress.IsActive = false;
+                }
+            }
         }
     }
 }

@@ -227,6 +227,56 @@ namespace 酷狗音乐UWP.page
                     await Class.Model.PlayList.Add(nowplay, isplay);
                 }
             }
+            public async Task AddToDownloadList()
+            {
+                var url = await GetDownUrl();
+                if (url != null && url != "")
+                {
+                    await KG_ClassLibrary.BackgroundDownload.Start(moredata.filename, url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                }
+            }
+            public async Task<string> GetDownUrl()
+            {
+                if (hash != "")
+                {
+                    switch (Class.Setting.DownQu.GetType())
+                    {
+                        case Class.Setting.DownQu.Type.low:
+                            return await Class.kugou.get_musicurl_by_hash(hash);
+                        case Class.Setting.DownQu.Type.mid:
+                            if (hash_320 != "")
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash_320);
+                            }
+                            else
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash);
+                            }
+                        case Class.Setting.DownQu.Type.high:
+                            if (hash_sq != null)
+                            {
+                                return await Class.kugou.get_musicurl_by_hash(hash_sq);
+                            }
+                            else
+                            {
+                                if (hash_320 != "")
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash_320);
+                                }
+                                else
+                                {
+                                    return await Class.kugou.get_musicurl_by_hash(hash);
+                                }
+                            }
+                        default:
+                            return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

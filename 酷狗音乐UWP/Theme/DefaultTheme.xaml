@@ -19,7 +19,7 @@
             <!--文字颜色2-->
             <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
             <!--ListView背景色-->
-            <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
+            <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <!--背景图片-->
@@ -37,7 +37,7 @@
             <!--文字颜色2-->
             <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
             <!--ListView背景色-->
-            <SolidColorBrush x:Key="KuGou-List-Background" Color="White"/>
+            <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

@@ -5,6 +5,7 @@
     xmlns:local="using:酷狗音乐UWP.page"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:user="using:酷狗音乐UWP.UserControlClass"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource KuGou-Background}">
@@ -24,13 +25,13 @@
                 </Grid>
                 <Grid Margin="0,50,0,0" Height="120" VerticalAlignment="Top">
                     <StackPanel Margin="5,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" FontSize="13" Text="{Binding singername}">童可可</TextBlock>
-                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" FontSize="12" Text="{Binding intro}">2016-05-13 发行</TextBlock>
+                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" FontSize="13" Text="{Binding singername}"></TextBlock>
+                        <TextBlock Foreground="{ThemeResource KuGou-Foreground}" FontSize="12" Text="{Binding intro}"></TextBlock>
                     </StackPanel>
                 </Grid>
             </Grid>
         </Grid>
-        <Grid x:Name="ContentGrid" Margin="0,170,0,0">
+        <Grid x:Name="ContentGrid" Margin="0,170,0,63">
             <Grid Height="40" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -38,63 +39,74 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button TabIndex="0" Click="TopBtnCLicked" x:Name="TopSongBtn" Grid.Column="0" Content="单曲" BorderThickness="0,0,0,2" BorderBrush="{ThemeResource KuGou-Foreground}" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button TabIndex="1" Click="TopBtnCLicked" x:Name="TopAlbumBtn" Grid.Column="1" Content="专辑" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button TabIndex="2" Click="TopBtnCLicked" x:Name="TopMVBtn" Grid.Column="2" Content="MV" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button TabIndex="3" Click="TopBtnCLicked" x:Name="TopMoreBtn" Grid.Column="3" Content="详情" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button TabIndex="0" Click="TopBtnCLicked" Foreground="{ThemeResource KuGou-Foreground}" x:Name="TopSongBtn" Grid.Column="0" Content="单曲" BorderThickness="0,0,0,2" BorderBrush="{ThemeResource KuGou-Foreground}" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button TabIndex="1" Click="TopBtnCLicked" Foreground="{ThemeResource KuGou-Foreground}" x:Name="TopAlbumBtn" Grid.Column="1" Content="专辑" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button TabIndex="2" Click="TopBtnCLicked" Foreground="{ThemeResource KuGou-Foreground}" x:Name="TopMVBtn" Grid.Column="2" Content="MV" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button TabIndex="3" Click="TopBtnCLicked" Foreground="{ThemeResource KuGou-Foreground}" x:Name="TopMoreBtn" Grid.Column="3" Content="详情" BorderThickness="0,0,0,2" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
             </Grid>
             <FlipView x:Name="flipview" Margin="0,40,0,0">
                 <FlipViewItem Visibility="Visible">
                     <ScrollViewer TabIndex="0" ViewChanged="NextPage">
-                        <ListView x:Name="SongList" Margin="5,5,5,0">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                    <Setter Property="Background" Value="{ThemeResource KuGou-List-Background}"/>
-                                    <Setter Property="Margin" Value="0,0,0,3"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Visibility="Visible" Margin="0,0,0,2" Background="{ThemeResource KuGou-List-Background}" Height="60" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                        <Grid>
+                            <ComboBox Margin="5,0,0,0" SelectedIndex="1" SelectionChanged="SongSortChanged">
+                                <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                                <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                            </ComboBox>
+                            <Button x:Name="MoreSongBtn" Height="35" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MoreSongBtn_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Width="25" Height="25" Symbol="Edit"></SymbolIcon>
+                                    <TextBlock Margin="3,0,0,0" Foreground="{ThemeResource KuGou-Foreground}">对多首歌曲进行操作</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ListView x:Name="SongList" Margin="5,35,5,0">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Margin" Value="0,0,0,3"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Visibility="Visible" Background="{ThemeResource KuGou-List-Background}" Margin="-10,0,-10,2" Height="60" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                            <StackPanel Margin="15,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="16" Foreground="{ThemeResource KuGou-Front1}">
+                        							<Run Text="{Binding songname}"/>
+                                                    </TextBlock>
+                                                    <Image Visibility="{Binding mvview}" Margin="10,0,0,0" Height="13" Width="20" Source="ms-appx:///Assets/image/mvicon.png" Stretch="Fill"></Image>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding singername}">
+                        									<Run Text="singername"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <AppBarButton Width="50" Height="50" Icon="More" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
+                                            <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListViewItem>
+                                    <Grid Visibility="Visible" Background="{ThemeResource KuGou-List-Background}" Margin="-10,0,-10,2" Height="50" VerticalAlignment="Top">
                                         <StackPanel Margin="15,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontSize="16" Foreground="{ThemeResource KuGou-Front1}">
-                        							<Run Text="{Binding songname}"/>
+                                                <TextBlock Foreground="{ThemeResource KuGou-Front1}" FontSize="16">
+                        							<Run Text="别让我放不下"/>
                                                 </TextBlock>
-                                                <Image Visibility="{Binding mvview}" Margin="10,0,0,0" Height="13" Width="20" Source="ms-appx:///Assets/image/mvicon.png" Stretch="Fill"></Image>
+                                                <Image Margin="10,0,0,0" Height="13" Width="20" Source="ms-appx:///Assets/image/mvicon.png" Stretch="Fill"></Image>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding singername}">
-                        									<Run Text="singername"/>
+                                                <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front1}">
+                        								<Run Text="童可可"/>
                                                 </TextBlock>
                                             </StackPanel>
                                         </StackPanel>
                                         <AppBarButton Width="50" Height="50" Icon="More" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
                                         <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
                                     </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListViewItem>
-                                <Grid Visibility="Visible" Margin="0,0,0,2" Background="{ThemeResource KuGou-List-Background}" Height="50" BorderThickness="0,0,0,2" VerticalAlignment="Top">
-                                    <StackPanel Margin="15,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" FontSize="16">
-                        							<Run Text="别让我放不下"/>
-                                            </TextBlock>
-                                            <Image Margin="10,0,0,0" Height="13" Width="20" Source="ms-appx:///Assets/image/mvicon.png" Stretch="Fill"></Image>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front1}">
-                        								<Run Text="童可可"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </StackPanel>
-                                    <AppBarButton Width="50" Height="50" Icon="More" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
-                                    <AppBarButton Margin="0,0,50,0" Width="50" Height="50" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}"/>
-                                </Grid>
-                            </ListViewItem>
-                        </ListView>
+                                </ListViewItem>
+                            </ListView>
+                        </Grid>
                     </ScrollViewer>
                 </FlipViewItem>
                 <FlipViewItem>
@@ -175,6 +187,8 @@
                 </FlipViewItem>
             </FlipView>
         </Grid>
+        <user:PlayerSmall  VerticalAlignment="Bottom" Height="63"></user:PlayerSmall>
+        <user:SongMultipleBox Height="60" x:Name="MoreSongBox" VerticalAlignment="Bottom"></user:SongMultipleBox>
         <ProgressRing Width="100" Height="100" x:Name="LoadProcess"></ProgressRing>
     </Grid>
 </Page>

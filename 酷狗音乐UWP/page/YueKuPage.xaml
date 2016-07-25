@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:usercon="using:酷狗音乐UWP.UserControlClass"
     mc:Ignorable="d">
-
     <Grid Background="{ThemeResource KuGou-Background}">
         <Grid Height="50" VerticalAlignment="Top">
             <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
@@ -180,7 +179,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -196,7 +195,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -212,7 +211,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Grid.Row="1" Foreground="{ThemeResource KuGou-Front1}" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -228,7 +227,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Grid.Row="1" Foreground="{ThemeResource KuGou-Front1}" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -244,7 +243,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Grid.Row="1" Foreground="{ThemeResource KuGou-Front1}" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -260,7 +259,7 @@
                 						<Run Text="{Binding play_count}"/>
                                                 </TextBlock>
                                             </Grid>
-                                            <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Grid.Row="1" Foreground="{ThemeResource KuGou-Front1}" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
@@ -288,7 +287,7 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Grid.Row="1" Foreground="{ThemeResource KuGou-Front1}" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                             <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
@@ -304,7 +303,7 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                             <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
@@ -320,7 +319,7 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding imgurl}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                             <FontIcon Width="20" Height="20" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
@@ -358,10 +357,10 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front2}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -373,10 +372,10 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front2}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -388,10 +387,10 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front2}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -403,10 +402,10 @@
                                             <Grid Grid.Column="0">
                                                 <Image Height="140" Stretch="Fill" Source="{Binding mobile_banner}"/>
                                             </Grid>
-                                            <TextBlock  Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
+                                            <TextBlock Foreground="{ThemeResource KuGou-Front1}" Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="13">
                 					<Run Text="{Binding title}"/>
                                             </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front2}">
                 					<Run Text="{Binding public_time}"/>
                                             </TextBlock>
                                         </Grid>
@@ -531,7 +530,7 @@
                 </FlipViewItem>
                 <FlipViewItem Visibility="Visible">
                     <ScrollViewer>
-                        <ListView SelectionMode="Single" Margin="10,3,10,0">
+                        <ListView SelectionChanged="SingerList_SelectionChanged" SelectionMode="Single" Margin="10,3,10,0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -589,40 +588,46 @@
                     </ScrollViewer>
                 </FlipViewItem>
                 <FlipViewItem>
-                    <ScrollViewer>
-                        <Grid>
-                            <Grid Margin="10,5,10,0" Height="30" VerticalAlignment="Top">
-                                <Button Width="80" Height="30" Content="全部分类" Foreground="White" Background="{x:Null}"></Button>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Background="{ThemeResource KuGou-Foreground}" Width="50" Height="30" Content="推荐" Foreground="{ThemeResource KuGou-BackgroundColor}"></Button>
-                                    <TextBlock Margin="3,0,3,0" Foreground="{ThemeResource KuGou-Foreground}">|</TextBlock>
-                                    <Button Width="50" Height="30" Content="最新" Foreground="{ThemeResource KuGou-Foreground}" Background="{x:Null}"></Button>
-                                </StackPanel>
+                    <Grid>
+                        <ScrollViewer ViewChanged="GeDanLoadMore">
+                            <Grid>
+                                <Grid Margin="10,5,10,0" Height="30" VerticalAlignment="Top">
+                                    <Button x:Name="GeDanTypeBtn" Width="80" Height="30" Content="全部分类" Foreground="White" Background="{x:Null}">
+                                        <Button.Flyout>
+                                            <MenuFlyout x:Name="GeDanTypeMenu">
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                    <ComboBox x:Name="GeDanSortBox" Margin="5,0,0,0" SelectedIndex="1" HorizontalAlignment="Right">
+                                        <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                                        <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <ListView x:Name="GeDanListView" Margin="10,38,10,0">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="BorderBrush" Value="#7F808080"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Margin" Value="0,0,0,2"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="{ThemeResource KuGou-List-Background}" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                                <Image Width="80" Height="80" Stretch="UniformToFill" Source="{Binding imgurl}" HorizontalAlignment="Left"/>
+                                                <StackPanel Margin="90,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding specialname}"></TextBlock>
+                                                    <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding playcount}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
-                            <ListView x:Name="GeDanListView" Margin="10,38,10,0">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                        <Setter Property="BorderBrush" Value="#7F808080"/>
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="Margin" Value="0,0,0,2"/>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="{ThemeResource KuGou-List-Background}" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
-                                            <Image Width="80" Height="80" Stretch="UniformToFill" Source="{Binding imgurl}" HorizontalAlignment="Left"/>
-                                            <StackPanel Margin="90,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding specialname}"></TextBlock>
-                                                <TextBlock Margin="5,0,0,0" FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding playcount}"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            <ProgressRing x:Name="GeDanLoadProgress" IsActive="False" Width="100" Height="100" Background="{x:Null}" />
-                        </Grid>
-                    </ScrollViewer>
+                        </ScrollViewer>
+                        <ProgressRing x:Name="GeDanLoadProgress" IsActive="False" Width="100" Height="100" Background="{x:Null}" />
+                    </Grid>
                 </FlipViewItem>
             </FlipView>
         </Grid>

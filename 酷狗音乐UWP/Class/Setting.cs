@@ -70,6 +70,63 @@ namespace 酷狗音乐UWP.Class
                 }
             }
         }
+        public class DownQu
+        {
+            public enum Type
+            {
+                low, mid, high
+            }
+            public static Type SIM
+            {
+                get
+                {
+                    if (!localSettings.Values.ContainsKey("DownSIMQu"))
+                    {
+                        localSettings.Values["DownSIMQu"] = 0;
+                        return Type.low;
+                    }
+                    else
+                    {
+                        return (Type)(int)localSettings.Values["DownSIMQu"];
+                    }
+                }
+                set
+                {
+                    localSettings.Values["DownSIMQu"] = (int)value;
+                }
+            }
+            public static Type WLAN
+            {
+                get
+                {
+                    if (!localSettings.Values.ContainsKey("DownWLANQu"))
+                    {
+                        localSettings.Values["DownWLANQu"] = 2;
+                        return Type.high;
+                    }
+                    else
+                    {
+                        return (Type)(int)localSettings.Values["DownWLANQu"];
+                    }
+                }
+                set
+                {
+                    localSettings.Values["DownWLANQu"] = (int)value;
+                }
+            }
+            public static new Type GetType()
+            {
+                ConnectionProfile InternetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
+                if (InternetConnectionProfile.IsWlanConnectionProfile)
+                {
+                    return WLAN;
+                }
+                else
+                {
+                    return SIM;
+                }
+            }
+        }
         public class Theme
         {
             public enum Type

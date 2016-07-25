@@ -57,7 +57,8 @@
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
-        <user:PlayerSmall></user:PlayerSmall>
+        <user:PlayerSmall Height="63" VerticalAlignment="Bottom"></user:PlayerSmall>
+        <user:SongMultipleBox x:Name="MoreSongBox" Height="60" VerticalAlignment="Bottom"></user:SongMultipleBox>
         <ProgressRing x:Name="SongLoadProgress" Height="100" Width="100"></ProgressRing>
     </Grid>
 </Page>
