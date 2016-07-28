@@ -6,20 +6,103 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <CollectionViewSource x:Name="mvitemcollectSource" IsSourceGrouped="True" ItemsPath="MVContent"></CollectionViewSource>
+    </UserControl.Resources>
     <Grid>
-        <Grid Height="160" VerticalAlignment="Top">
-            <FlipView x:Name="BannerView" Height="160" VerticalAlignment="Top" SelectionChanged="BannerView_SelectionChanged" Tapped="BannerView_Tapped">
-                <FlipView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding imgurl}" Stretch="Fill"></Image>
-                    </DataTemplate>
-                </FlipView.ItemTemplate>
-            </FlipView>
-            <Grid Height="15" VerticalAlignment="Bottom" Background="#99575555">
-                <TextBlock x:Name="BannerTitle" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="AliceBlue" FontSize="14"></TextBlock>
-                <StackPanel x:Name="BannerPanel" Height="15" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right"></StackPanel>
+        <Grid>
+            <local:PicsFlipView x:Name="picview" Height="160" VerticalAlignment="Top"></local:PicsFlipView>
+            <Grid Height="60" Margin="5,165,5,5" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Tag="40" Click="TuiJianTopBtn_CLicked" Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">内地</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Tag="41" Click="TuiJianTopBtn_CLicked" Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">港台</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Tag="43" Click="TuiJianTopBtn_CLicked" Margin="2,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">韩国</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Tag="44" Click="TuiJianTopBtn_CLicked" Margin="2,0,0,0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">欧美</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Grid Margin="5,230,5,0">
+                <SemanticZoom>
+                    <SemanticZoom.ZoomedInView>
+                        <ListView x:Name="ZoomInView">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0,0,0,5"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock Text="{Binding key}" Foreground="White" FontSize="18"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="-10,0" Height="160">
+                                        <Grid.Background>
+                                            <ImageBrush Stretch="Fill" ImageSource="{Binding imgurl}"/>
+                                        </Grid.Background>
+                                        <Grid>
+                                            <Grid.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#CC252525" Offset="0.952"/>
+                                                    <GradientStop Color="Transparent" Offset="0.538"/>
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
+                                            <TextBlock Margin="5,0,0,5" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="White"><Run Text="{Binding filename}"></Run><Run>-</Run><Run Text="{Binding singername}"></Run></TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </SemanticZoom.ZoomedInView>
+                    <SemanticZoom.ZoomedOutView>
+                        <ListView x:Name="ZoomOutView">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Margin" Value="-12,0,-12,5"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="50" Background="{ThemeResource KuGou-List-Background}">
+                                        <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding Group.key}"></TextBlock>
+                                        <Button Visibility="Collapsed" Width="50" Height="50" Content="更多" HorizontalAlignment="Right" Foreground="{ThemeResource KuGou-Front1}" Background="{x:Null}"></Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </SemanticZoom.ZoomedOutView>
+                </SemanticZoom>
             </Grid>
         </Grid>
+        <ProgressRing x:Name="LoadProcess" Width="100" Height="100"></ProgressRing>
     </Grid>
 </UserControl>

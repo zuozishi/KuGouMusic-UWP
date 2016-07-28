@@ -151,6 +151,7 @@ namespace 酷狗音乐UWP.page
                             case Class.Setting.Qu.Type.mid:
                                 if (hash_320 != "")
                                 {
+                                    hash = hash_320;
                                     return await Class.kugou.get_musicurl_by_hash(hash_320);
                                 }
                                 else
@@ -160,12 +161,14 @@ namespace 酷狗音乐UWP.page
                             case Class.Setting.Qu.Type.high:
                                 if (hash_sq != null)
                                 {
+                                    hash = hash_sq;
                                     return await Class.kugou.get_musicurl_by_hash(hash_sq);
                                 }
                                 else
                                 {
                                     if (hash_320 != "")
                                     {
+                                        hash = hash_320;
                                         return await Class.kugou.get_musicurl_by_hash(hash_320);
                                     }
                                     else
@@ -212,6 +215,7 @@ namespace 酷狗音乐UWP.page
                     music.imgurl = "ms-appx:///Assets/image/songimg.png";
                 }
                 music.url = await GetUrl();
+                music.hash = hash;
                 music.albumid = "";
                 return music;
             }

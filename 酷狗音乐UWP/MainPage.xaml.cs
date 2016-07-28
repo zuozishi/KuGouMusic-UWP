@@ -24,6 +24,8 @@ using Windows.Media.Core;
 using static 酷狗音乐UWP.Class.Model.LocalList;
 using Windows.ApplicationModel.Background;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Shapes;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -41,7 +43,6 @@ namespace 酷狗音乐UWP
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            Storyboard_SearchBox.Begin();
             init();
             注册后台服务();
         }
@@ -70,6 +71,24 @@ namespace 酷狗音乐UWP
             }
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (Class.UserManager.isLogin())
+            {
+                var ellipse = new Ellipse();
+                ellipse.Width = 45;
+                ellipse.Height = 45;
+                ellipse.Margin = new Thickness(-10);
+                var imgsource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(Class.UserManager.GetData(Class.UserManager.Type.pic)) };
+                ellipse.Fill = new ImageBrush() { ImageSource = imgsource };
+                UserLoginBtn.Content = ellipse;
+            }
+            else
+            {
+                UserLoginBtn.Content = new SymbolIcon(Symbol.Contact2);
+            }
+        }
+
         private async void init()
         {
             LoadProgress.IsActive = true;
@@ -88,7 +107,7 @@ namespace 酷狗音乐UWP
                 await datafolder.CreateFileAsync("playlist.json", CreationCollisionOption.ReplaceExisting);
                 localSettings.Values["isfirst"] = true;
             }
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[1].Value as ResourceDictionary;
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
@@ -101,6 +120,19 @@ namespace 酷狗音乐UWP
             titleBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
             titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
             titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
+            if (Class.UserManager.isLogin())
+            {
+                var ellipse = new Ellipse();
+                ellipse.Width = 45;
+                ellipse.Height = 45;
+                ellipse.Margin = new Thickness(-10);
+                var imgsource= new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(Class.UserManager.GetData(Class.UserManager.Type.pic)) };
+                ellipse.Fill= new ImageBrush() { ImageSource = imgsource};
+                UserLoginBtn.Content = ellipse;
+            }else
+            {
+                UserLoginBtn.Content = new SymbolIcon(Symbol.Contact2);
+            }
             //await Class.Model.PlayList.Clear();
             KanPagePanel.LoadData();
             await init_local_list();
@@ -132,9 +164,12 @@ namespace 酷狗音乐UWP
         private async Task init_local_list()
         {
             var Items = await Class.Model.LocalList.GetList();
-            this.itemcollectSource.Source = Items;
-            ZoomOutView.ItemsSource = itemcollectSource.View.CollectionGroups;
-            ZoomInView.ItemsSource = itemcollectSource.View;
+            if (Items != null)
+            {
+                this.itemcollectSource.Source = Items;
+                ZoomOutView.ItemsSource = itemcollectSource.View.CollectionGroups;
+                ZoomInView.ItemsSource = itemcollectSource.View;
+            }
         }
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
@@ -222,10 +257,44 @@ namespace 酷狗音乐UWP
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void UserLoginBtn_Click(object sender, RoutedEventArgs e)
         {
             //Frame.Navigate(typeof(page.WebPage), "http://m.kugou.com/song/static/index.html");
-            Frame.Navigate(typeof(page.SingerPage),"89958");
+            if (Class.UserManager.isLogin())
+            {
+                var menu= new MessageDialog("是否注销当前用户?");
+                UICommand cmdOK = new UICommand("确定",new UICommandInvokedHandler(UnloginOnCommandAct),1);
+                UICommand cmdCancel = new UICommand("取消", new UICommandInvokedHandler(UnloginOnCommandAct), 2);
+                menu.Commands.Add(cmdOK);
+                menu.Commands.Add(cmdCancel);
+                await menu.ShowAsync();
+            }
+            else
+            {
+                Frame.Navigate(typeof(page.LoginPage));
+            }
+        }
+
+        private void UnloginOnCommandAct(IUICommand command)
+        {
+            if((int)(command.Id)==1)
+            {
+                Class.UserManager.unLogin();
+            }
+            if (Class.UserManager.isLogin())
+            {
+                var ellipse = new Ellipse();
+                ellipse.Width = 45;
+                ellipse.Height = 45;
+                ellipse.Margin = new Thickness(-10);
+                var imgsource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(Class.UserManager.GetData(Class.UserManager.Type.pic)) };
+                ellipse.Fill = new ImageBrush() { ImageSource = imgsource };
+                UserLoginBtn.Content = ellipse;
+            }
+            else
+            {
+                UserLoginBtn.Content = new SymbolIcon(Symbol.Contact2);
+            }
         }
 
         private void TopBtn_Clicked(object sender, RoutedEventArgs e)
@@ -303,12 +372,24 @@ namespace 酷狗音乐UWP
 
         private void CloudMuiscBtn_Clicked(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.MyMusicListPage));
+            if (Class.UserManager.isLogin())
+            {
+                Frame.Navigate(typeof(page.MyMusicListPage));
+            }
+            else
+            {
+                Class.UserManager.ShowLoginUI();
+            }
         }
 
         private void SettingBtnClicked(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(page.SettingPage));
+        }
+
+        private void HistoryBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(page.HistoryPage));
         }
     }
 }

@@ -78,7 +78,7 @@ namespace KG_ClassLibrary
                 }
                 //string name = uri.ToString().Substring(uri.ToString().LastIndexOf("/"), uri.ToString().Length);
                 string name = filename + extname; ;
-                StorageFile file = await folder.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
+                StorageFile file = await folder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
                 downloader.FailureToastNotification = DownloadedToast.Done(filename, DownloadedToast.DownResult.Fa);
                 downloader.SuccessToastNotification = DownloadedToast.Done(filename, DownloadedToast.DownResult.Su);
                 var download = downloader.CreateDownload(new Uri(url), file);
@@ -92,6 +92,7 @@ namespace KG_ClassLibrary
                 transfers.Add(transfer);
                 Progress<DownloadOperation> progressCallback = new Progress<DownloadOperation>(DownloadProgress);
                 download.StartAsync().AsTask(cancelToken.Token, progressCallback);
+                await new MessageDialog("已加入下载列表！").ShowAsync();
             }
             catch
             {

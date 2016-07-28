@@ -44,7 +44,7 @@
                             <Grid Margin="10,0,10,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="160"/>
-                                    <RowDefinition Height="68"/>
+                                    <RowDefinition Height="60"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -62,25 +62,21 @@
                                     </Grid.ColumnDefinitions>
                                     <Button Margin="0,0,2,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Clock"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专区</TextBlock>
                                         </StackPanel>
                                     </Button>
-                                    <Button Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                                    <Button Click="MVBtn_Click" Margin="2,0,2,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="Download"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">MV</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <Button Margin="2,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="List"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专题</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <Button Margin="2,0,0,0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <SymbolIcon Margin="-5,0,0,0" Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="List"></SymbolIcon>
                                             <TextBlock Foreground="#FF016E9B" VerticalAlignment="Center" FontSize="18">专辑</TextBlock>
                                         </StackPanel>
                                     </Button>
@@ -167,7 +163,7 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid x:Name="recommend1" Margin="3" Grid.Row="0" Grid.Column="0" Height="150" VerticalAlignment="Top">
+                                        <Grid x:Name="recommend1" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="0" Grid.Column="0" Height="150" VerticalAlignment="Top">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -183,7 +179,7 @@
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="recommend2" Margin="3" Grid.Row="0" Grid.Column="1" Height="150">
+                                        <Grid x:Name="recommend2" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="0" Grid.Column="1" Height="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -199,7 +195,7 @@
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="recommend3" Margin="3" Grid.Row="0" Grid.Column="3" Height="150">
+                                        <Grid x:Name="recommend3" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="0" Grid.Column="3" Height="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -215,7 +211,7 @@
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="recommend4" Margin="3" Grid.Row="1" Grid.Column="0" Height="150">
+                                        <Grid x:Name="recommend4" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="1" Grid.Column="0" Height="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -231,7 +227,7 @@
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="recommend5" Margin="3" Grid.Row="1" Grid.Column="1" Height="150">
+                                        <Grid x:Name="recommend5" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="1" Grid.Column="1" Height="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -247,7 +243,7 @@
                 					<Run Text="{Binding specialname}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="recommend6" Margin="3" Grid.Row="1" Grid.Column="2" Height="150">
+                                        <Grid x:Name="recommend6" Tapped="HotGeDan_Tapped" Margin="3" Grid.Row="1" Grid.Column="2" Height="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="20"/>
@@ -279,7 +275,7 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid x:Name="specialView1" Margin="3" Grid.Column="0">
+                                        <Grid x:Name="specialView1" Tapped="Special_Tapped" Margin="3" Grid.Column="0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="40"/>
@@ -295,7 +291,7 @@
                 					<Run Text="{Binding play_count}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="specialView2" Margin="3" Grid.Column="1">
+                                        <Grid x:Name="specialView2" Tapped="Special_Tapped" Margin="3" Grid.Column="1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="40"/>
@@ -311,7 +307,7 @@
                 					<Run Text="{Binding play_count}"/>
                                             </TextBlock>
                                         </Grid>
-                                        <Grid x:Name="specialView3" Margin="3" Grid.Column="2">
+                                        <Grid x:Name="specialView3" Tapped="Special_Tapped" Margin="3" Grid.Column="2">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="40"/>
@@ -599,11 +595,11 @@
                                         </Button.Flyout>
                                     </Button>
                                     <ComboBox x:Name="GeDanSortBox" Margin="5,0,0,0" SelectedIndex="1" HorizontalAlignment="Right">
-                                        <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
-                                        <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                                        <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Front1}"></ComboBoxItem>
+                                        <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Front1}"></ComboBoxItem>
                                     </ComboBox>
                                 </Grid>
-                                <ListView x:Name="GeDanListView" Margin="10,38,10,0">
+                                <ListView x:Name="GeDanListView" SelectionChanged="GeDanListView_SelectionChanged" Margin="10,38,10,0">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

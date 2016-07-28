@@ -639,6 +639,14 @@ namespace 酷狗音乐UWP.UserControlClass
                     }
                     obj2.SelectedIndex = -1;
                     break;
+                case 3:
+                    var obj3=sender as ListView;
+                    if (obj3.SelectedItem != null)
+                    {
+                        var songlist= (Model.SearchResultModel.SongList)obj3.SelectedItem;
+                        mainframe.Navigate(typeof(page.SongListPage), new string[] { songlist.specialid.ToString(),songlist.specialname});
+                    }
+                    break;
                 default:
                     break;
             }

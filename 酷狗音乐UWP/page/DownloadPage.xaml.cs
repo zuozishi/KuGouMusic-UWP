@@ -28,6 +28,7 @@ namespace 酷狗音乐UWP.page
     public sealed partial class DownloadPage : Page
     {
         private BackgroundDownload.ResultData songresult;
+        private BackgroundDownload.ResultData mvresult;
 
         public ObservableCollection<DownloadManager.DownloadModel> SongDowns { get; private set; }
 
@@ -41,16 +42,17 @@ namespace 酷狗音乐UWP.page
             init();
         }
 
-        private async void init()
+        private void init()
         {
             //await KG_ClassLibrary.BackgroundDownload.Start("123444.flac", "http://fs.pc.kugou.com/201607200123/005f3d8bbfdde9b4111164787f8a622b/G001/M07/07/1F/QQ0DAFSTAB6Aebl0AcQxqCQQQSM04.flac", KG_ClassLibrary.BackgroundDownload.DownloadType.song);
             GetSongDowning();
+            GetMVDowning();
         }
 
         private async void GetSongDowning()
         {
             //await Task.Delay(3000);
-            songresult= await BackgroundDownload.GetList(KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+            songresult= await BackgroundDownload.GetList(BackgroundDownload.DownloadType.song);
             if(songresult!=null)
             {
                 SongDowningList.ItemsSource = songresult.transfers;
@@ -62,14 +64,47 @@ namespace 酷狗音乐UWP.page
             }
         }
 
+        private async void GetMVDowning()
+        {
+            mvresult = await BackgroundDownload.GetList(BackgroundDownload.DownloadType.mv);
+            if (mvresult != null)
+            {
+                MVDowningList.ItemsSource = mvresult.transfers;
+            }
+            LocalMVList.Items.Clear();
+            foreach (var file in mvresult.files)
+            {
+                LocalMVList.Items.Add(file);
+            }
+        }
+
         private void TopBtnClicked(object sender, RoutedEventArgs e)
         {
-
+            var btn = sender as Button;
+            flipview.SelectedIndex = btn.TabIndex;
         }
 
         private void BackBtn_Clicked(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
+        }
+
+        private void flipview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var view = sender as FlipView;
+            switch (view.SelectedIndex)
+            {
+                case 0:
+                    SongList_Btn.BorderThickness = new Thickness(0, 0, 0, 2);
+                    MVList_Btn.BorderThickness = new Thickness(0);
+                    break;
+                case 1:
+                    SongList_Btn.BorderThickness = new Thickness(0);
+                    MVList_Btn.BorderThickness = new Thickness(0,0,0,2);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -23,12 +23,14 @@ namespace 酷狗音乐UWP.UserControlClass
         private List<string> titledata;
         private DispatcherTimer timer = new DispatcherTimer();
         private int thispage = 0;
+        public FlipView picflipview;
 
         public PicsFlipView()
         {
             this.InitializeComponent();
             timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += Timer_Tick;
+            picflipview = flipview;
         }
 
         private void Timer_Tick(object sender, object e)

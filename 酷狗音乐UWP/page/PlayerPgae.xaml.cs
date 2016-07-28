@@ -47,8 +47,8 @@ namespace 酷狗音乐UWP.page
         private async void init()
         {
             BackgroundMedia = Class.MediaControl.GetCurrent();
-            ProcessTimer.Interval = TimeSpan.FromSeconds(60);
-            PicTimer.Interval = TimeSpan.FromSeconds(15);
+            ProcessTimer.Interval = TimeSpan.FromMilliseconds(800);
+            PicTimer.Interval = TimeSpan.FromSeconds(60);
             PicTimer.Tick += (s, e) =>
            {
                if(PlayerFlip.SelectedIndex==1)

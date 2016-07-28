@@ -46,6 +46,7 @@ namespace 酷狗音乐UWP.Class
                             case Setting.Qu.Type.mid:
                                 if (hash320 != "")
                                 {
+                                    hash = hash320;
                                     return await Class.kugou.get_musicurl_by_hash(hash320);
                                 }
                                 else
@@ -55,12 +56,14 @@ namespace 酷狗音乐UWP.Class
                             case Setting.Qu.Type.high:
                                 if (sqhash != null)
                                 {
+                                    hash = sqhash;
                                     return await Class.kugou.get_musicurl_by_hash(sqhash);
                                 }
                                 else
                                 {
                                     if (hash320 != "")
                                     {
+                                        hash = hash320;
                                         return await Class.kugou.get_musicurl_by_hash(hash320);
                                     }
                                     else
@@ -82,6 +85,7 @@ namespace 酷狗音乐UWP.Class
                     var music = new Class.Model.Player.NowPlay();
                     music.title = filename;
                     music.url = await GetUrl();
+                    music.hash = hash;
                     music.albumid = album_id;
                     if (singername.Length > 0)
                     {
@@ -490,6 +494,7 @@ namespace 酷狗音乐UWP.Class
                     var json = await Windows.Storage.FileIO.ReadTextAsync(listfile);
                     list = Class.data.DataContractJsonDeSerialize<PlayList>(json);
                     list.SongList.Add(nowplay);
+                    Class.Model.History.Add(nowplay);
                     await Windows.Storage.FileIO.WriteTextAsync(listfile,Class.data.ToJsonData(list));
                     if (isplay)
                     {
@@ -607,13 +612,14 @@ namespace 酷狗音乐UWP.Class
                     stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                     stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                     stmp.DisplayUpdater.Update();
-                    LoadUrl(list.SongList[now].url);
+                    LoadUrl(list.SongList[now]);
                 }
                 catch (Exception)
                 {
                     
                 }
             }
+
             public static async Task Next()
             {
                 try
@@ -634,7 +640,7 @@ namespace 酷狗音乐UWP.Class
                             stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                             stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                             stmp.DisplayUpdater.Update();
-                            LoadUrl(list.SongList[now].url);
+                            LoadUrl(list.SongList[now]);
                             break;
                         case PlayList.cycling.列表循环:
                             if (now == list.SongList.Count - 1)
@@ -652,7 +658,7 @@ namespace 酷狗音乐UWP.Class
                             stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                             stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                             stmp.DisplayUpdater.Update();
-                            LoadUrl(list.SongList[now].url);
+                            LoadUrl(list.SongList[now]);
                             await Windows.Storage.FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(list));
                             break;
                         case PlayList.cycling.随机播放:
@@ -664,7 +670,7 @@ namespace 酷狗音乐UWP.Class
                                 stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                                 stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                                 stmp.DisplayUpdater.Update();
-                                LoadUrl(list.SongList[now].url);
+                                LoadUrl(list.SongList[now]);
                                 await Windows.Storage.FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(list));
                             break;
                         default:
@@ -676,6 +682,7 @@ namespace 酷狗音乐UWP.Class
 
                 }
             }
+
             public static async Task Previous()
             {
                 try
@@ -696,7 +703,7 @@ namespace 酷狗音乐UWP.Class
                             stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                             stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                             stmp.DisplayUpdater.Update();
-                            LoadUrl(list.SongList[now].url);
+                            LoadUrl(list.SongList[now]);
                             break;
                         case PlayList.cycling.列表循环:
                             if (now == 0)
@@ -714,7 +721,7 @@ namespace 酷狗音乐UWP.Class
                             stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                             stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                             stmp.DisplayUpdater.Update();
-                            LoadUrl(list.SongList[now].url);
+                            LoadUrl(list.SongList[now]);
                             await Windows.Storage.FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(list));
                             break;
                         case PlayList.cycling.随机播放:
@@ -726,7 +733,7 @@ namespace 酷狗音乐UWP.Class
                             stmp.DisplayUpdater.MusicProperties.Title = list.SongList[now].title;
                             stmp.DisplayUpdater.MusicProperties.Artist = list.SongList[now].singername;
                             stmp.DisplayUpdater.Update();
-                            LoadUrl(list.SongList[now].url);
+                            LoadUrl(list.SongList[now]);
                             await Windows.Storage.FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(list));
                             break;
                         default:
@@ -738,12 +745,20 @@ namespace 酷狗音乐UWP.Class
 
                 }
             }
-            private static void LoadUrl(string url)
+
+            private async static void LoadUrl(Class.Model.Player.NowPlay nowplay)
             {
                 try
                 {
                     var data = new ValueSet();
-                    data["path"] = url;
+                    if (nowplay.hash != null&&nowplay.hash!="")
+                    {
+                        data["path"] = await Class.kugou.get_musicurl_by_hash(nowplay.hash);
+                    }
+                    else
+                    {
+                        data["path"] = nowplay.url;
+                    }
                     BackgroundMediaPlayer.SendMessageToBackground(data);
                 }
                 catch (Exception)
@@ -751,6 +766,7 @@ namespace 酷狗音乐UWP.Class
                     
                 }
             }
+
             private static async Task<bool> IsNowPlay(Player.NowPlay nowplay)
             {
                 try
@@ -769,6 +785,110 @@ namespace 酷狗音乐UWP.Class
                 {
                     return false;
                 }
+            }
+        }
+        public class History
+        {
+            public class HistoryMV
+            {
+                public string title { get; set; }
+                public string singer { get; set; }
+                public string hash { get; set; }
+            }
+            public class songflag { }
+            public class mvflag { }
+            public async static void Add(Player.NowPlay nowplay)
+            {
+                bool isadd = true;
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historysong.json",CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
+                if (data == null)
+                {
+                    data = new List<Player.NowPlay>();
+                }
+                foreach (var item in data)
+                {
+                    if (item.title == nowplay.title && item.singername == nowplay.singername)
+                    {
+                        isadd = false;
+                        break;
+                    }
+                }
+                if (isadd)
+                {
+                    data.Add(nowplay);
+                }
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static void Add(HistoryMV mvdata)
+            {
+                bool isadd = true;
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
+                if (data == null)
+                {
+                    data = new List<HistoryMV>();
+                }
+                foreach (var item in data)
+                {
+                    if (item.title == mvdata.title && item.singer == mvdata.singer)
+                    {
+                        isadd = false;
+                    }
+                }
+                if (isadd)
+                {
+                    data.Add(mvdata);
+                }
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static void Remove(Player.NowPlay nowplay)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historysong.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
+                data.Remove(nowplay);
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static void Remove(HistoryMV mvdata)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
+                data.Remove(mvdata);
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static void Clear(songflag song)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historysong.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
+                data.Clear();
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static void Clear(mvflag mv)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
+                data.Clear();
+                await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
+            }
+            public async static Task<List<Player.NowPlay>> Get(songflag song)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historysong.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
+                return data;
+            }
+            public async static Task<List<HistoryMV>> Get(mvflag mv)
+            {
+                var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+                var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
+                var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
+                return data;
             }
         }
         public class LocalList

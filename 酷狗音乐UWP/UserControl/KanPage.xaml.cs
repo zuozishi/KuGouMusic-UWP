@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -22,128 +24,206 @@ namespace 酷狗音乐UWP.UserControlClass
 {
     public sealed partial class KanPage : UserControl
     {
-        private DispatcherTimer BannerTimer = new DispatcherTimer();
+        private List<BannerData> bannerdata;
+        Frame mainFrame = Window.Current.Content as Frame;
+
         public KanPage()
         {
             this.InitializeComponent();
         }
-        
-        public void LoadData()
+        public async void LoadData()
         {
-            //LoadBanner();
+            LoadProcess.IsActive = true;
+            await LoadBannerData();
+            await LoadMVData();
+            LoadProcess.IsActive = false;
         }
 
-        private async void LoadBanner()
+        private async Task LoadMVData()
         {
-            BannerTimer.Interval = TimeSpan.FromSeconds(5);
-            BannerTimer.Tick += (s, e) =>
+            var mvdata = await MVDataInGroup.GetData();
+            this.mvitemcollectSource.Source = mvdata;
+            ZoomOutView.ItemsSource = mvitemcollectSource.View.CollectionGroups;
+            ZoomInView.ItemsSource = mvitemcollectSource.View;
+            ZoomInView.SelectionMode = ListViewSelectionMode.Extended;
+            ZoomInView.SelectionChanged += ZoomInView_SelectionChanged;
+        }
+
+        public async Task LoadBannerData()
+        {
+            bannerdata = await BannerData.GetBanner();
+            var piclist = new List<string>();
+            foreach (var item in bannerdata)
             {
-                if (BannerView.SelectedIndex == BannerView.Items.Count - 1)
-                {
-                    BannerView.SelectedIndex = 0;
-                }
-                else
-                {
-                    BannerView.SelectedIndex = BannerView.SelectedIndex + 1;
-                }
-            };
-            if(BannerView.Items.Count==0)
-            {
-                var BannerData = await GetBanner();
-                //<Image Source="http://imge.kugou.com/mobilebanner/20160708/20160708172910957734.jpg" Stretch="Fill"></Image>
-                //<Ellipse Margin="0,0,5,0" Width="10" Height="10" Fill="#7FFFFFFF"></Ellipse>
-                BannerTitle.Text = BannerData[0].title;
-                for (int i = 0; i < BannerData.Count; i++)
-                {
-                    BannerView.Items.Add(BannerData[i]);
-                    var ellipse = new Ellipse();
-                    ellipse.Margin = new Thickness() { Right = 5 };
-                    ellipse.Width = 10;
-                    ellipse.Height = 10;
-                    if (i == 0)
-                    {
-                        ellipse.Fill = new SolidColorBrush(Colors.White);
-                    }
-                    else
-                    {
-                        ellipse.Fill = new SolidColorBrush(Color.FromArgb(50, 255, 255, 255));
-                    }
-                    BannerPanel.Children.Add(ellipse);
-                }
-                BannerTimer.Start();
+                piclist.Add(item.bannerurl);
             }
+            picview.SetItems(piclist);
+            picview.picflipview.Tapped += Picflipview_Tapped; ;
         }
 
-        private async Task<List<BannerModel>> GetBanner()
-        {
-            var httpclient = new Noear.UWP.Http.AsyncHttpClient();
-            httpclient.Url("http://service.mobile.kugou.com/v1/show/banner?type=1&plat=0&version=8150");
-            var json = (await httpclient.Get()).GetString();
-            var obj = Windows.Data.Json.JsonObject.Parse(json);
-            var bannerdata = new List<BannerModel>();
-            var banners = obj.GetNamedObject("data").GetNamedArray("info");
-            foreach (var item in banners)
-            {
-                var banner = Class.data.DataContractJsonDeSerialize<BannerModel>(item.ToString());
-                bannerdata.Add(banner);
-            }
-            return bannerdata;
-        }
-
-        public class BannerModel
-        {
-            public int type { get; set; }
-            public string title { get; set; }
-            public string imgurl { get; set; }
-            public ExtraModel extra { get; set; }
-        }
-
-        public class ExtraModel
-        {
-            public int vid { get; set; }
-            public string mvhash { get; set; }
-            public string url { get; set; }
-        }
-
-        private void BannerView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                var thispage = ((FlipView)sender).SelectedIndex;
-                var item= (BannerModel)((FlipView)sender).SelectedItem;
-                BannerTitle.Text = item.title;
-                var ellipes = new List<Ellipse>();
-                foreach (var items in BannerPanel.Children)
-                {
-                    ((Ellipse)items).Fill = new SolidColorBrush(Color.FromArgb(50, 255, 255, 255));
-                    ellipes.Add((Ellipse)items);
-                }
-                ellipes[thispage].Fill = new SolidColorBrush(Colors.White);
-            }
-            catch (Exception)
-            {
-                
-            }
-        }
-
-        private void BannerView_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Picflipview_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var view = sender as FlipView;
-            if(view.SelectedItem!=null)
+            if (view.SelectedIndex >= 0)
             {
-                var data = view.SelectedItem as BannerModel;
-                var frame = Window.Current.Content as Frame;
-                switch (data.type)
+                switch (bannerdata[view.SelectedIndex].type)
                 {
                     case 1:
-                        frame.Navigate(typeof(page.MVPlayer), data.extra.mvhash);
+                        mainFrame.Navigate(typeof(page.MVPlayer), bannerdata[view.SelectedIndex].extra.hash);
                         break;
-                    case 7:
-                        frame.Navigate(typeof(page.WebPage), data.extra.url);
+                    case 2:
+                        mainFrame.Navigate(typeof(page.SongListPage), new string[] { bannerdata[view.SelectedIndex].extra.specialid, bannerdata[view.SelectedIndex].extra.title });
                         break;
                     default:
                         break;
                 }
+            }
+        }
+
+        public class BannerData
+        {
+            public int type { get; set; }
+            public string bannerurl { get; set; }
+            public Extra extra { get; set; }
+            public class Extra
+            {
+                public string hash { get; set; }
+                public string specialid { get; set; }
+                public string title { get; set; }
+                public string url { get; set; }
+            }
+            public static async Task<List<BannerData>> GetBanner()
+            {
+                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                httpclient.Url("http://mobilecdn.kugou.com/api/v3/mv/multBanner?plat=0&version=8150");
+                var json = (await httpclient.Get()).GetString();
+                var obj = Windows.Data.Json.JsonObject.Parse(json);
+                var data = Class.data.DataContractJsonDeSerialize<List<BannerData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
+                return data;
+            }
+        }
+
+        public class MVDataInGroup
+        {
+            public string key { get; set; }
+            public List<MVData> MVContent { get; set; }
+            public static async Task<List<MVDataInGroup>> GetData()
+            {
+                var httpclient = new Noear.UWP.Http.AsyncHttpClient();
+                httpclient.Url("http://mobilecdn.kugou.com/api/v3/mv/recommend?plat=0&version=8150");
+                var json = (await httpclient.Get()).GetString();
+                json = json.Replace("{size}", "400");
+                var obj = Windows.Data.Json.JsonObject.Parse(json);
+                obj = obj.GetNamedObject("data");
+                var resultgroup = new List<MVDataInGroup>();
+                var tempmvlist = new List<MVData>();
+                var tempmvobj = obj.GetNamedArray("new");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("MV首播"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key= "MV首播", MVContent= tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("hot");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("最热MV"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "最热MV", MVContent = tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("live");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("现场"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "现场", MVContent = tempmvlist });
+                
+                tempmvobj = obj.GetNamedArray("topic");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    for (int j = 0; j < tempmvobj[i].GetObject().GetNamedArray("mvs").GetArray().Count; j++)
+                    {
+                        tempmvobj[i].GetObject().GetNamedArray("mvs").GetArray()[j].GetObject().Add("Content", JsonValue.CreateStringValue(tempmvobj[i].GetObject().GetNamedString("title")));
+                    }
+                    tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj[i].GetObject().GetNamedArray("mvs").ToString());
+                    resultgroup.Add(new MVDataInGroup() { key = tempmvobj[i].GetObject().GetNamedString("title"), MVContent = tempmvlist });
+                }
+
+                tempmvobj = obj.GetNamedArray("mainland");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("内地"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "内地", MVContent = tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("hktw");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("港台"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "港台", MVContent = tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("korea");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("韩国"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "韩国", MVContent = tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("japan");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("日本"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "日本", MVContent = tempmvlist });
+
+                tempmvobj = obj.GetNamedArray("west");
+                for (int i = 0; i < tempmvobj.Count; i++)
+                {
+                    tempmvobj[i].GetObject().Add("Content", JsonValue.CreateStringValue("欧美"));
+                }
+                tempmvlist = Class.data.DataContractJsonDeSerialize<List<MVData>>(tempmvobj.ToString());
+                resultgroup.Add(new MVDataInGroup() { key = "欧美", MVContent = tempmvlist });
+                return resultgroup;
+            }
+        }
+        public class MVData
+        {
+            public string filename { get; set; }
+            public string singername { get; set; }
+            public string hash { get; set; }
+            public string Content { get; set; }
+            public string imgurl { get; set; }
+        }
+
+        private void ZoomInView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            if (list.SelectedItem != null)
+            {
+                var data = list.SelectedItem as MVData;
+                mainFrame.Navigate(typeof(page.MVPlayer), data.hash);
+            }
+        }
+
+        public delegate void TuiJianBtnHandler(string ids);
+        public event TuiJianBtnHandler TuiJianTopBtnCLicked;
+        private void TuiJianTopBtn_CLicked(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if (TuiJianTopBtnCLicked == null)
+            {
+                mainFrame.Navigate(typeof(page.YueKu.MVPage), (string)btn.Tag);
+            }else
+            {
+                TuiJianTopBtnCLicked((string)btn.Tag);
             }
         }
     }

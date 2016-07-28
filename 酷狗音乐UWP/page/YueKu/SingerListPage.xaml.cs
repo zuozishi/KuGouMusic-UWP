@@ -24,10 +24,14 @@ namespace 酷狗音乐UWP.page.YueKu
     /// </summary>
     public sealed partial class SingerListPage : Page
     {
+        private ObservableCollection<SingerInGroup> singerlist;
+        private ObservableCollection<SingerInGroup> newgroup;
+
         public SingerListPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            ZoomInView.SelectedIndex = -1;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -53,7 +57,7 @@ namespace 酷狗音乐UWP.page.YueKu
                     singerdata.RemoveAt(0);
                 }
             }
-            var singerlist = new List<SingerInGroup>();
+            singerlist = new ObservableCollection<SingerInGroup>();
             foreach (var group in singerdata)
             {
                 var list = new SingerInGroup();
@@ -62,15 +66,32 @@ namespace 酷狗音乐UWP.page.YueKu
                 singerlist.Add(list);
             }
             this.itemcollectSource.Source = singerlist;
+            newgroup= new ObservableCollection<SingerInGroup>();
+            newgroup.Add(singerlist[0]);
+            this.singeritemcollectSource.Source = newgroup;
             ZoomOutView.ItemsSource = itemcollectSource.View.CollectionGroups;
-            ZoomInView.ItemsSource = itemcollectSource.View;
+            ZoomInView.ItemsSource = singeritemcollectSource.View;
+            ZoomInView.SelectionMode = ListViewSelectionMode.Extended;
+            ZoomInView.SelectionChanged += ZoomInView_SelectionChanged;
+            ZoomInView.SelectedIndex = -1;
             LoadProcess.IsActive = false;
+        }
+
+        private void ZoomInView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            if (list.SelectedItem != null)
+            {
+                var data = list.SelectedItem as SingerList;
+                Frame.Navigate(typeof(page.SingerPage), data.singerid);
+                list.SelectedIndex = -1;
+            }
         }
 
         public class SingerInGroup
         {
             public string Key { get; set; }
-            public List<SingerList> ItemContent { get; set; }
+            public ObservableCollection<SingerList> ItemContent { get; set; }
         }
 
         public class SingerList
@@ -83,16 +104,16 @@ namespace 酷狗音乐UWP.page.YueKu
 
         public class SingerData
         {
-            public List<SingerList> singer;
+            public ObservableCollection<SingerList> singer;
             public string title { get; set; }
-            public static async Task<List<SingerData>> LoadData(string type,string sextype)
+            public static async Task<ObservableCollection<SingerData>> LoadData(string type,string sextype)
             {
                 var httpclient = new Noear.UWP.Http.AsyncHttpClient();
                 httpclient.Url("http://mobilecdn.kugou.com/api/v3/singer/list?type="+type+"&showtype=2&sextype="+sextype+"&musician=0");
                 var json = (await httpclient.Get()).GetString();
                 json = json.Replace("{size}", "150");
                 var obj = Windows.Data.Json.JsonObject.Parse(json);
-                var data= Class.data.DataContractJsonDeSerialize<List<SingerData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
+                var data= Class.data.DataContractJsonDeSerialize<ObservableCollection<SingerData>>(obj.GetNamedObject("data").GetNamedArray("info").ToString());
                 for (int i = 0; i < data.Count; i++)
                 {
                     for (int j = 0; j < data[i].singer.Count; j++)
@@ -116,6 +137,22 @@ namespace 酷狗音乐UWP.page.YueKu
             {
                 var data = btn.DataContext as SingerList;
                 Frame.Navigate(typeof(page.SingerPage), data.singerid);
+            }
+        }
+
+        private void ZoomOutViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var border = sender as Border;
+            var data = border.DataContext as string;
+            foreach (var item in singerlist)
+            {
+                if (item.Key == data)
+                {
+                    newgroup.Clear();
+                    newgroup.Add(item);
+                    this.singeritemcollectSource.Source = newgroup;
+                    ZoomInView.ItemsSource = singeritemcollectSource.View;
+                }
             }
         }
     }

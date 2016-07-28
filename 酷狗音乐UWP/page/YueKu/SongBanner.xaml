@@ -21,8 +21,8 @@
         <Grid Margin="0,50,0,0" Height="30" VerticalAlignment="Top">
             <Button x:Name="TopMoreBtn" Background="{x:Null}" HorizontalAlignment="Right" Click="TopMoreBtn_Click">
                 <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Margin="0,0,5,0" Symbol="Edit"></SymbolIcon>
-                    <TextBlock>对多首歌曲进行操作</TextBlock>
+                    <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Margin="0,0,5,0" Symbol="Edit"></SymbolIcon>
+                    <TextBlock Foreground="{ThemeResource KuGou-Foreground}">对多首歌曲进行操作</TextBlock>
                 </StackPanel>
             </Button>
         </Grid>

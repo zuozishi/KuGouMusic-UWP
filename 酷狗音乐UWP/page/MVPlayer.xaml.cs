@@ -10,6 +10,7 @@ using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.System.Display;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,84 +30,78 @@ namespace 酷狗音乐UWP.page
     /// </summary>
     public sealed partial class MVPlayer : Page
     {
+        DispatcherTimer displayTimer = new DispatcherTimer();
+        private MVData mvdata;
+
         public MVPlayer()
         {
             this.InitializeComponent();
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            var hash = e.Parameter.ToString();
-            var data = await get_mv_url(hash);
-            try
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var dispRequest = new DisplayRequest();
                 dispRequest.RequestActive();
-                //DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
-                ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                //media.IsFullWindow = true;
+                DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
+                ApplicationView.GetForCurrentView().ExitFullScreenMode();
+            }
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var hash = e.Parameter.ToString();
+            mvdata = await get_mv_url(hash);
+            displayTimer.Interval = TimeSpan.FromSeconds(10);
+            displayTimer.Tick += DisplayTimer_Tick;
+            try
+            {
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var dispRequest = new DisplayRequest();
+                    dispRequest.RequestActive();
+                    DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
+                    ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+                }
             }
             catch (Exception)
             {
                 
             }
-            songname_text.Text = data.songname;
-            singername_text.Text = data.singer;
-            if(data.sq.downurl==null)
+            mediaTransport.DataContext = new mvinfo() { songname = mvdata.songname, singer = mvdata.singer };
+            Class.Model.History.Add(new Class.Model.History.HistoryMV() { title= mvdata.songname,singer= mvdata.singer,hash=hash});
+            if (mvdata.hasrq)
             {
-                if (data.rq.downurl == null)
+                media.Source = new Uri(mvdata.rq.downurl);
+            }else
+            {
+                if (mvdata.hassq)
                 {
-                    media.Source = new Uri(data.le.downurl);
-                }
-                else
+                    media.Source = new Uri(mvdata.sq.downurl);
+                }else
                 {
-                    media.Source = new Uri(data.rq.downurl);
+                    media.Source = new Uri(mvdata.le.downurl);
                 }
             }
-            else
+        }
+
+        public class mvinfo
+        {
+            public string songname { get; set; }
+            public string singer { get; set; }
+        }
+
+        private void DisplayTimer_Tick(object sender, object e)
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                media.Source = new Uri(data.sq.downurl);
+                var dispRequest = new DisplayRequest();
+                dispRequest.RequestActive();
             }
-            //LoadAboutData(hash);
-            //LoadfxData(data.songname);
         }
 
-        private void LoadfxData(string title)
-        {
-            
-        }
-
-        private async void LoadAboutData(string hash)
-        {
-            var httpclient = new Windows.Web.Http.HttpClient();
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var time = Convert.ToInt64(ts.TotalMilliseconds).ToString();
-            var key = Class.MD5.GetMd5String("1005Ilwieks28dk2k092lksi2UIkp8150" + time);
-            var postobj = new JsonObject();
-            postobj.Add("appid", JsonValue.CreateStringValue("1005"));
-            postobj.Add("mid", JsonValue.CreateStringValue(""));
-            postobj.Add("clientver", JsonValue.CreateStringValue("8150"));
-            postobj.Add("clienttime", JsonValue.CreateStringValue("1469035332000"));
-            postobj.Add("key", JsonValue.CreateStringValue("27b498a7d890373fadb673baa1dabf7e"));
-            var array = new JsonArray();
-            var videodata = new JsonObject();
-            videodata.Add("video_hash", JsonValue.CreateStringValue(hash));
-            videodata.Add("video_id", JsonValue.CreateNumberValue(0));
-            array.Add(videodata);
-            postobj.Add("data", array);
-            var postdata = new Windows.Web.Http.HttpStringContent(postobj.ToString());
-            var result= await httpclient.PostAsync(new Uri("http://kmr.service.kugou.com/v1/video/related"), postdata);
-            var json = await result.Content.ReadAsStringAsync();
-            json = json.Replace("{size}", "150");
-            var obj = JsonObject.Parse(json);
-            AboutMVListView.ItemsSource = Class.data.DataContractJsonDeSerialize<List<AboutMVdata>>(obj.GetNamedArray("data")[0].GetArray().ToString());
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            ApplicationView.GetForCurrentView().ExitFullScreenMode();
-            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
-        }
-        public class mvdata
+        public class MVData
         {
             public class sqmv
             {
@@ -126,20 +121,51 @@ namespace 酷狗音乐UWP.page
             public sqmv sq;
             public rqmv rq;
             public remv le;
+            public bool hassq
+            {
+                get
+                {
+                    if (sq != null && sq.downurl != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            public bool hasrq
+            {
+                get
+                {
+                    if (rq != null && rq.downurl != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            public bool hasle
+            {
+                get
+                {
+                    if (le != null && le.downurl != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
             public string songname, singer;
         }
-        public class AboutMVdata
-        {
-            public string video_name { get; set; }
-            public string author_name { get; set; }
-            public string intro { get; set; }
-            public string thumb { get; set; }
-            public string sd_hash { get; set; }
-            public string mkv_sd_hash { get; set; }
-            public string qhd_hash { get; set; }
-            public string ld_hash { get; set; }
-        }
-        public static async Task<mvdata> get_mv_url(string hash)
+        public static async Task<MVData> get_mv_url(string hash)
         {
             try
             {
@@ -152,7 +178,7 @@ namespace 酷狗音乐UWP.page
                 obj.GetNamedObject("mvdata").Add("songname", JsonValue.CreateStringValue(obj.GetNamedString("songname")));
                 obj.GetNamedObject("mvdata").Add("singer", JsonValue.CreateStringValue(obj.GetNamedString("singer")));
                 json = obj.GetNamedObject("mvdata").ToString();
-                return data.DataContractJsonDeSerialize<mvdata>(json);
+                return data.DataContractJsonDeSerialize<MVData>(json);
             }
             catch (Exception)
             {
@@ -165,28 +191,83 @@ namespace 酷狗音乐UWP.page
             Frame.GoBack();
         }
 
-        private void TopBtnClicked(object sender, RoutedEventArgs e)
+        private async void SelecionQuButton_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            flipview.SelectedIndex = btn.TabIndex;
+            var btn = sender as AppBarButton;
+            if (mvdata != null)
+            {
+                var dialog = new MessageDialog("选择播放清晰度");
+                if (mvdata.hasle)
+                {
+                    dialog.Commands.Add(new UICommand("标清", SelectionQuClicked,mvdata.le.downurl));
+                    if (media.Source.ToString() == mvdata.le.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+                if (mvdata.hassq)
+                {
+                    dialog.Commands.Add(new UICommand("高清", SelectionQuClicked, mvdata.sq.downurl));
+                    if (media.Source.ToString() == mvdata.sq.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+                if (mvdata.hasrq)
+                {
+                    dialog.Commands.Add(new UICommand("超清", SelectionQuClicked, mvdata.rq.downurl));
+                    if (media.Source.ToString() == mvdata.rq.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+                
+                await dialog.ShowAsync();
+            }
         }
 
-        private void flipview_Changed(object sender, SelectionChangedEventArgs e)
+        private void SelectionQuClicked(IUICommand command)
         {
-            var view = sender as FlipView;
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
-            switch (view.SelectedIndex)
+            media.Source = new Uri(command.Id.ToString());
+        }
+
+        private async void SelectionDownClicked(IUICommand command)
+        {
+            await KG_ClassLibrary.BackgroundDownload.Start(mvdata.singer + "-" + mvdata.songname, command.Id.ToString(), KG_ClassLibrary.BackgroundDownload.DownloadType.mv);
+        }
+
+        private async void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            if (mvdata != null)
             {
-                case 0:
-                    AboutMV_Btn.BorderBrush= (SolidColorBrush)Theme["KuGou-Foreground"];
-                    fxMVList_Btn.BorderBrush = new SolidColorBrush(Colors.Transparent);
-                    break;
-                case 1:
-                    AboutMV_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
-                    fxMVList_Btn.BorderBrush = new SolidColorBrush(Colors.White);
-                    break;
-                default:
-                    break;
+                var dialog = new MessageDialog("选择下载清晰度");
+                if (mvdata.hasle)
+                {
+                    dialog.Commands.Add(new UICommand("标清", SelectionDownClicked, mvdata.le.downurl));
+                    if (media.Source.ToString() == mvdata.le.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+                if (mvdata.hassq)
+                {
+                    dialog.Commands.Add(new UICommand("高清", SelectionDownClicked, mvdata.sq.downurl));
+                    if (media.Source.ToString() == mvdata.sq.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+                if (mvdata.hasrq)
+                {
+                    dialog.Commands.Add(new UICommand("超清", SelectionDownClicked, mvdata.rq.downurl));
+                    if (media.Source.ToString() == mvdata.rq.downurl)
+                    {
+                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
+                    }
+                }
+
+                await dialog.ShowAsync();
             }
         }
     }

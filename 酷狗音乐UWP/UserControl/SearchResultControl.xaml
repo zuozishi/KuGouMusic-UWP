@@ -193,7 +193,7 @@
                             <ProgressRing x:Name="SongLoadProgress" IsActive="True" Width="100" Height="100" Background="{x:Null}" />
                         </Grid>
                     </FlipViewItem>
-                    <FlipViewItem Visibility="Collapsed">
+                    <FlipViewItem Visibility="Visible">
                         <Grid>
                             <ScrollViewer ViewChanged="LoadMore_Changed">
                                 <ListView SelectionChanged="ListSelection_Changes" x:Name="MVResultList"  Background="{x:Null}" SelectionMode="Single">
@@ -229,7 +229,7 @@
                             <ProgressRing x:Name="MVLoadProgress" IsActive="True" Width="100" Height="100" Background="{x:Null}" />
                         </Grid>
                     </FlipViewItem>
-                    <FlipViewItem Visibility="Collapsed">
+                    <FlipViewItem Visibility="Visible">
                         <Grid>
                             <ScrollViewer ViewChanged="LoadMore_Changed">
                                 <GridView SelectionChanged="ListSelection_Changes" x:Name="AlbumResultList" Margin="10,0" HorizontalAlignment="Center" SelectionMode="Single">
@@ -272,7 +272,7 @@
                             <ProgressRing x:Name="AlbumLoadProgress" IsActive="True" Width="100" Height="100" Background="{x:Null}" />
                         </Grid>
                     </FlipViewItem>
-                    <FlipViewItem Visibility="Collapsed">
+                    <FlipViewItem Visibility="Visible">
                         <Grid>
                             <ScrollViewer ViewChanged="LoadMore_Changed">
                                 <ListView SelectionChanged="ListSelection_Changes" x:Name="SonglistResultList"  Background="{x:Null}" SelectionMode="Single">

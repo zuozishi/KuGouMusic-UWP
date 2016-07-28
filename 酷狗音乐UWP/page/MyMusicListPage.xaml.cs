@@ -33,24 +33,9 @@ namespace 酷狗音乐UWP.page
             this.InitializeComponent();
         }
 
-        private void init()
-        {
-            var localSettings = ApplicationData.Current.LocalSettings;
-            if (localSettings.Values.ContainsKey("uid"))
-            {
-                uid = (string)localSettings.Values["uid"];
-            }
-            else
-            {
-                Frame.Navigate(typeof(page.LoginPage));
-                return;
-            }
-            GetCloudList();
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            init();
+            GetCloudList();
         }
 
         private async void GetCloudList()

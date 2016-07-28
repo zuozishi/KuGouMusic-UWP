@@ -28,11 +28,18 @@ namespace 酷狗音乐UWP.Class
         }
         public static T DataContractJsonDeSerialize<T>(string json)
         {
-            var ds = new DataContractJsonSerializer(typeof(T));
-            var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
-            T obj = (T)ds.ReadObject(ms);
-            ms.Dispose();
-            return obj;
+            try
+            {
+                var ds = new DataContractJsonSerializer(typeof(T));
+                var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
+                T obj = (T)ds.ReadObject(ms);
+                ms.Dispose();
+                return obj;
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
         }
     }
 }

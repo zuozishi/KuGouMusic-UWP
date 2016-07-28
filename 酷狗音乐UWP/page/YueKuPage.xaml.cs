@@ -241,11 +241,12 @@ namespace 酷狗音乐UWP.page
         {
             try
             {
+                var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
                 var flip = sender as FlipView;
                 switch (flip.SelectedIndex)
                 {
                     case 0:
-                        TuiJian_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        TuiJian_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         PaiHang_Btn.BorderBrush = new SolidColorBrush();
                         GeShou_Btn.BorderBrush = new SolidColorBrush();
                         GeDan_Btn.BorderBrush = new SolidColorBrush();
@@ -256,7 +257,7 @@ namespace 酷狗音乐UWP.page
                         break;
                     case 1:
                         TuiJian_Btn.BorderBrush = new SolidColorBrush();
-                        PaiHang_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        PaiHang_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         GeShou_Btn.BorderBrush = new SolidColorBrush();
                         GeDan_Btn.BorderBrush = new SolidColorBrush();
                         if (paihangdata == null)
@@ -267,14 +268,14 @@ namespace 酷狗音乐UWP.page
                     case 2:
                         TuiJian_Btn.BorderBrush = new SolidColorBrush();
                         PaiHang_Btn.BorderBrush = new SolidColorBrush();
-                        GeShou_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        GeShou_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         GeDan_Btn.BorderBrush = new SolidColorBrush();
                         break;
                     case 3:
                         TuiJian_Btn.BorderBrush = new SolidColorBrush();
                         PaiHang_Btn.BorderBrush = new SolidColorBrush();
                         GeShou_Btn.BorderBrush = new SolidColorBrush();
-                        GeDan_Btn.BorderBrush = new SolidColorBrush(Colors.White);
+                        GeDan_Btn.BorderBrush = (SolidColorBrush)Theme["KuGou-Foreground"];
                         if (gedandata == null)
                         {
                             LoadGeDan();
@@ -411,6 +412,39 @@ namespace 酷狗音乐UWP.page
                 case 3:
                     Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "1", "3", "华语组合" });
                     break;
+                case 4:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "6", "1", "韩国男歌手" });
+                    break;
+                case 5:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "6", "2", "韩国女歌手" });
+                    break;
+                case 6:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "6", "3", "韩国组合" });
+                    break;
+                case 7:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "5", "1", "日本男歌手" });
+                    break;
+                case 8:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "5", "2", "日本女歌手" });
+                    break;
+                case 9:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "5", "3", "日本组合" });
+                    break;
+                case 10:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "2", "1", "欧美男歌手" });
+                    break;
+                case 11:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "2", "2", "欧美女歌手" });
+                    break;
+                case 12:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "2", "3", "欧美组合" });
+                    break;
+                case 13:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "4", "0", "其他歌手" });
+                    break;
+                case 14:
+                    Frame.Navigate(typeof(page.YueKu.SingerListPage), new string[] { "0", "0", "酷狗音乐人" });
+                    break;
                 default:
                     break;
             }
@@ -489,6 +523,41 @@ namespace 酷狗音乐UWP.page
                     await gedandata.LoadData();
                     GeDanLoadProgress.IsActive = false;
                 }
+            }
+        }
+
+        private void GeDanListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            if (list.SelectedItem != null)
+            {
+                var data = list.SelectedItem as GeDanData;
+                Frame.Navigate(typeof(page.SongListPage),new string[] { data.specialid,data.specialname});
+            }
+        }
+
+        private void MVBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(page.YueKu.MVPage));
+        }
+
+        private void HotGeDan_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            if (grid.DataContext != null)
+            {
+                var data = grid.DataContext as TuiJianData.TuiJian_recommend.extradata;
+                Frame.Navigate(typeof(page.SongListPage), new string[] { data.specialid, data.specialname });
+            }
+        }
+
+        private void Special_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            if (grid.DataContext != null)
+            {
+                var data = grid.DataContext as TuiJianData.TuiJian_custom_special.specialData;
+                Frame.Navigate(typeof(page.SongListPage), new string[] { data.specialid,data.specialname});
             }
         }
     }

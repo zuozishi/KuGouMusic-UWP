@@ -179,6 +179,7 @@
     <Compile Include="Class\MusicClass.cs" />
     <Compile Include="Class\Setting.cs" />
     <Compile Include="Class\SoundEffect.cs" />
+    <Compile Include="Class\UserManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -187,6 +188,9 @@
     </Compile>
     <Compile Include="page\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\index\music.xaml.cs">
       <DependentUpon>music.xaml</DependentUpon>
@@ -244,6 +248,9 @@
     </Compile>
     <Compile Include="page\YueKuPage.xaml.cs">
       <DependentUpon>YueKuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="page\YueKu\MVPage.xaml.cs">
+      <DependentUpon>MVPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="page\YueKu\SingerListPage.xaml.cs">
       <DependentUpon>SingerListPage.xaml</DependentUpon>
@@ -340,6 +347,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="page\HistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="page\index\music.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -413,6 +424,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="page\YueKuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="page\YueKu\MVPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

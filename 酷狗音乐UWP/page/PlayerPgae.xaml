@@ -197,7 +197,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <AppBarButton Grid.Column="0" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                    <AppBarButton Grid.Column="1" Icon="Street" Click="ShareBtn_Clicked" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="1" Click="ShareBtn_Clicked" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Icon="Street"/>
                     <AppBarButton Grid.Column="2" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
                     <AppBarButton Grid.Column="3" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
                 </Grid>

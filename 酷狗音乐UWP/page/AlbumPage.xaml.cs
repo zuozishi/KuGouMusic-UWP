@@ -158,6 +158,7 @@ namespace 酷狗音乐UWP.page
                         case Class.Setting.Qu.Type.mid:
                             if (hash320 != "")
                             {
+                                hash = hash320;
                                 return await Class.kugou.get_musicurl_by_hash(hash320);
                             }
                             else
@@ -167,12 +168,14 @@ namespace 酷狗音乐UWP.page
                         case Class.Setting.Qu.Type.high:
                             if (sqhash != null)
                             {
+                                hash = sqhash;
                                 return await Class.kugou.get_musicurl_by_hash(sqhash);
                             }
                             else
                             {
                                 if (hash320 != "")
                                 {
+                                    hash = hash320;
                                     return await Class.kugou.get_musicurl_by_hash(hash320);
                                 }
                                 else
@@ -194,6 +197,7 @@ namespace 酷狗音乐UWP.page
                 var music = new Class.Model.Player.NowPlay();
                 music.title = filename;
                 music.url = await GetUrl();
+                music.hash = hash;
                 music.albumid = "";
                 if (singername.Length > 0)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -42,22 +43,25 @@ namespace 酷狗音乐UWP.page
         private void Webview_ScriptNotify(object sender, NotifyEventArgs e)
         {
             var cookie = e.Value;
+            var localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["cookie"] = cookie;
             var cookies = cookie.Split('&');
-            string uid = "";
             foreach (var str in cookies)
             {
                 if(str.Contains("KuGoo=KugooID="))
                 {
-                    uid = str.Replace("KuGoo=KugooID=", "");
-                    break;
+                    localSettings.Values["uid"] = str.Replace("KuGoo=KugooID=", "");
+                }
+                if (str.Contains("Pic="))
+                {
+                    localSettings.Values["userpic"] = System.Net.WebUtility.UrlDecode(str.Replace("Pic=", ""));
+                }
+                if (str.Contains("NickName="))
+                {
+                    localSettings.Values["username"] = System.Net.WebUtility.UrlDecode(str.Replace("NickName=", ""));
                 }
             }
-            if(uid!="")
-            {
-                var localSettings = ApplicationData.Current.LocalSettings;
-                localSettings.Values["uid"] = uid;
-                Frame.GoBack();
-            }
+            Frame.GoBack();
         }
 
         private async void Webview_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
