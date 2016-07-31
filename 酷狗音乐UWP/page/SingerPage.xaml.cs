@@ -123,7 +123,7 @@ namespace 酷狗音乐UWP.page
         {
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+                var Theme = Application.Current.Resources.MergedDictionaries[0] as ResourceDictionary;
                 var applicationView = ApplicationView.GetForCurrentView();
                 applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
                 StatusBar statusBar = StatusBar.GetForCurrentView();
@@ -562,6 +562,7 @@ namespace 酷狗音乐UWP.page
                 }
                 else
                 {
+                    SongList.SelectedItems.Clear();
                     SongList.SelectionMode = ListViewSelectionMode.Single;
                     MoreSongBox.Hidden();
                 }

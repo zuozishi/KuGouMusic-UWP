@@ -33,7 +33,7 @@
                             <ProgressBar Value="{Binding Progress}" Grid.Row="1" VerticalAlignment="Center"></ProgressBar>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <AppBarButton Width="50" Height="50" Icon="Delete"></AppBarButton>
+                            <AppBarButton Width="50" Height="50" Icon="Delete" DataContext="{Binding}" Click="DownItemDel"></AppBarButton>
                         </Grid>
                     </Grid>
                 </Setter.Value>
@@ -65,7 +65,7 @@
                             <TextBlock Grid.Row="1" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front2}">点击继续下载</TextBlock>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <AppBarButton Width="50" Height="50" Icon="Delete"></AppBarButton>
+                            <AppBarButton Width="50" Height="50" Icon="Delete" DataContext="{Binding}" Click="DownItemDel"></AppBarButton>
                         </Grid>
                     </Grid>
                 </Setter.Value>
@@ -91,7 +91,7 @@
                             <TextBlock Grid.Row="1" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding alert}"></TextBlock>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <AppBarButton Width="50" Height="50" Icon="Delete"></AppBarButton>
+                            <AppBarButton Width="50" Height="50" Icon="Delete"  DataContext="{Binding}" Click="DownItemDel"></AppBarButton>
                         </Grid>
                     </Grid>
                 </Setter.Value>
@@ -119,7 +119,7 @@
                     <RowDefinition Height="3" />
                 </Grid.RowDefinitions>
                 <Button x:Name="SongList_Btn" BorderBrush="White" TabIndex="0" Grid.Column="0" Background="{x:Null}" Content="单曲" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
-                <Button x:Name="MVList_Btn" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="MV" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,2" Click="TopBtnClicked"></Button>
+                <Button x:Name="MVList_Btn" BorderBrush="White" TabIndex="1" Grid.Column="1" Background="{x:Null}" Content="MV" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Click="TopBtnClicked"></Button>
             </Grid>
             <FlipView x:Name="flipview" SelectionChanged="flipview_SelectionChanged" Margin="0,50,0,0" Background="{x:Null}">
                 <FlipViewItem>
@@ -131,7 +131,7 @@
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">正在下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">正在下载(<Run x:Name="SongDowningNum">0</Run>)</TextBlock>
                             <ListView x:Name="SongDowningList" Grid.Row="1">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -146,7 +146,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">已下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">已下载(<Run x:Name="SongFileNum">0</Run>)</TextBlock>
                             <ListView Grid.Row="3" x:Name="LocalSongList">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -171,7 +171,7 @@
                                                 <TextBlock Grid.Row="1" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding DateCreated.DateTime}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
-                                                <AppBarButton Width="50" Height="50" Icon="Delete"></AppBarButton>
+                                                <AppBarButton Width="50" Height="50" Icon="Delete" DataContext="{Binding}" Click="FileItemDel"></AppBarButton>
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>
@@ -189,7 +189,7 @@
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">正在下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="0">正在下载(<Run x:Name="MVDowningNum">0</Run>)</TextBlock>
                             <ListView x:Name="MVDowningList" Grid.Row="1">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -204,7 +204,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">已下载(<Run>0</Run>)</TextBlock>
+                            <TextBlock Foreground="{ThemeResource KuGou-Foreground}" Margin="10,0,10,0" Grid.Row="2">已下载(<Run x:Name="MVFileNum">0</Run>)</TextBlock>
                             <ListView Grid.Row="3" x:Name="LocalMVList">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -229,7 +229,7 @@
                                                 <TextBlock Grid.Row="1" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding DateCreated.DateTime}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
-                                                <AppBarButton Width="50" Height="50" Icon="Delete"></AppBarButton>
+                                                <AppBarButton Width="50" Height="50" Icon="Delete" DataContext="{Binding}" Click="FileItemDel"></AppBarButton>
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>

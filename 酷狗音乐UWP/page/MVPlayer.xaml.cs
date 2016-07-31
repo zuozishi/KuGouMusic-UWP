@@ -191,84 +191,75 @@ namespace 酷狗音乐UWP.page
             Frame.GoBack();
         }
 
-        private async void SelecionQuButton_Click(object sender, RoutedEventArgs e)
+        private void SelecionQuButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as AppBarButton;
             if (mvdata != null)
             {
-                var dialog = new MessageDialog("选择播放清晰度");
-                if (mvdata.hasle)
+                var dialog = new MenuFlyout();
+                var menu = new MenuFlyoutItem();
+                menu.Click += QuMenu_Click;
+                if (mvdata.hasle&&media.Source.ToString()!= mvdata.le.downurl)
                 {
-                    dialog.Commands.Add(new UICommand("标清", SelectionQuClicked,mvdata.le.downurl));
-                    if (media.Source.ToString() == mvdata.le.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "标清";
+                    menu.Tag = mvdata.le.downurl;
+                    dialog.Items.Add(menu);
                 }
-                if (mvdata.hassq)
+                if (mvdata.hassq && media.Source.ToString() != mvdata.sq.downurl)
                 {
-                    dialog.Commands.Add(new UICommand("高清", SelectionQuClicked, mvdata.sq.downurl));
-                    if (media.Source.ToString() == mvdata.sq.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "高清";
+                    menu.Tag = mvdata.sq.downurl;
+                    dialog.Items.Add(menu);
                 }
-                if (mvdata.hasrq)
+                if (mvdata.hasrq && media.Source.ToString() != mvdata.rq.downurl)
                 {
-                    dialog.Commands.Add(new UICommand("超清", SelectionQuClicked, mvdata.rq.downurl));
-                    if (media.Source.ToString() == mvdata.rq.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "超清";
+                    menu.Tag = mvdata.rq.downurl;
+                    dialog.Items.Add(menu);
                 }
-                
-                await dialog.ShowAsync();
+                dialog.ShowAt(btn);
             }
         }
 
-        private void SelectionQuClicked(IUICommand command)
+        private void QuMenu_Click(object sender, RoutedEventArgs e)
         {
-            media.Source = new Uri(command.Id.ToString());
+            var menu = sender as MenuFlyoutItem;
+            media.Source = new Uri(media.Tag.ToString());
         }
 
-        private async void SelectionDownClicked(IUICommand command)
-        {
-            await KG_ClassLibrary.BackgroundDownload.Start(mvdata.singer + "-" + mvdata.songname, command.Id.ToString(), KG_ClassLibrary.BackgroundDownload.DownloadType.mv);
-        }
-
-        private async void DownloadButton_Click(object sender, RoutedEventArgs e)
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as AppBarButton;
             if (mvdata != null)
             {
-                var dialog = new MessageDialog("选择下载清晰度");
+                var dialog = new MenuFlyout();
+                var menu = new MenuFlyoutItem();
+                menu.Click += DownMenu_Click;
                 if (mvdata.hasle)
                 {
-                    dialog.Commands.Add(new UICommand("标清", SelectionDownClicked, mvdata.le.downurl));
-                    if (media.Source.ToString() == mvdata.le.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "标清";
+                    menu.Tag = mvdata.le.downurl;
+                    dialog.Items.Add(menu);
                 }
                 if (mvdata.hassq)
                 {
-                    dialog.Commands.Add(new UICommand("高清", SelectionDownClicked, mvdata.sq.downurl));
-                    if (media.Source.ToString() == mvdata.sq.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "高清";
+                    menu.Tag = mvdata.sq.downurl;
+                    dialog.Items.Add(menu);
                 }
                 if (mvdata.hasrq)
                 {
-                    dialog.Commands.Add(new UICommand("超清", SelectionDownClicked, mvdata.rq.downurl));
-                    if (media.Source.ToString() == mvdata.rq.downurl)
-                    {
-                        dialog.DefaultCommandIndex = (uint)(dialog.Commands.Count - 1);
-                    }
+                    menu.Text = "超清";
+                    menu.Tag = mvdata.rq.downurl;
+                    dialog.Items.Add(menu);
                 }
-
-                await dialog.ShowAsync();
+                dialog.ShowAt(btn);
             }
+        }
+        private async void DownMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var menu = sender as MenuFlyoutItem;
+            await KG_ClassLibrary.BackgroundDownload.Start(mvdata.singer + "-" + mvdata.songname, media.Tag.ToString(),KG_ClassLibrary.BackgroundDownload.DownloadType.mv);
         }
     }
 }

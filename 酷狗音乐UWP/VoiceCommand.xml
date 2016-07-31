@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="zh-cn" Name="KuGouUWP_Cortana">
+    <AppName> 酷狗音乐 </AppName>
+    <Example>搜索</Example>
+
+    <Command Name="SearchALl">
+      <Example>搜索薛之谦</Example>
+      <ListenFor>搜索[content]</ListenFor>
+      <Feedback>正在搜索[content]...</Feedback>
+      <Navigate />
+    </Command>
+  </CommandSet>
+</VoiceCommands>

@@ -18,7 +18,7 @@
         </Grid>
         <Grid Margin="0,50,0,0">
             <ScrollViewer>
-                <ListView Margin="5,0,5,0" x:Name="SongListView" SelectionMode="Single">
+                <ListView Margin="5,0,5,0" x:Name="SongListView">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -38,9 +38,9 @@
                                     <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singername}"></TextBlock>
                                 </StackPanel>
                                 <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <AppBarButton TabIndex="{Binding num}" Visibility="{Binding isplay}" Height="50" Width="50" Icon="Add" Foreground="{ThemeResource KuGou-Front1}"></AppBarButton>
-                                    <AppBarButton TabIndex="{Binding num}" Visibility="{Binding isplay}" Height="50" Width="50" Icon="Download" Foreground="{ThemeResource KuGou-Front1}"></AppBarButton>
-                                    <AppBarButton TabIndex="{Binding num}" Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" Click="ItemClearBtn_Clicked"></AppBarButton>
+                                    <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Add" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
+                                    <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Download" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
+                                    <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -55,14 +55,15 @@
                                 <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}">星尘</TextBlock>
                             </StackPanel>
                             <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Like" Foreground="White"></AppBarButton>
-                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Download" Foreground="White"></AppBarButton>
-                                <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}"></AppBarButton>
+                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Like" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
+                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Download" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
+                                <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
                             </StackPanel>
                         </Grid>
                     </ListViewItem>
                 </ListView>
             </ScrollViewer>
         </Grid>
+        <ProgressBar x:Name="LoadProgress" Visibility="Collapsed" IsIndeterminate="True" VerticalAlignment="Top" Background="{x:Null}"></ProgressBar>
     </Grid>
 </UserControl>

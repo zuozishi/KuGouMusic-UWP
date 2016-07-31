@@ -189,6 +189,7 @@
                 	<Run Text="传播好音乐"/>
                     </TextBlock>
                 </StackPanel>
+                <ProgressBar x:Name="LoadProgress" Grid.Row="4" Visibility="Collapsed" Background="{x:Null}" IsIndeterminate="True"></ProgressBar>
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -196,10 +197,10 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <AppBarButton Grid.Column="0" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                    <AppBarButton Grid.Column="1" Click="ShareBtn_Clicked" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Icon="Street"/>
-                    <AppBarButton Grid.Column="2" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                    <AppBarButton Grid.Column="3" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="0" TabIndex="0" Click="ToolBynClicked" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="1" TabIndex="1" Click="ToolBynClicked" Icon="Street" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <AppBarButton Grid.Column="2" TabIndex="2" Click="ToolBynClicked" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="3" TabIndex="3" Click="ToolBynClicked" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
                 </Grid>
                 <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>

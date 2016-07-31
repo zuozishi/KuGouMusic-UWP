@@ -26,6 +26,7 @@ namespace 酷狗音乐UWP.page.YueKu
     {
         private ObservableCollection<SingerInGroup> singerlist;
         private ObservableCollection<SingerInGroup> newgroup;
+        private ObservableCollection<SingerData> singerdata;
 
         public SingerListPage()
         {
@@ -36,45 +37,48 @@ namespace 酷狗音乐UWP.page.YueKu
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var data = e.Parameter as string[];
-            string type = data[0];
-            string sextype = data[1];
-            TitleText.Text = data[2];
-            LoadProcess.IsActive = true;
-            var singerdata= await SingerData.LoadData(type, sextype);
-            if (singerdata != null && singerdata.Count > 0)
+            if (singerdata == null)
             {
-                if (singerdata[0].title == "热门")
+                var data = e.Parameter as string[];
+                string type = data[0];
+                string sextype = data[1];
+                TitleText.Text = data[2];
+                LoadProcess.IsActive = true;
+                singerdata = await SingerData.LoadData(type, sextype);
+                if (singerdata != null && singerdata.Count > 0)
                 {
-                    HotSingerBtn1.DataContext = singerdata[0].singer[0];
-                    HotSingerBtn2.DataContext = singerdata[0].singer[1];
-                    HotSingerBtn3.DataContext = singerdata[0].singer[2];
-                    HotSingerBtn4.DataContext = singerdata[0].singer[3];
-                    HotSingerBtn5.DataContext = singerdata[0].singer[4];
-                    HotSingerBtn6.DataContext = singerdata[0].singer[5];
-                    HotSingerBtn7.DataContext = singerdata[0].singer[6];
-                    HotSingerBtn8.DataContext = singerdata[0].singer[7];
-                    singerdata.RemoveAt(0);
+                    if (singerdata[0].title == "热门")
+                    {
+                        HotSingerBtn1.DataContext = singerdata[0].singer[0];
+                        HotSingerBtn2.DataContext = singerdata[0].singer[1];
+                        HotSingerBtn3.DataContext = singerdata[0].singer[2];
+                        HotSingerBtn4.DataContext = singerdata[0].singer[3];
+                        HotSingerBtn5.DataContext = singerdata[0].singer[4];
+                        HotSingerBtn6.DataContext = singerdata[0].singer[5];
+                        HotSingerBtn7.DataContext = singerdata[0].singer[6];
+                        HotSingerBtn8.DataContext = singerdata[0].singer[7];
+                        singerdata.RemoveAt(0);
+                    }
                 }
+                singerlist = new ObservableCollection<SingerInGroup>();
+                foreach (var group in singerdata)
+                {
+                    var list = new SingerInGroup();
+                    list.Key = group.title;
+                    list.ItemContent = group.singer;
+                    singerlist.Add(list);
+                }
+                this.itemcollectSource.Source = singerlist;
+                newgroup = new ObservableCollection<SingerInGroup>();
+                newgroup.Add(singerlist[0]);
+                this.singeritemcollectSource.Source = newgroup;
+                ZoomOutView.ItemsSource = itemcollectSource.View.CollectionGroups;
+                ZoomInView.ItemsSource = singeritemcollectSource.View;
+                ZoomInView.SelectionMode = ListViewSelectionMode.Extended;
+                ZoomInView.SelectionChanged += ZoomInView_SelectionChanged;
+                ZoomInView.SelectedIndex = -1;
+                LoadProcess.IsActive = false;
             }
-            singerlist = new ObservableCollection<SingerInGroup>();
-            foreach (var group in singerdata)
-            {
-                var list = new SingerInGroup();
-                list.Key = group.title;
-                list.ItemContent = group.singer;
-                singerlist.Add(list);
-            }
-            this.itemcollectSource.Source = singerlist;
-            newgroup= new ObservableCollection<SingerInGroup>();
-            newgroup.Add(singerlist[0]);
-            this.singeritemcollectSource.Source = newgroup;
-            ZoomOutView.ItemsSource = itemcollectSource.View.CollectionGroups;
-            ZoomInView.ItemsSource = singeritemcollectSource.View;
-            ZoomInView.SelectionMode = ListViewSelectionMode.Extended;
-            ZoomInView.SelectionChanged += ZoomInView_SelectionChanged;
-            ZoomInView.SelectedIndex = -1;
-            LoadProcess.IsActive = false;
         }
 
         private void ZoomInView_SelectionChanged(object sender, SelectionChangedEventArgs e)

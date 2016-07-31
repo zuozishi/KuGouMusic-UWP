@@ -26,6 +26,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Shapes;
+using Windows.ApplicationModel.VoiceCommands;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -47,10 +48,11 @@ namespace 酷狗音乐UWP
             注册后台服务();
         }
 
-        private void 注册后台服务()
+        private async void 注册后台服务()
         {
             try
             {
+                await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommand.xml")));
                 foreach (var cur in BackgroundTaskRegistration.AllTasks)
                 {
                     if (cur.Value.Name == "TitleTask")
@@ -69,6 +71,22 @@ namespace 酷狗音乐UWP
             {
 
             }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = Colors.White;
+                statusBar.BackgroundColor = ((SolidColorBrush)SearchBox.Foreground).Color;
+                statusBar.BackgroundOpacity = 100;
+            }
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = ((SolidColorBrush)SearchBox.Foreground).Color;
+            titleBar.ButtonBackgroundColor = ((SolidColorBrush)SearchBox.Foreground).Color;
+            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -107,19 +125,6 @@ namespace 酷狗音乐UWP
                 await datafolder.CreateFileAsync("playlist.json", CreationCollisionOption.ReplaceExisting);
                 localSettings.Values["isfirst"] = true;
             }
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[1].Value as ResourceDictionary;
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.White;
-                statusBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-                statusBar.BackgroundOpacity = 100;
-            }
-            //电脑标题栏颜色
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-            titleBar.ButtonBackgroundColor = ((SolidColorBrush)Theme["KuGou-BackgroundColor"]).Color;
-            titleBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);//Colors.White纯白用不了
             if (Class.UserManager.isLogin())
             {
                 var ellipse = new Ellipse();

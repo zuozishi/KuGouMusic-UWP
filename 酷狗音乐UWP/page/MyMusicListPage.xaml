@@ -93,6 +93,7 @@
                     </Grid>
                 </ScrollViewer>
             </Grid>
+            <ProgressRing x:Name="LoadProgress" Width="100" Height="100" IsActive="False"></ProgressRing>
             <usercon:PlayerSmall></usercon:PlayerSmall>
         </Grid>
     </Grid>

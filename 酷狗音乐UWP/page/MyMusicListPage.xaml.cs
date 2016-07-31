@@ -24,22 +24,27 @@ namespace 酷狗音乐UWP.page
     /// </summary>
     public sealed partial class MyMusicListPage : Page
     {
-        private string uid;
+        private string uid=Class.UserManager.GetData(Class.UserManager.Type.uid);
         private List<MuiscListData> listdata;
         private List<RidListData> riddata;
 
         public MyMusicListPage()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            GetCloudList();
+            if (listdata == null)
+            {
+                GetCloudList();
+            }
         }
 
         private async void GetCloudList()
         {
+            LoadProgress.IsActive = true;
             var rid= await GetridList();
             if(rid!="")
             {
@@ -74,7 +79,7 @@ namespace 酷狗音乐UWP.page
                 CloudListNum.Text = cloudlist.Count.ToString();
                 MyMusicList.SelectionChanged += MusicListChanged;
                 CloudMusicList.SelectionChanged += MusicListChanged;
-                this.NavigationCacheMode = NavigationCacheMode.Enabled;
+                LoadProgress.IsActive = false;
             }
         }
 
@@ -90,7 +95,6 @@ namespace 酷狗音乐UWP.page
 
         private async Task<string> GetridList()
         {
-            //3660795342,1,36,32,43,44,47,31,4218150kgyzone
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             var time = Convert.ToInt64(ts.TotalSeconds).ToString();
             var key = Class.MD5.GetMd5String("100010TKbNapLfhKd89VxM"+uid+time+ "netfavorite");

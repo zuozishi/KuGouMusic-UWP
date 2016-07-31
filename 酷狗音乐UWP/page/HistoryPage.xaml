@@ -59,7 +59,7 @@
                                         <TextBlock Grid.Row="0" Margin="0,0,0,3" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding title}"></TextBlock>
                                         <TextBlock Grid.Row="1" VerticalAlignment="Top" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singername}"></TextBlock>
                                     </Grid>
-                                    <AppBarButton Grid.Column="2" Width="55" Height="55" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}"></AppBarButton>
+                                    <AppBarButton Grid.Column="2" Width="55" Height="55" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="SongListItemDel"></AppBarButton>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -91,7 +91,7 @@
                                         <TextBlock Grid.Row="0" Margin="0,0,0,3" VerticalAlignment="Bottom" Foreground="{ThemeResource KuGou-Front1}" Text="{Binding title}"></TextBlock>
                                         <TextBlock Grid.Row="1" VerticalAlignment="Top" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singer}"></TextBlock>
                                     </Grid>
-                                    <AppBarButton Grid.Column="2" Width="55" Height="55" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}"></AppBarButton>
+                                    <AppBarButton Grid.Column="2" Width="55" Height="55" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MVListItemDel"></AppBarButton>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

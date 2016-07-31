@@ -12,6 +12,7 @@ using Windows.Media;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 
 namespace 酷狗音乐UWP.Class
 {
@@ -849,7 +850,13 @@ namespace 酷狗音乐UWP.Class
                 var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
                 var listfile = await datafolder.CreateFileAsync("historysong.json", CreationCollisionOption.OpenIfExists);
                 var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
-                data.Remove(nowplay);
+                for (int i = 0; i < data.Count; i++)
+                {
+                    if (data[i].url == nowplay.url)
+                    {
+                        data.RemoveAt(i);
+                    }
+                }
                 await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
             }
             public async static void Remove(HistoryMV mvdata)
@@ -857,7 +864,13 @@ namespace 酷狗音乐UWP.Class
                 var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
                 var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
                 var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
-                data.Remove(mvdata);
+                for (int i = 0; i < data.Count; i++)
+                {
+                    if (data[i].hash == mvdata.hash)
+                    {
+                        data.RemoveAt(i);
+                    }
+                }
                 await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
             }
             public async static void Clear(songflag song)
@@ -876,18 +889,18 @@ namespace 酷狗音乐UWP.Class
                 data.Clear();
                 await FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(data));
             }
-            public async static Task<List<Player.NowPlay>> Get(songflag song)
+            public async static Task<ObservableCollection<Player.NowPlay>> Get(songflag song)
             {
                 var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
                 var listfile = await datafolder.CreateFileAsync("historysong.json", CreationCollisionOption.OpenIfExists);
-                var data = Class.data.DataContractJsonDeSerialize<List<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
+                var data = Class.data.DataContractJsonDeSerialize<ObservableCollection<Player.NowPlay>>(await FileIO.ReadTextAsync(listfile));
                 return data;
             }
-            public async static Task<List<HistoryMV>> Get(mvflag mv)
+            public async static Task<ObservableCollection<HistoryMV>> Get(mvflag mv)
             {
                 var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
                 var listfile = await datafolder.CreateFileAsync("historymv.json", CreationCollisionOption.OpenIfExists);
-                var data = Class.data.DataContractJsonDeSerialize<List<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
+                var data = Class.data.DataContractJsonDeSerialize<ObservableCollection<HistoryMV>>(await FileIO.ReadTextAsync(listfile));
                 return data;
             }
         }
@@ -914,6 +927,7 @@ namespace 酷狗音乐UWP.Class
                     var locallistfile = await datafolder.GetFileAsync("locallist.json");
                     var json = await FileIO.ReadTextAsync(locallistfile);
                     var list = Class.data.DataContractJsonDeSerialize<List<MusicInGroup>>(json);
+                    list= list.OrderBy(x => x.key).ToList();
                     return list;
                 }
                 catch (Exception)
@@ -946,9 +960,16 @@ namespace 酷狗音乐UWP.Class
                 }
                 if(files.Count>0)
                 {
-                    foreach (var item in files)
+                    for (var i=0;i<files.Count;i++)
                     {
-                        if(item.ContentType.Contains("audio"))
+                        var item = files[i];
+                        if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                        {
+                            StatusBar statusBar = StatusBar.GetForCurrentView();
+                            statusBar.ProgressIndicator.Text = "正在加载";
+                            await statusBar.ProgressIndicator.ShowAsync();
+                        }
+                        if (item.ContentType.Contains("audio"))
                         {
                             string firstword = "";
                             if ((await item.Properties.GetMusicPropertiesAsync()).Title != "")
@@ -1006,12 +1027,22 @@ namespace 酷狗音乐UWP.Class
                                 }
                             }
                         }
+                        if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                        {
+                            StatusBar statusBar = StatusBar.GetForCurrentView();
+                            statusBar.ProgressIndicator.ProgressValue = (double)i / (double)files.Count;
+                        }
                     }
                 }
                 List<MusicInGroup> Items = (from item in mainItem group item by item.Content into newItems select new MusicInGroup { key = newItems.Key, MusicContent = newItems.ToList() }).ToList();
                 var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
                 var locallistfile = await datafolder.GetFileAsync("locallist.json");
                 await FileIO.WriteTextAsync(locallistfile, Class.data.ToJsonData(Items));
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    StatusBar statusBar = StatusBar.GetForCurrentView();
+                    await statusBar.ProgressIndicator.HideAsync();
+                }
             }
             public static async Task AddFolder()
             {

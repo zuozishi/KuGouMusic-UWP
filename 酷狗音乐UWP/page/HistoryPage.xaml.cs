@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using 酷狗音乐UWP.Class;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -22,6 +24,9 @@ namespace 酷狗音乐UWP.page
     /// </summary>
     public sealed partial class HistoryPage : Page
     {
+        private ObservableCollection<Model.Player.NowPlay> songdata;
+        private ObservableCollection<Model.History.HistoryMV> mvdata;
+
         public HistoryPage()
         {
             this.InitializeComponent();
@@ -30,14 +35,14 @@ namespace 酷狗音乐UWP.page
 
         private async void init()
         {
-            var songdata = await Class.Model.History.Get(new Class.Model.History.songflag());
+            songdata = await Class.Model.History.Get(new Class.Model.History.songflag());
             if (songdata != null)
             {
                 songlist.ItemsSource = songdata;
                 songlist.SelectionMode = ListViewSelectionMode.Single;
                 songlist.SelectionChanged += Songlist_SelectionChanged;
             }
-            var mvdata = await Class.Model.History.Get(new Class.Model.History.mvflag());
+            mvdata = await Class.Model.History.Get(new Class.Model.History.mvflag());
             if (mvdata != null)
             {
                 mvlist.ItemsSource = mvdata;
@@ -95,6 +100,29 @@ namespace 酷狗音乐UWP.page
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void MVListItemDel(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            if (btn.DataContext != null)
+            {
+                var item = btn.DataContext as Class.Model.History.HistoryMV;
+                mvdata.Remove(item);
+                Class.Model.History.Remove(item);
+
+            }
+        }
+
+        private void SongListItemDel(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            if (btn.DataContext != null)
+            {
+                var item = btn.DataContext as Class.Model.Player.NowPlay;
+                songdata.Remove(item);
+                Class.Model.History.Remove(item);
             }
         }
     }

@@ -92,7 +92,10 @@ namespace KG_ClassLibrary
                 transfers.Add(transfer);
                 Progress<DownloadOperation> progressCallback = new Progress<DownloadOperation>(DownloadProgress);
                 download.StartAsync().AsTask(cancelToken.Token, progressCallback);
-                await new MessageDialog("已加入下载列表！").ShowAsync();
+                if(type!= DownloadType.song)
+                {
+                    await new MessageDialog("已加入下载列表！").ShowAsync();
+                }
             }
             catch
             {

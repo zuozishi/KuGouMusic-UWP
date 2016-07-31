@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 
 namespace mediaservice
 {
-    public class Contrana
+    public sealed class Contrana : IBackgroundTask
     {
-
+        public void Run(IBackgroundTaskInstance taskInstance)
+        {
+            
+        }
     }
 }

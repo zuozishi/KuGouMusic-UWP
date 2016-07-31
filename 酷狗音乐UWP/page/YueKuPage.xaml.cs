@@ -215,8 +215,12 @@ namespace 酷狗音乐UWP.page
         private void TopicList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var list = sender as ListView;
-            var data = list.SelectedItem as TuiJianData.TuiJian_topic;
-            Frame.Navigate(typeof(page.WebPage), data.url);
+            if (list.SelectedItem != null)
+            {
+                var data = list.SelectedItem as TuiJianData.TuiJian_topic;
+                Frame.Navigate(typeof(page.WebPage), data.url);
+                list.SelectedIndex = -1;
+            }
         }
 
         private void Back_Btn_Click(object sender, RoutedEventArgs e)

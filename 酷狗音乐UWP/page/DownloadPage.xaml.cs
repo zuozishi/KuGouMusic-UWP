@@ -55,6 +55,8 @@ namespace 酷狗音乐UWP.page
             songresult= await BackgroundDownload.GetList(BackgroundDownload.DownloadType.song);
             if(songresult!=null)
             {
+                SongDowningNum.Text = songresult.transfers.Count.ToString();
+                SongFileNum.Text = songresult.files.Count.ToString();
                 SongDowningList.ItemsSource = songresult.transfers;
                 LocalSongList.Items.Clear();
                 foreach (var file in songresult.files)
@@ -69,12 +71,14 @@ namespace 酷狗音乐UWP.page
             mvresult = await BackgroundDownload.GetList(BackgroundDownload.DownloadType.mv);
             if (mvresult != null)
             {
+                MVDowningNum.Text = mvresult.transfers.Count.ToString();
+                MVFileNum.Text = mvresult.files.Count.ToString();
                 MVDowningList.ItemsSource = mvresult.transfers;
-            }
-            LocalMVList.Items.Clear();
-            foreach (var file in mvresult.files)
-            {
-                LocalMVList.Items.Add(file);
+                LocalMVList.Items.Clear();
+                foreach (var file in mvresult.files)
+                {
+                    LocalMVList.Items.Add(file);
+                }
             }
         }
 
@@ -104,6 +108,56 @@ namespace 酷狗音乐UWP.page
                     break;
                 default:
                     break;
+            }
+        }
+
+        private async void DownItemDel(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            var downop = btn.DataContext as TransferModel;
+            await downop.DownloadOperation.ResultFile.DeleteAsync();
+            for (int i = 0; i < SongDowningList.Items.Count; i++)
+            {
+                var item = SongDowningList.Items[i] as TransferModel;
+                if (item.filename == downop.filename && item.allsize == downop.allsize)
+                {
+                    SongDowningList.Items.RemoveAt(i);
+                    break;
+                }
+            }
+            for (int i = 0; i < MVDowningList.Items.Count; i++)
+            {
+                var item = MVDowningList.Items[i] as TransferModel;
+                if (item.filename == downop.filename && item.allsize == downop.allsize)
+                {
+                    MVDowningList.Items.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
+        private async void FileItemDel(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            var file = btn.DataContext as Windows.Storage.StorageFile;
+            await file.DeleteAsync();
+            for (int i = 0; i < LocalSongList.Items.Count; i++)
+            {
+                var item = LocalSongList.Items[i] as Windows.Storage.StorageFile;
+                if (item.Path == file.Path)
+                {
+                    LocalSongList.Items.RemoveAt(i);
+                    break;
+                }
+            }
+            for (int i = 0; i < LocalMVList.Items.Count; i++)
+            {
+                var item = LocalMVList.Items[i] as Windows.Storage.StorageFile;
+                if (item.Path == file.Path)
+                {
+                    LocalMVList.Items.RemoveAt(i);
+                    break;
+                }
             }
         }
     }

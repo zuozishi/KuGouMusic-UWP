@@ -49,8 +49,8 @@
                     <ScrollViewer TabIndex="0" ViewChanged="NextPage">
                         <Grid>
                             <ComboBox Margin="5,0,0,0" SelectedIndex="1" SelectionChanged="SongSortChanged">
-                                <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
-                                <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Foreground}"></ComboBoxItem>
+                                <ComboBoxItem Content="最新" Foreground="{ThemeResource KuGou-Front1}"></ComboBoxItem>
+                                <ComboBoxItem Content="最热" Foreground="{ThemeResource KuGou-Front1}"></ComboBoxItem>
                             </ComboBox>
                             <Button x:Name="MoreSongBtn" Height="35" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MoreSongBtn_Click">
                                 <StackPanel Orientation="Horizontal">

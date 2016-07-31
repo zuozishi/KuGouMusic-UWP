@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Playback;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -78,7 +79,7 @@ namespace 酷狗音乐UWP.UserControlClass
                     if(list.SongList.Count>0)
                     {
                         listdata = new List<ListData>();
-                         listdata.Clear();
+                        listdata.Clear();
                         SongListView.Items.Clear();
                         SongListView.ItemsSource = null;
                         for (int i = 0; i < list.SongList.Count; i++)
@@ -155,17 +156,46 @@ namespace 酷狗音乐UWP.UserControlClass
             }
         }
 
-        private async void ClearBtn_Click(object sender, RoutedEventArgs e)
-        {
-            await Class.Model.PlayList.Clear();
-            init();
-        }
-
-        private async void ItemClearBtn_Clicked(object sender, RoutedEventArgs e)
+        private async void MoreBtnClicked(object sender, RoutedEventArgs e)
         {
             var btn = sender as AppBarButton;
-            await Class.Model.PlayList.Del(btn.TabIndex-1);
-            init();
+            if (btn.DataContext != null)
+            {
+                var data = btn.DataContext as ListData;
+                var song = list.SongList[int.Parse(data.num) - 1];
+                if (btn.TabIndex==0)
+                {
+
+                }
+                else if(btn.TabIndex == 1)
+                {
+                    LoadProgress.Visibility = Visibility.Visible;
+                    if (song.url != null && song.url.Contains("http://"))
+                    {
+                        await KG_ClassLibrary.BackgroundDownload.Start(song.singername + "-" + song.title, song.url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                        await new Windows.UI.Popups.MessageDialog("已加入下载列表！").ShowAsync();
+                    } else
+                    {
+                        await new Windows.UI.Popups.MessageDialog("本地歌曲无需下载" + song.url).ShowAsync();
+                    }
+                    LoadProgress.Visibility = Visibility.Collapsed;
+                }
+                else if(btn.TabIndex == 2)
+                {
+                    LoadProgress.Visibility = Visibility.Visible;
+                    SongListView.Items.RemoveAt(int.Parse(data.num) - 1);
+                    await Class.Model.PlayList.Del(int.Parse(data.num) - 1);
+                    LoadProgress.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private async void ClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LoadProgress.Visibility = Visibility.Visible;
+            SongListView.Items.Clear();
+            await Class.Model.PlayList.Clear();
+            LoadProgress.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -248,7 +248,7 @@ namespace 酷狗音乐UWP.page
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = sender as FlipView;
-            var Theme = (Application.Current.Resources.ThemeDictionaries.ToList())[0].Value as ResourceDictionary;
+            var Theme = Application.Current.Resources.MergedDictionaries[0] as ResourceDictionary;
             try
             {
                 switch (flipview.SelectedIndex)
@@ -357,9 +357,34 @@ namespace 酷狗音乐UWP.page
             }
         }
 
-        private void ShareBtn_Clicked(object sender, RoutedEventArgs e)
+        private async void ToolBynClicked(object sender, RoutedEventArgs e)
         {
-            
+            var btn = sender as AppBarButton;
+            switch (btn.TabIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    LoadProgress.Visibility = Visibility.Visible;
+                    nowplay = await Class.Model.Player.GetNowPlay();
+                    if (nowplay.url != null && nowplay.url.Contains("http://"))
+                    {
+                        await KG_ClassLibrary.BackgroundDownload.Start(nowplay.singername + "-" + nowplay.title, nowplay.url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
+                        await new Windows.UI.Popups.MessageDialog("已加入下载列表！").ShowAsync();
+                    }
+                    else
+                    {
+                        await new Windows.UI.Popups.MessageDialog("本地歌曲无需下载" + nowplay.url).ShowAsync();
+                    }
+                    LoadProgress.Visibility = Visibility.Collapsed;
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
