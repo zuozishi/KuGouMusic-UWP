@@ -8,7 +8,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class Setting
     {

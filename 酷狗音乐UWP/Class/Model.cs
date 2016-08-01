@@ -14,7 +14,7 @@ using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class Model
     {

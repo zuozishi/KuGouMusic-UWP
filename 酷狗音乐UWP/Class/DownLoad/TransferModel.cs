@@ -2,8 +2,8 @@
 using Windows.Networking.BackgroundTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
-using 酷狗音乐UWP;
-using 酷狗音乐UWP.page;
+using KuGouMusicUWP;
+using KuGouMusicUWP.Pages;
 
 namespace KG_ClassLibrary
 {

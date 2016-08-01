@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace 酷狗音乐UWP.UserControlClass
+namespace KuGouMusicUWP.UserControlClass
 {
     public sealed partial class PlayerSmall : UserControl
     {
@@ -120,7 +120,7 @@ namespace 酷狗音乐UWP.UserControlClass
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            mainFrame.Navigate(typeof(page.PlayerPgae));
+            mainFrame.Navigate(typeof(Pages.PlayerPgae));
         }
 
         private void Play_Btn_Click(object sender, RoutedEventArgs e)

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class Lrc
     {

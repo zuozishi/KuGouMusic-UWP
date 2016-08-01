@@ -1,11 +1,11 @@
 ﻿<UserControl
-    x:Class="酷狗音乐UWP.UserControlClass.PlayerSmall"
+    x:Class="KuGouMusicUWP.UserControlClass.PlayerSmall"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:酷狗音乐UWP.UserControlClass"
+    xmlns:local="using:KuGouMusicUWP.UserControlClass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:usercont="using:酷狗音乐UWP.UserControlClass"
+    xmlns:usercont="using:KuGouMusicUWP.UserControlClass"
     mc:Ignorable="d"
     d:DesignHeight="63">
 

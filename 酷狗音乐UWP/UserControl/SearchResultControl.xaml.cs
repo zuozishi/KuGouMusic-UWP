@@ -16,12 +16,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using 酷狗音乐UWP.Class;
-using static 酷狗音乐UWP.Class.Model.SearchResultModel;
+using KuGouMusicUWP.Class;
+using static KuGouMusicUWP.Class.Model.SearchResultModel;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace 酷狗音乐UWP.UserControlClass
+namespace KuGouMusicUWP.UserControlClass
 {
     public sealed partial class SearchResultControl : UserControl
     {
@@ -555,7 +555,7 @@ namespace 酷狗音乐UWP.UserControlClass
             if (singerdata != null)
             {
                 var frame = Window.Current.Content as Frame;
-                frame.Navigate(typeof(page.SingerPage), singerdata.singerid);
+                frame.Navigate(typeof(Pages.SingerPage), singerdata.singerid);
             }
         }
 
@@ -626,7 +626,7 @@ namespace 酷狗音乐UWP.UserControlClass
                     if (obj1.SelectedItem != null)
                     {
                         var mv = (Model.SearchResultModel.MV)obj1.SelectedItem;
-                        mainframe.Navigate(typeof(page.MVPlayer), mv.hash);
+                        mainframe.Navigate(typeof(Pages.MVPlayer), mv.hash);
                     }
                     obj1.SelectedIndex = -1;
                     break;
@@ -635,7 +635,7 @@ namespace 酷狗音乐UWP.UserControlClass
                     if (obj2.SelectedItem != null)
                     {
                         var album = (Model.SearchResultModel.Album)obj2.SelectedItem;
-                        mainframe.Navigate(typeof(page.AlbumPage), album.albumid);
+                        mainframe.Navigate(typeof(Pages.AlbumPage), album.albumid);
                     }
                     obj2.SelectedIndex = -1;
                     break;
@@ -644,7 +644,7 @@ namespace 酷狗音乐UWP.UserControlClass
                     if (obj3.SelectedItem != null)
                     {
                         var songlist= (Model.SearchResultModel.SongList)obj3.SelectedItem;
-                        mainframe.Navigate(typeof(page.SongListPage), new string[] { songlist.specialid.ToString(),songlist.specialname});
+                        mainframe.Navigate(typeof(Pages.SongListPage), new string[] { songlist.specialid.ToString(),songlist.specialname});
                     }
                     break;
                 default:

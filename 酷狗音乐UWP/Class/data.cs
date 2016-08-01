@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class data
     {

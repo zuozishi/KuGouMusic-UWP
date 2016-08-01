@@ -10,7 +10,7 @@ using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class DownloadManager
     {

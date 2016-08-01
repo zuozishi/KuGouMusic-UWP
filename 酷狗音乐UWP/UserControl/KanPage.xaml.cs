@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace 酷狗音乐UWP.UserControlClass
+namespace KuGouMusicUWP.UserControlClass
 {
     public sealed partial class KanPage : UserControl
     {
@@ -69,10 +69,10 @@ namespace 酷狗音乐UWP.UserControlClass
                 switch (bannerdata[view.SelectedIndex].type)
                 {
                     case 1:
-                        mainFrame.Navigate(typeof(page.MVPlayer), bannerdata[view.SelectedIndex].extra.hash);
+                        mainFrame.Navigate(typeof(Pages.MVPlayer), bannerdata[view.SelectedIndex].extra.hash);
                         break;
                     case 2:
-                        mainFrame.Navigate(typeof(page.SongListPage), new string[] { bannerdata[view.SelectedIndex].extra.specialid, bannerdata[view.SelectedIndex].extra.title });
+                        mainFrame.Navigate(typeof(Pages.SongListPage), new string[] { bannerdata[view.SelectedIndex].extra.specialid, bannerdata[view.SelectedIndex].extra.title });
                         break;
                     default:
                         break;
@@ -209,7 +209,7 @@ namespace 酷狗音乐UWP.UserControlClass
             if (list.SelectedItem != null)
             {
                 var data = list.SelectedItem as MVData;
-                mainFrame.Navigate(typeof(page.MVPlayer), data.hash);
+                mainFrame.Navigate(typeof(Pages.MVPlayer), data.hash);
             }
         }
 
@@ -220,7 +220,7 @@ namespace 酷狗音乐UWP.UserControlClass
             var btn = sender as Button;
             if (TuiJianTopBtnCLicked == null)
             {
-                mainFrame.Navigate(typeof(page.YueKu.MVPage), (string)btn.Tag);
+                mainFrame.Navigate(typeof(Pages.YueKu.MVPage), (string)btn.Tag);
             }else
             {
                 TuiJianTopBtnCLicked((string)btn.Tag);

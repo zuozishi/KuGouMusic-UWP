@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using System.Collections.ObjectModel;
 using Windows.Media.Core;
-using static 酷狗音乐UWP.Class.Model.LocalList;
+using static KuGouMusicUWP.Class.Model.LocalList;
 using Windows.ApplicationModel.Background;
 using Windows.Storage.Streams;
 using Windows.UI.Popups;
@@ -30,7 +30,7 @@ using Windows.ApplicationModel.VoiceCommands;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
-namespace 酷狗音乐UWP
+namespace KuGouMusicUWP
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
@@ -179,7 +179,7 @@ namespace 酷狗音乐UWP
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.Search));
+            Frame.Navigate(typeof(Pages.Search));
         }
 
         private void flipview1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -258,13 +258,13 @@ namespace 酷狗音乐UWP
             if (sender.Text.Length > 0)
             {
                 await Task.Delay(100);
-                Frame.Navigate(typeof(page.SearchResult), sender.Text);
+                Frame.Navigate(typeof(Pages.SearchResult), sender.Text);
             }
         }
 
         private async void UserLoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof(page.WebPage), "http://m.kugou.com/song/static/index.html");
+            //Frame.Navigate(typeof(Pages.WebPage), "http://m.kugou.com/song/static/index.html");
             if (Class.UserManager.isLogin())
             {
                 var menu= new MessageDialog("是否注销当前用户?");
@@ -276,7 +276,7 @@ namespace 酷狗音乐UWP
             }
             else
             {
-                Frame.Navigate(typeof(page.LoginPage));
+                Frame.Navigate(typeof(Pages.LoginPage));
             }
         }
 
@@ -367,19 +367,19 @@ namespace 酷狗音乐UWP
 
         private void YueKuBtn_Clicked(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.YueKuPage));
+            Frame.Navigate(typeof(Pages.YueKuPage));
         }
 
         private void DownloadBtn_Clicked(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.DownloadPage));
+            Frame.Navigate(typeof(Pages.DownloadPage));
         }
 
         private void CloudMuiscBtn_Clicked(object sender, RoutedEventArgs e)
         {
             if (Class.UserManager.isLogin())
             {
-                Frame.Navigate(typeof(page.MyMusicListPage));
+                Frame.Navigate(typeof(Pages.MyMusicListPage));
             }
             else
             {
@@ -389,12 +389,12 @@ namespace 酷狗音乐UWP
 
         private void SettingBtnClicked(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.SettingPage));
+            Frame.Navigate(typeof(Pages.SettingPage));
         }
 
         private void HistoryBtn_Clicked(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(page.HistoryPage));
+            Frame.Navigate(typeof(Pages.HistoryPage));
         }
     }
 }

@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace 酷狗音乐UWP.UserControlClass
+namespace KuGouMusicUWP.UserControlClass
 {
     public sealed partial class PicsFlipView : UserControl
     {

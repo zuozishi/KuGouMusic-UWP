@@ -43,15 +43,15 @@ namespace KG_ClassLibrary
                     switch (type)
                     {
                         case DownloadType.song:
-                            switch (酷狗音乐UWP.Class.Setting.DownQu.GetType())
+                            switch (KuGouMusicUWP.Class.Setting.DownQu.GetType())
                             {
-                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.low:
+                                case KuGouMusicUWP.Class.Setting.DownQu.Type.low:
                                     extname = ".mp3";
                                     break;
-                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.mid:
+                                case KuGouMusicUWP.Class.Setting.DownQu.Type.mid:
                                     extname = ".mp3";
                                     break;
-                                case 酷狗音乐UWP.Class.Setting.DownQu.Type.high:
+                                case KuGouMusicUWP.Class.Setting.DownQu.Type.high:
                                     extname = ".flac";
                                     break;
                                 default:

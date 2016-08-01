@@ -19,7 +19,7 @@
     <PackageCertificateKeyFile>酷狗音乐UWP_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>A64E8B884926AEEC6ACEF6B3B31E7C5038439CCA</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -199,82 +199,82 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\AlbumPage.xaml.cs">
+    <Compile Include="Pages\AlbumPage.xaml.cs">
       <DependentUpon>AlbumPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\DownloadPage.xaml.cs">
+    <Compile Include="Pages\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\HistoryPage.xaml.cs">
+    <Compile Include="Pages\HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\index\music.xaml.cs">
+    <Compile Include="Pages\index\music.xaml.cs">
       <DependentUpon>music.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\LoginPage.xaml.cs">
+    <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\MVListPage.xaml.cs">
+    <Compile Include="Pages\MVListPage.xaml.cs">
       <DependentUpon>MVListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\MVPlayer.xaml.cs">
+    <Compile Include="Pages\MVPlayer.xaml.cs">
       <DependentUpon>MVPlayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\MyMusicListInfo.xaml.cs">
+    <Compile Include="Pages\MyMusicListInfo.xaml.cs">
       <DependentUpon>MyMusicListInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\MyMusicListPage.xaml.cs">
+    <Compile Include="Pages\MyMusicListPage.xaml.cs">
       <DependentUpon>MyMusicListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\PlayerPageLite.xaml.cs">
+    <Compile Include="Pages\PlayerPageLite.xaml.cs">
       <DependentUpon>PlayerPageLite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\PlayerPgae.xaml.cs">
+    <Compile Include="Pages\PlayerPgae.xaml.cs">
       <DependentUpon>PlayerPgae.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Search.xaml.cs">
+    <Compile Include="Pages\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\SearchResult.xaml.cs">
+    <Compile Include="Pages\SearchResult.xaml.cs">
       <DependentUpon>SearchResult.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\SettingPage.xaml.cs">
+    <Compile Include="Pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Setting\DownloadQuSet.xaml.cs">
+    <Compile Include="Pages\Setting\DownloadQuSet.xaml.cs">
       <DependentUpon>DownloadQuSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Setting\ListenQuSet.xaml.cs">
+    <Compile Include="Pages\Setting\ListenQuSet.xaml.cs">
       <DependentUpon>ListenQuSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Setting\SkinSetPage.xaml.cs">
+    <Compile Include="Pages\Setting\SkinSetPage.xaml.cs">
       <DependentUpon>SkinSetPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Setting\ThemeSet.xaml.cs">
+    <Compile Include="Pages\Setting\ThemeSet.xaml.cs">
       <DependentUpon>ThemeSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\Setting\WelcomeSet.xaml.cs">
+    <Compile Include="Pages\Setting\WelcomeSet.xaml.cs">
       <DependentUpon>WelcomeSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\SingerPage.xaml.cs">
+    <Compile Include="Pages\SingerPage.xaml.cs">
       <DependentUpon>SingerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\SongListPage.xaml.cs">
+    <Compile Include="Pages\SongListPage.xaml.cs">
       <DependentUpon>SongListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\WebPage.xaml.cs">
+    <Compile Include="Pages\WebPage.xaml.cs">
       <DependentUpon>WebPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\YueKuPage.xaml.cs">
+    <Compile Include="Pages\YueKuPage.xaml.cs">
       <DependentUpon>YueKuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\YueKu\MVPage.xaml.cs">
+    <Compile Include="Pages\YueKu\MVPage.xaml.cs">
       <DependentUpon>MVPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\YueKu\SingerListPage.xaml.cs">
+    <Compile Include="Pages\YueKu\SingerListPage.xaml.cs">
       <DependentUpon>SingerListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="page\YueKu\SongBanner.xaml.cs">
+    <Compile Include="Pages\YueKu\SongBanner.xaml.cs">
       <DependentUpon>SongBanner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -358,107 +358,107 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="page\AlbumPage.xaml">
+    <Page Include="Pages\AlbumPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="page\DownloadPage.xaml">
+    <Page Include="Pages\DownloadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\HistoryPage.xaml">
+    <Page Include="Pages\HistoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\index\music.xaml">
+    <Page Include="Pages\index\music.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\MVListPage.xaml">
+    <Page Include="Pages\MVListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\MVPlayer.xaml">
+    <Page Include="Pages\MVPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\MyMusicListInfo.xaml">
+    <Page Include="Pages\MyMusicListInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\MyMusicListPage.xaml">
+    <Page Include="Pages\MyMusicListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\PlayerPageLite.xaml">
+    <Page Include="Pages\PlayerPageLite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\PlayerPgae.xaml">
+    <Page Include="Pages\PlayerPgae.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Search.xaml">
+    <Page Include="Pages\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\SearchResult.xaml">
+    <Page Include="Pages\SearchResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\SettingPage.xaml">
+    <Page Include="Pages\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Setting\DownloadQuSet.xaml">
+    <Page Include="Pages\Setting\DownloadQuSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Setting\ListenQuSet.xaml">
+    <Page Include="Pages\Setting\ListenQuSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Setting\SkinSetPage.xaml">
+    <Page Include="Pages\Setting\SkinSetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Setting\ThemeSet.xaml">
+    <Page Include="Pages\Setting\ThemeSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\Setting\WelcomeSet.xaml">
+    <Page Include="Pages\Setting\WelcomeSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\SingerPage.xaml">
+    <Page Include="Pages\SingerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\SongListPage.xaml">
+    <Page Include="Pages\SongListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\WebPage.xaml">
+    <Page Include="Pages\WebPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\YueKuPage.xaml">
+    <Page Include="Pages\YueKuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\YueKu\MVPage.xaml">
+    <Page Include="Pages\YueKu\MVPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\YueKu\SingerListPage.xaml">
+    <Page Include="Pages\YueKu\SingerListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="page\YueKu\SongBanner.xaml">
+    <Page Include="Pages\YueKu\SongBanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -526,6 +526,9 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxSystemBinary Include="酷狗音乐UWP.dll" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

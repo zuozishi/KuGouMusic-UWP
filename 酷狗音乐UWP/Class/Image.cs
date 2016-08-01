@@ -9,7 +9,7 @@ using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace 酷狗音乐UWP.Class.ImageUtility
+namespace KuGouMusicUWP.Class.ImageUtility
 {
     public class MyImage
     {

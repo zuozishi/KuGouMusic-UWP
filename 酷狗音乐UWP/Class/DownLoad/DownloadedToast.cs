@@ -23,7 +23,7 @@ namespace KG_ClassLibrary
             }
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
             XmlNodeList elements = toastXml.GetElementsByTagName("text");
-            elements[0].AppendChild(toastXml.CreateTextNode("酷狗音乐UWP"));
+            elements[0].AppendChild(toastXml.CreateTextNode("KuGouMusicUWP"));
             elements[1].AppendChild(toastXml.CreateTextNode("文件:"+filename+result));
             ToastNotification toast = new ToastNotification(toastXml);
             return toast;

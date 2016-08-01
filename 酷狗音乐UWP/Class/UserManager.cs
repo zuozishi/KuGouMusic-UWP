@@ -7,7 +7,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class UserManager
     {
@@ -25,7 +25,7 @@ namespace 酷狗音乐UWP.Class
         public static void ShowLoginUI()
         {
             var mainFrame = Window.Current.Content as Frame;
-            mainFrame.Navigate(typeof(page.LoginPage));
+            mainFrame.Navigate(typeof(Pages.LoginPage));
         }
         public static void unLogin()
         {

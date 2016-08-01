@@ -13,7 +13,7 @@ using Windows.Media.Devices;
 using Windows.Media.Effects;
 using Windows.Media.MediaProperties;
 
-namespace 酷狗音乐UWP.Class
+namespace KuGouMusicUWP.Class
 {
     public class SoundEffect
     {
