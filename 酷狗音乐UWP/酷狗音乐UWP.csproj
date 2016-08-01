@@ -19,8 +19,8 @@
     <PackageCertificateKeyFile>酷狗音乐UWP_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>A64E8B884926AEEC6ACEF6B3B31E7C5038439CCA</PackageCertificateThumbprint>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>77036B2B58D8C3097032CDA2AD25D1CC242001BA</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -109,6 +109,7 @@
     <Content Include="Assets\NewStoreLogo.scale-150.png" />
     <Content Include="Assets\NewStoreLogo.scale-200.png" />
     <Content Include="Assets\NewStoreLogo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Theme\Skin\BiShuiLan\background.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -172,6 +173,8 @@
     </Content>
     <Content Include="更新日志.txt" />
     <None Include="project.json" />
+    <None Include="酷狗音乐UWP_StoreKey.pfx" />
+    <None Include="酷狗音乐UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -304,8 +307,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="酷狗音乐UWP_StoreKey.pfx" />
-    <None Include="酷狗音乐UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\image\albumimg.jpg" />
@@ -334,7 +335,6 @@
     <Content Include="Assets\page\MainPage\看_未选中.png" />
     <Content Include="Assets\page\MainPage\选中.png" />
     <Content Include="Assets\page\MainPage\顶部渐变.png" />
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -516,7 +516,7 @@
       <HintPath>..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
     </Reference>
     <Reference Include="mediaservice">
-      <HintPath>..\mediaservice\bin\Debug\mediaservice.winmd</HintPath>
+      <HintPath>..\mediaservice\bin\Release\mediaservice.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

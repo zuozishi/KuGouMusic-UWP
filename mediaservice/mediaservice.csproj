@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncHttpClient.UWP">
-      <HintPath>..\..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
