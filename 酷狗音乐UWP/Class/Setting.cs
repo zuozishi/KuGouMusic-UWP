@@ -133,15 +133,6 @@ namespace 酷狗音乐UWP.Class
             {
                 Default,BiShuiLan,StarNight,Rabbit
             }
-            public class ThemeList
-            {
-                public class ThemeData
-                {
-                    public string title { get; set; }
-                    public string img { get; set; }
-                }
-                public List<ThemeData> List { get; set; }
-            }
             public static Type NowTheme
             {
                 get

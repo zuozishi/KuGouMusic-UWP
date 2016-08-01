@@ -140,20 +140,28 @@
     </Page.Resources>
 
     <Grid x:Name="mainGrid" Background="{ThemeResource KuGou-Background}">
-        <Grid Background="#33ACACAC">
+        <Grid Background="#33171717">
             <Grid Height="50" VerticalAlignment="Top">
                 <Button x:Name="Back_Btn" Width="50" Height="50" Background="{x:Null}" Click="Back_Btn_Click">
                     <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
                 </Button>
-                <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">正在播放</TextBlock>
+                <StackPanel Margin="50,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock x:Name="SongName_Text" Foreground="White" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center">酷狗音乐</TextBlock>
+                    <TextBlock x:Name="SingerName_Text" Margin="0,5,0,0" Foreground="#FFFFFFFC" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0.8">
+                	<Run Text="传播好音乐"/>
+                    </TextBlock>
+                </StackPanel>
                 <Button Click="SearchBtn_Clicked" Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
                     <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Find"></SymbolIcon>
                 </Button>
             </Grid>
-            <Grid Margin="0,50,0,250">
-                <FlipView x:Name="PlayerFlip" SelectionChanged="FlipView_SelectionChanged">
+            <Grid Margin="0,50,0,170">
+                <FlipView x:Name="PlayerFlip" SelectionChanged="FlipView_SelectionChanged" Background="{x:Null}">
                     <FlipViewItem Visibility="Visible">
-                        <Image x:Name="Album_Img" Source="ms-appx:///Assets/image/albumimg2.png" Stretch="Fill"></Image>
+                        <Grid>
+                            <Image x:Name="Album_Img" Width="250" Height="250" Source="ms-appx:///Assets/image/albumimg2.png" Stretch="Fill" Tapped="Album_Img_Tapped"></Image>
+                            <TextBlock x:Name="NowLrc_Text" Margin="0,0,0,20" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Center" VerticalAlignment="Bottom"></TextBlock>
+                        </Grid>
                     </FlipViewItem>
                     <FlipViewItem>
                         <ScrollViewer Background="{x:Null}" BorderBrush="{x:Null}">
@@ -162,13 +170,17 @@
                         </ScrollViewer>
                     </FlipViewItem>
                 </FlipView>
+                <CommandBar x:Name="MoreToolBtnBar" VerticalAlignment="Bottom" ClosedDisplayMode="Hidden" Foreground="{ThemeResource KuGou-Foreground}" Background="{x:Null}">
+                    <AppBarButton x:Name="MoreToolBtn0" Foreground="{ThemeResource KuGou-Foreground}" TabIndex="0" Click="MoreToolBtnsClicked" Icon="Contact2" Label="写真搜索"></AppBarButton>
+                    <AppBarButton x:Name="MoreToolBtn1" Foreground="{ThemeResource KuGou-Foreground}" TabIndex="1" Click="MoreToolBtnsClicked" Icon="Find" Label="查找歌词"></AppBarButton>
+                    <AppBarButton x:Name="MoreToolBtn2" Foreground="{ThemeResource KuGou-Foreground}" TabIndex="2" Click="MoreToolBtnsClicked" Icon="Contact" Label="查看歌手"></AppBarButton>
+                    <AppBarButton x:Name="MoreToolBtn3" Foreground="{ThemeResource KuGou-Foreground}" TabIndex="3" Click="MoreToolBtnsClicked" Icon="Pictures" Label="保存图片"></AppBarButton>
+                </CommandBar>
             </Grid>
             <Grid VerticalAlignment="Bottom" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="35"></RowDefinition>
-                    <RowDefinition Height="20"></RowDefinition>
-                    <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="15"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
@@ -177,32 +189,25 @@
                     <Rectangle x:Name="Page1_Icon" Margin="0,0,5,0" Width="8" Height="8" Fill="White"></Rectangle>
                     <Rectangle x:Name="Page2_Icon" Width="8" Height="8" Fill="#7FFFFFFF"></Rectangle>
                 </StackPanel>
-                <Slider x:Name="SongSlider" Grid.Row="1" Value="0" VerticalAlignment="Top" ValueChanged="SongSlider_ValueChanged" Style="{StaticResource SliderStyle1}"></Slider>
-                <Grid Grid.Row="2">
-                    <TextBlock x:Name="ThisTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Left">00:00</TextBlock>
-                    <TextBlock x:Name="NowLrc_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock x:Name="AllTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Right">00:00</TextBlock>
+                <Grid Grid.Row="1">
+                    <TextBlock x:Name="ThisTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Left" VerticalAlignment="Center">00:00</TextBlock>
+                    <TextBlock x:Name="AllTime_Text" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Right" VerticalAlignment="Center">00:00</TextBlock>
+                    <Slider x:Name="SongSlider" Value="0" VerticalAlignment="Top" ValueChanged="SongSlider_ValueChanged" Style="{StaticResource SliderStyle1}" Margin="41,0"></Slider>
                 </Grid>
-                <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="SongName_Text" Foreground="{ThemeResource KuGou-Foreground}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">酷狗音乐</TextBlock>
-                    <TextBlock x:Name="SingerName_Text" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                	<Run Text="传播好音乐"/>
-                    </TextBlock>
-                </StackPanel>
-                <ProgressBar x:Name="LoadProgress" Grid.Row="4" Visibility="Collapsed" Background="{x:Null}" IsIndeterminate="True"></ProgressBar>
-                <Grid Grid.Row="5">
+                <ProgressBar x:Name="LoadProgress" Grid.Row="2" Visibility="Collapsed" Background="{x:Null}" IsIndeterminate="True"></ProgressBar>
+                <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <AppBarButton Grid.Column="0" TabIndex="0" Click="ToolBynClicked" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                    <AppBarButton Grid.Column="1" TabIndex="1" Click="ToolBynClicked" Icon="Street" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <AppBarButton Grid.Column="2" TabIndex="2" Click="ToolBynClicked" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
-                    <AppBarButton Grid.Column="3" TabIndex="3" Click="ToolBynClicked" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="0" TabIndex="0" Click="ToolBtnClicked" Icon="Add" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="1" TabIndex="1" Click="ToolBtnClicked" Icon="Street" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <AppBarButton Grid.Column="2" TabIndex="2" Click="ToolBtnClicked" Icon="Download" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
+                    <AppBarButton Grid.Column="3" TabIndex="3" Click="ToolBtnClicked" Icon="More" Foreground="{ThemeResource KuGou-Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></AppBarButton>
                 </Grid>
-                <Grid Grid.Row="6">
+                <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>

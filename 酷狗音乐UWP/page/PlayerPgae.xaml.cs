@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Playback;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -17,8 +20,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using 酷狗音乐UWP.Class;
+using 酷狗音乐UWP.Class.ImageUtility;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -49,9 +54,9 @@ namespace 酷狗音乐UWP.page
             BackgroundMedia = Class.MediaControl.GetCurrent();
             ProcessTimer.Interval = TimeSpan.FromMilliseconds(800);
             PicTimer.Interval = TimeSpan.FromSeconds(60);
-            PicTimer.Tick += (s, e) =>
+            PicTimer.Tick += async (s, e) =>
            {
-               if(PlayerFlip.SelectedIndex==1)
+               if (PlayerFlip.SelectedIndex == 1)
                {
                    if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
                    {
@@ -63,7 +68,15 @@ namespace 酷狗音乐UWP.page
                        {
                            picnum = picnum + 1;
                        }
-                       mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[picnum].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
+                       WriteableBitmap wb = new WriteableBitmap(1000, 1500);
+                       HttpClient hc = new HttpClient();
+                       byte[] b = await hc.GetByteArrayAsync(singerdata.pics[picnum].Replace("{size}", "480"));
+                       using (IRandomAccessStream iras = b.AsBuffer().AsStream().AsRandomAccessStream())
+                       {
+                           await wb.SetSourceAsync(iras);
+                       }
+                       BlurEffect be = new BlurEffect(wb);
+                       mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(2), Stretch = Stretch.UniformToFill };
                    }
                }
            };
@@ -206,7 +219,7 @@ namespace 酷狗音乐UWP.page
 
         public async void UpdateData()
         {
-            var nowplay = await Class.Model.Player.GetNowPlay();
+            nowplay = await Class.Model.Player.GetNowPlay();
             var playlist = await Class.Model.PlayList.GetPlayList();
             switch (playlist.cyc)
             {
@@ -231,11 +244,19 @@ namespace 酷狗音乐UWP.page
                 if (nowplay.albumid.Length > 0)
                 {
                     var imgurl = await GetAlbumImg(nowplay.albumid);
-                    Album_Img.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(imgurl) };
+                    Album_Img.Source = new BitmapImage(new Uri(imgurl));
+                    WriteableBitmap wb = new WriteableBitmap(1000, 1500);
+                    HttpClient hc = new HttpClient();
+                    byte[] b = await hc.GetByteArrayAsync(imgurl);
+                    using (IRandomAccessStream iras = b.AsBuffer().AsStream().AsRandomAccessStream())
+                    {
+                        await wb.SetSourceAsync(iras);
+                    }
+                    mainGrid.Background = new SolidColorBrush(GetColor.GetMajorColor(wb));
                 }
                 else
                 {
-                    Album_Img.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri("ms-appx:///Assets/image/albumimg2.png") };
+                    Album_Img.Source = new BitmapImage() { UriSource = new Uri("ms-appx:///Assets/image/albumimg2.png") };
                 }
             }
             else
@@ -275,22 +296,45 @@ namespace 酷狗音乐UWP.page
 
         private async void LoadPics()
         {
-            if(singerdata==null)
+            try
             {
-                var nowplay = await Class.Model.Player.GetNowPlay();
-                singerdata = await Class.Model.SearchResultModel.GetSingerResult(nowplay.singername);
-                if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                if (singerdata == null)
                 {
-                    mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[0].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
-                    PicTimer.Start();
+                    var nowplay = await Class.Model.Player.GetNowPlay();
+                    singerdata = await Class.Model.SearchResultModel.GetSingerResult(nowplay.singername);
+                    if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                    {
+                        WriteableBitmap wb = new WriteableBitmap(1000, 1500);
+                        HttpClient hc = new HttpClient();
+                        byte[] b = await hc.GetByteArrayAsync(singerdata.pics[0].Replace("{size}", "480"));
+                        using (IRandomAccessStream iras = b.AsBuffer().AsStream().AsRandomAccessStream())
+                        {
+                            await wb.SetSourceAsync(iras);
+                        }
+                        BlurEffect be = new BlurEffect(wb);
+                        mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(2), Stretch = Stretch.UniformToFill };
+                        PicTimer.Start();
+                    }
+                }
+                else
+                {
+                    if (singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
+                    {
+                        WriteableBitmap wb = new WriteableBitmap(1000, 1500);
+                        HttpClient hc = new HttpClient();
+                        byte[] b = await hc.GetByteArrayAsync(singerdata.pics[picnum].Replace("{size}", "480"));
+                        using (IRandomAccessStream iras = b.AsBuffer().AsStream().AsRandomAccessStream())
+                        {
+                            await wb.SetSourceAsync(iras);
+                        }
+                        BlurEffect be = new BlurEffect(wb);
+                        mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(2),Stretch=Stretch.UniformToFill };
+                    }
                 }
             }
-            else
+            catch (Exception)
             {
-                if(singerdata != null && singerdata.pics != null && singerdata.pics.Count > 0)
-                {
-                    mainGrid.Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage() { UriSource = new Uri(singerdata.pics[picnum].Replace("{size}", "480")) }, Stretch = Stretch.UniformToFill };
-                }
+                
             }
         }
 
@@ -357,7 +401,7 @@ namespace 酷狗音乐UWP.page
             }
         }
 
-        private async void ToolBynClicked(object sender, RoutedEventArgs e)
+        private async void ToolBtnClicked(object sender, RoutedEventArgs e)
         {
             var btn = sender as AppBarButton;
             switch (btn.TabIndex)
@@ -381,6 +425,55 @@ namespace 酷狗音乐UWP.page
                     LoadProgress.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
+                    if (nowplay != null)
+                    {
+                        if (nowplay.singername == null || nowplay.singername == "未知歌手" || nowplay.singername == "传播好音乐")
+                        {
+                            MoreToolBtn2.Visibility = Visibility.Collapsed;
+                        }
+                        if (singerdata == null || singerdata.pics == null)
+                        {
+                            MoreToolBtn3.Visibility = Visibility.Collapsed;
+                        }
+                        MoreToolBtnBar.IsOpen = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Album_Img_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var img = sender as Image;
+            var source = img.Source as BitmapImage;
+            if (source.UriSource.ToString().Contains("http://"))
+            {
+                Frame.Navigate(typeof(page.AlbumPage), nowplay.albumid);
+            }
+        }
+
+        private async void MoreToolBtnsClicked(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as AppBarButton;
+            switch (btn.TabIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    Frame.Navigate(typeof(page.SearchResult), nowplay.singername);
+                    break;
+                case 3:
+                    LoadProgress.Visibility = Visibility.Visible;
+                    HttpClient hc = new HttpClient();
+                    var bytes = await hc.GetByteArrayAsync(singerdata.pics[picnum].Replace("{size}", "480"));
+                    var picfolder = await KnownFolders.PicturesLibrary.CreateFolderAsync("保存的歌手写真", CreationCollisionOption.OpenIfExists);
+                    var picfile = await picfolder.CreateFileAsync(nowplay.singername + picnum.ToString(), CreationCollisionOption.ReplaceExisting);
+                    await FileIO.WriteBytesAsync(picfile, bytes);
+                    await new Windows.UI.Popups.MessageDialog("歌手写真已保存到本地相册").ShowAsync();
+                    LoadProgress.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;

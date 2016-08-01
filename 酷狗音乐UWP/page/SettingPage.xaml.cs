@@ -47,6 +47,7 @@ namespace 酷狗音乐UWP.page
                     Frame.Navigate(typeof(page.Setting.WelcomeSet));
                     break;
                 case 1:
+                    Frame.Navigate(typeof(page.Setting.SkinSetPage));
                     break;
                 case 2:
                     Frame.Navigate(typeof(page.Setting.ListenQuSet));
