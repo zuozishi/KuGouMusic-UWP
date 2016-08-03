@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using KuGouMusicUWP.Class;
+using Windows.ApplicationModel.Resources;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -224,7 +225,7 @@ namespace KuGouMusicUWP.Pages
                 var nowplay = await this.GetNowPlay();
                 if (nowplay.url == null || nowplay.url == "")
                 {
-                    await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                    await new MessageDialog(ResourceLoader.GetForCurrentView().GetString("PlayFalied")).ShowAsync();
                 }
                 else
                 {

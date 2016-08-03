@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="260916E2A81CC.21468CB13FA6F" Publisher="CN=A886177F-54CC-4C7C-810E-A20DBDE691E6" Version="1.0.17.0" />
+  <Identity Name="260916E2A81CC.21468CB13FA6F" Publisher="CN=A886177F-54CC-4C7C-810E-A20DBDE691E6" Version="1.2.1.0" />
   <mp:PhoneIdentity PhoneProductId="4dfe6774-2b47-43ea-9a0c-ad17a92494ca" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>酷狗音乐UWP</DisplayName>
@@ -27,25 +27,6 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="lightBlue" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.TitleUpdateTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-            <Task Type="timer" />
-            <Task Type="pushNotification" />
-          </BackgroundTasks>
-        </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.backmedia">
-          <BackgroundTasks>
-            <Task Type="audio" />
-          </BackgroundTasks>
-        </Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
-        </uap:Extension>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="musicfile">
             <uap:SupportedFileTypes>
@@ -55,6 +36,25 @@
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
+        <uap:Extension Category="windows.fileOpenPicker">
+          <uap:FileOpenPicker>
+            <uap:SupportedFileTypes>
+              <uap:SupportsAnyFileType />
+            </uap:SupportedFileTypes>
+          </uap:FileOpenPicker>
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.backmedia">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="mediaservice.TitleUpdateTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <Task Type="timer" />
+            <Task Type="pushNotification" />
+          </BackgroundTasks>
+        </Extension>
       </Extensions>
       <uap:ApplicationContentUriRules>
         <uap:Rule Match="http://m.kugou.com" Type="include" WindowsRuntimeAccess="all" />

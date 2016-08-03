@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Resources;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -65,7 +66,7 @@ namespace KuGouMusicUWP.Pages
                     }
                     else
                     {
-                        await new Windows.UI.Popups.MessageDialog("反馈初始化失败").ShowAsync();
+                        await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("FeedbackInitFalied")).ShowAsync();
                     }
                     break;
                 default:

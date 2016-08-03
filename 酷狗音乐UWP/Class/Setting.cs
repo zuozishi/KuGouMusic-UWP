@@ -44,8 +44,8 @@ namespace KuGouMusicUWP.Class
                 {
                     if (!localSettings.Values.ContainsKey("WLANQu"))
                     {
-                        localSettings.Values["WLANQu"] = 0;
-                        return Type.low;
+                        localSettings.Values["WLANQu"] = 2;
+                        return Type.high;
                     }
                     else
                     {

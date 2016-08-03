@@ -173,6 +173,12 @@
     </Content>
     <Content Include="更新日志.txt" />
     <None Include="project.json" />
+    <PRIResource Include="strings\zh-CN\Resources.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </PRIResource>
+    <PRIResource Include="strings\en-US\Resources.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </PRIResource>
     <None Include="酷狗音乐UWP_StoreKey.pfx" />
     <None Include="酷狗音乐UWP_TemporaryKey.pfx" />
   </ItemGroup>
@@ -526,9 +532,6 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AppxSystemBinary Include="酷狗音乐UWP.dll" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

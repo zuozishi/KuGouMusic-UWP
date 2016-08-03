@@ -27,6 +27,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Shapes;
 using Windows.ApplicationModel.VoiceCommands;
+using Windows.ApplicationModel.Resources;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -156,7 +157,7 @@ namespace KuGouMusicUWP
                     var msgnum = await feedback.GetNewFeedBackRemindCount("e4e6005e3145b90b4edd99c0d0d35af9", userInfo.U_Key);
                     if (msgnum > 0)
                     {
-                        await new Windows.UI.Popups.MessageDialog("您收到" + msgnum + "条反馈回复,请到设置->反馈查看").ShowAsync();
+                        await new MessageDialog(string.Format(ResourceLoader.GetForCurrentView().GetString("PlayFalied"),msgnum)).ShowAsync();
                     }
                 }
             }
@@ -267,9 +268,9 @@ namespace KuGouMusicUWP
             //Frame.Navigate(typeof(Pages.WebPage), "http://m.kugou.com/song/static/index.html");
             if (Class.UserManager.isLogin())
             {
-                var menu= new MessageDialog("是否注销当前用户?");
-                UICommand cmdOK = new UICommand("确定",new UICommandInvokedHandler(UnloginOnCommandAct),1);
-                UICommand cmdCancel = new UICommand("取消", new UICommandInvokedHandler(UnloginOnCommandAct), 2);
+                var menu= new MessageDialog(ResourceLoader.GetForCurrentView().GetString("UnloginDialog"));
+                UICommand cmdOK = new UICommand(ResourceLoader.GetForCurrentView().GetString("OKBtn"), new UICommandInvokedHandler(UnloginOnCommandAct),1);
+                UICommand cmdCancel = new UICommand(ResourceLoader.GetForCurrentView().GetString("CancelBtn"), new UICommandInvokedHandler(UnloginOnCommandAct), 2);
                 menu.Commands.Add(cmdOK);
                 menu.Commands.Add(cmdCancel);
                 await menu.ShowAsync();

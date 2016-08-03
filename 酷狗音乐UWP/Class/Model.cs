@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Data.Json;
 using Windows.Foundation.Collections;
 using Windows.Media;
@@ -113,7 +114,7 @@ namespace KuGouMusicUWP.Class
                     var nowplay = await this.GetNowPlay();
                     if (nowplay.url == null || nowplay.url == "")
                     {
-                        await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                        await new MessageDialog(ResourceLoader.GetForCurrentView().GetString("PlayFalied")).ShowAsync();
                     }
                     else
                     {
@@ -951,7 +952,7 @@ namespace KuGouMusicUWP.Class
                         var files1 = (await folder1.GetFilesAsync()).ToList();
                         foreach (var file in files1)
                         {
-                            if (file.ContentType.Contains("audio"))
+                            if (file.ContentType.Contains("audio")&&(file.Name.Contains(".mp3")|| file.Name.Contains(".flac")))
                             {
                                 files.Add(file);
                             }
@@ -969,7 +970,7 @@ namespace KuGouMusicUWP.Class
                             statusBar.ProgressIndicator.Text = "正在加载";
                             await statusBar.ProgressIndicator.ShowAsync();
                         }
-                        if (item.ContentType.Contains("audio"))
+                        if (item.ContentType.Contains("audio") && (item.Name.Contains(".mp3") || item.Name.Contains(".flac")))
                         {
                             string firstword = "";
                             if ((await item.Properties.GetMusicPropertiesAsync()).Title != "")

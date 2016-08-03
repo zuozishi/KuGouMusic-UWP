@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -224,7 +225,7 @@ namespace KuGouMusicUWP.Pages
                 var nowplay = await this.GetNowPlay();
                 if (nowplay.url == null || nowplay.url == "")
                 {
-                    await new MessageDialog("该音乐暂时无法播放！").ShowAsync();
+                    await new MessageDialog(ResourceLoader.GetForCurrentView().GetString("PlayFalied")).ShowAsync();
                 }
                 else
                 {

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -52,9 +53,9 @@ namespace KuGouMusicUWP.Pages.Setting
 
         private async void ShowDialog()
         {
-            var dialog = new MessageDialog("主题生效需要重启应用,是否重启?");
-            dialog.Commands.Add(new UICommand("重启",DialogHandler,0));
-            dialog.Commands.Add(new UICommand("稍后", DialogHandler, 1));
+            var dialog = new MessageDialog(ResourceLoader.GetForCurrentView().GetString("ThemeLoadDialog"));
+            dialog.Commands.Add(new UICommand(ResourceLoader.GetForCurrentView().GetString("RestartBtn"), DialogHandler,0));
+            dialog.Commands.Add(new UICommand(ResourceLoader.GetForCurrentView().GetString("LaterBtn"), DialogHandler, 1));
             await dialog.ShowAsync();
         }
 

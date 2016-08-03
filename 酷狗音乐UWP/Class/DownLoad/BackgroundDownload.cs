@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.UI.Popups;
@@ -94,12 +95,12 @@ namespace KG_ClassLibrary
                 download.StartAsync().AsTask(cancelToken.Token, progressCallback);
                 if(type!= DownloadType.song)
                 {
-                    await new MessageDialog("已加入下载列表！").ShowAsync();
+                    await new MessageDialog(ResourceLoader.GetForCurrentView().GetString("AddDownSuccess")).ShowAsync();
                 }
             }
             catch
             {
-                await new MessageDialog("链接已失效！").ShowAsync();
+                await new MessageDialog(ResourceLoader.GetForCurrentView().GetString("AddDownFalied")).ShowAsync();
             }
         }
 

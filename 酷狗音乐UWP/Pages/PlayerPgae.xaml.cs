@@ -24,6 +24,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using KuGouMusicUWP.Class;
 using KuGouMusicUWP.Class.ImageUtility;
+using Windows.ApplicationModel.Resources;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -37,6 +38,7 @@ namespace KuGouMusicUWP.Pages
         public MediaPlayer BackgroundMedia { get; private set; }
         private DispatcherTimer ProcessTimer = new DispatcherTimer();
         private DispatcherTimer PicTimer = new DispatcherTimer();
+        private ImageBrush albumimgbrush;
         int picnum = 0;
         private Class.Model.Player.NowPlay nowplay;
         private bool ishander = true;
@@ -76,7 +78,7 @@ namespace KuGouMusicUWP.Pages
                            await wb.SetSourceAsync(iras);
                        }
                        BlurEffect be = new BlurEffect(wb);
-                       mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(2), Stretch = Stretch.UniformToFill };
+                       mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(1), Stretch = Stretch.UniformToFill };
                    }
                }
            };
@@ -255,7 +257,9 @@ namespace KuGouMusicUWP.Pages
                     {
                         await wb.SetSourceAsync(iras);
                     }
-                    mainGrid.Background = new SolidColorBrush(GetColor.GetMajorColor(wb));
+                    BlurEffect be = new BlurEffect(wb);
+                    albumimgbrush= new ImageBrush() { ImageSource = await be.ApplyFilter(2), Stretch = Stretch.UniformToFill };
+                    mainGrid.Background = new ImageBrush() { ImageSource = await be.ApplyFilter(2), Stretch = Stretch.UniformToFill };
                 }
                 else
                 {
@@ -280,7 +284,13 @@ namespace KuGouMusicUWP.Pages
                     case 0:
                         Page1_Icon.Fill = new SolidColorBrush(Colors.White);
                         Page2_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));
-                        mainGrid.Background = (ImageBrush)Theme["KuGou-Background"];
+                        if (albumimgbrush == null)
+                        {
+                            mainGrid.Background = (ImageBrush)Theme["KuGou-Background"];
+                        }else
+                        {
+                            mainGrid.Background = albumimgbrush;
+                        }
                         break;
                     case 1:
                         Page1_Icon.Fill = new SolidColorBrush(Color.FromArgb(50, 225, 225, 225));
@@ -419,11 +429,11 @@ namespace KuGouMusicUWP.Pages
                     if (nowplay.url != null && nowplay.url.Contains("http://"))
                     {
                         await KG_ClassLibrary.BackgroundDownload.Start(nowplay.singername + "-" + nowplay.title, nowplay.url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
-                        await new Windows.UI.Popups.MessageDialog("已加入下载列表！").ShowAsync();
+                        await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("AddDownSuccess")).ShowAsync();
                     }
                     else
                     {
-                        await new Windows.UI.Popups.MessageDialog("本地歌曲无需下载" + nowplay.url).ShowAsync();
+                        await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("DownLocalFalied") + nowplay.url).ShowAsync();
                     }
                     LoadProgress.Visibility = Visibility.Collapsed;
                     break;
@@ -475,7 +485,7 @@ namespace KuGouMusicUWP.Pages
                     var picfolder = await KnownFolders.PicturesLibrary.CreateFolderAsync("保存的歌手写真", CreationCollisionOption.OpenIfExists);
                     var picfile = await picfolder.CreateFileAsync(nowplay.singername + picnum.ToString(), CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteBytesAsync(picfile, bytes);
-                    await new Windows.UI.Popups.MessageDialog("歌手写真已保存到本地相册").ShowAsync();
+                    await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("DownSingerPic")).ShowAsync();
                     LoadProgress.Visibility = Visibility.Visible;
                     break;
                 default:

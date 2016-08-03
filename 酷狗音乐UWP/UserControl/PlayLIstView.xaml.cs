@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using KuGouMusicUWP.Class;
+using Windows.ApplicationModel.Resources;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -173,10 +174,10 @@ namespace KuGouMusicUWP.UserControlClass
                     if (song.url != null && song.url.Contains("http://"))
                     {
                         await KG_ClassLibrary.BackgroundDownload.Start(song.singername + "-" + song.title, song.url, KG_ClassLibrary.BackgroundDownload.DownloadType.song);
-                        await new Windows.UI.Popups.MessageDialog("已加入下载列表！").ShowAsync();
+                        await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("AddDownSuccess")).ShowAsync();
                     } else
                     {
-                        await new Windows.UI.Popups.MessageDialog("本地歌曲无需下载" + song.url).ShowAsync();
+                        await new Windows.UI.Popups.MessageDialog(ResourceLoader.GetForCurrentView().GetString("DownLocalFalied") + song.url).ShowAsync();
                     }
                     LoadProgress.Visibility = Visibility.Collapsed;
                 }
