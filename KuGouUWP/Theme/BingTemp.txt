@@ -1,0 +1,43 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KuGouUWP">
+    <ResourceDictionary.ThemeDictionaries >
+        <ResourceDictionary x:Key="Light">
+            <!--背景图片-->
+            <ImageBrush x:Key="KuGou-Background" ImageSource="Skin/Bing/background.jpg"/>
+            <!--背景颜色-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="{0}"/>
+            <!--背景颜色透明点-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="{1}"/>
+            <!--背景颜色深点-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="{2}"/>
+            <!--标题栏前景颜色-->
+            <SolidColorBrush x:Key="KuGou-Foreground" Color="{3}"/>
+            <!--文字颜色1-->
+            <SolidColorBrush x:Key="KuGou-Front1" Color="{4}"/>
+            <!--文字颜色2-->
+            <SolidColorBrush x:Key="KuGou-Front2" Color="{5}"/>
+            <!--ListView背景色-->
+            <SolidColorBrush x:Key="KuGou-List-Background" Color="{6}"/>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <!--背景图片-->
+            <ImageBrush x:Key="KuGou-Background" ImageSource="Skin/Bing/background.jpg"/>
+            <!--背景颜色-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="{0}"/>
+            <!--背景颜色透明点-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="{1}"/>
+            <!--背景颜色深点-->
+            <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="{2}"/>
+            <!--标题栏前景颜色-->
+            <SolidColorBrush x:Key="KuGou-Foreground" Color="{3}"/>
+            <!--文字颜色1-->
+            <SolidColorBrush x:Key="KuGou-Front1" Color="{4}"/>
+            <!--文字颜色2-->
+            <SolidColorBrush x:Key="KuGou-Front2" Color="{5}"/>
+            <!--ListView背景色-->
+            <SolidColorBrush x:Key="KuGou-List-Background" Color="{6}"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

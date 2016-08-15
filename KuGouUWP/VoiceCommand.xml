@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="zh-CN" Name="KuGouUWP">
+    <AppName> 酷狗音乐 </AppName>
+    <Example>搜索薛之谦</Example>
+
+    <Command Name="Search">
+      <Example>搜索薛之谦</Example>
+      <ListenFor>搜索{SearchContent}</ListenFor>
+      <Feedback>正在搜索{SearchContent}...</Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="OpenMyList">
+      <Example>打开我的歌单</Example>
+      <ListenFor>打开我的歌单</ListenFor>
+      <Feedback>正在打开你的歌单...</Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="OpenYueKu">
+      <Example>打开乐库</Example>
+      <ListenFor>打开乐库</ListenFor>
+      <Feedback>正在打开乐库...</Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="OpenSetting">
+      <Example>打开设置</Example>
+      <ListenFor>打开设置</ListenFor>
+      <Feedback>正在打开设置...</Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="OpenPlaying">
+      <Example>打开正在播放</Example>
+      <ListenFor>打开正在播放</ListenFor>
+      <Feedback>正在打开播放页面...</Feedback>
+      <Navigate />
+    </Command>
+    <PhraseTopic Label="SearchContent">
+      <Subject>泡沫</Subject>
+    </PhraseTopic>
+  </CommandSet>
+</VoiceCommands>

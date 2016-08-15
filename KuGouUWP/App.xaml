@@ -1,0 +1,49 @@
+﻿<Application
+    x:Class="KuGouUWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KuGouUWP"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <!--背景图片-->
+                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/background.jpg"/>
+                    <!--背景颜色-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF43BDEE"/>
+                    <!--背景颜色透明点-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#BF2C9BCC"/>
+                    <!--背景颜色深点-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF016E9B"/>
+                    <!--标题栏前景颜色-->
+                    <SolidColorBrush x:Key="KuGou-Foreground" Color="White"/>
+                    <!--文字颜色1-->
+                    <SolidColorBrush x:Key="KuGou-Front1" Color="Black"/>
+                    <!--文字颜色2-->
+                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
+                    <!--ListView背景色-->
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <!--背景图片-->
+                    <ImageBrush x:Key="KuGou-Background" ImageSource="Assets/background.jpg"/>
+                    <!--背景颜色-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor" Color="#FF43BDEE"/>
+                    <!--背景颜色透明点-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor1" Color="#BF2C9BCC"/>
+                    <!--背景颜色深点-->
+                    <SolidColorBrush x:Key="KuGou-BackgroundColor2" Color="#FF016E9B"/>
+                    <!--标题栏前景颜色-->
+                    <SolidColorBrush x:Key="KuGou-Foreground" Color="White"/>
+                    <!--文字颜色1-->
+                    <SolidColorBrush x:Key="KuGou-Front1" Color="Black"/>
+                    <!--文字颜色2-->
+                    <SolidColorBrush x:Key="KuGou-Front2" Color="#FF7C7C7C"/>
+                    <!--ListView背景色-->
+                    <SolidColorBrush x:Key="KuGou-List-Background" Color="#B4FFFFFF"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

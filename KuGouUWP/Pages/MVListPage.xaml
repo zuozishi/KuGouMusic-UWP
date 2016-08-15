@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="KuGouUWP.Pages.MVListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KuGouUWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="mainGrid" Background="{ThemeResource KuGou-Background}">
+        <Grid Height="50" VerticalAlignment="Top">
+            <Button Width="50" Height="50" Background="{x:Null}">
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Back"></SymbolIcon>
+            </Button>
+            <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18" Text="{Binding title}">MV</TextBlock>
+            <Button Width="50" Height="50" Background="{x:Null}" HorizontalAlignment="Right">
+                <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Symbol="Find"></SymbolIcon>
+            </Button>
+        </Grid>
+        <Grid Margin="0,50,0,0">
+            <ScrollViewer>
+                <Grid>
+                    <Grid Height="120" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="77"/>
+                            <RowDefinition Height="43"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Height="100" Source="{Binding mvbanner}" Stretch="Fill"/>
+                        <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords" FontSize="11" Foreground="#FF4B4A4A" Text="{Binding des}"></TextBlock>
+                    </Grid>
+                    <ListView x:Name="mvlistView" SelectionMode="Single" ItemsSource="{Binding mvlist}" Margin="10,120,10,0" ItemClick="mvlistView_ItemClick" SelectionChanged="mvlistView_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="BorderBrush" Value="#7F808080"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Margin" Value="0,0,0,2"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Visibility="Visible" Margin="-5,0,-5,0" Background="{ThemeResource KuGou-List-Background}" Height="80" BorderThickness="0,0,0,2" VerticalAlignment="Top">
+                                    <Image Width="120" Height="80" Stretch="UniformToFill" Source="{Binding pic}" HorizontalAlignment="Left"/>
+                                    <StackPanel Margin="130,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Margin="5,0,0,0" Foreground="{ThemeResource KuGou-Front1}" FontSize="15" Text="{Binding name}"></TextBlock>
+                                        <TextBlock Margin="5,0,0,0" FontSize="15" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singer}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

@@ -108,15 +108,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BingSkinUpdate.cs" />
     <Compile Include="MediaService.cs" />
     <Compile Include="Notifications.cs" />
-    <Compile Include="Contrana.cs" />
+    <Compile Include="Cortana.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="AsyncHttpClient.UWP">
-      <HintPath>..\..\..\..\Desktop\develop\AsyncHttpClient.UWP.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

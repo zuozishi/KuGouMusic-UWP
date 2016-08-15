@@ -1,0 +1,69 @@
+﻿<UserControl
+    x:Class="KuGouUWP.UserControlClass.PlayLIstView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KuGouUWP.UserControlClass"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Width="300" Height="350" Background="{ThemeResource KuGou-BackgroundColor}">
+        <Grid Height="50" VerticalAlignment="Top">
+            <TextBlock Margin="10,0,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14">当前播放列表</TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <AppBarButton Height="50" Width="50" Icon="Add" Foreground="White"></AppBarButton>
+                <AppBarButton x:Name="Cyc_Btn" Height="50" Width="50" Icon="RepeatOne" Foreground="White" Click="Cyc_Btn_Click"></AppBarButton>
+                <AppBarButton x:Name="ClearBtn" Height="50" Width="50" Icon="Delete" Foreground="White" Click="ClearBtn_Click"></AppBarButton>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="0,50,0,0">
+            <ScrollViewer>
+                <ListView Margin="5,0,5,0" x:Name="SongListView">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Background" Value="{ThemeResource KuGou-List-Background}"/>
+                            <Setter Property="BorderBrush" Value="#7F808080"/>
+                            <Setter Property="Margin" Value="0,0,0,3"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="278" Height="45" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <Grid HorizontalAlignment="Left" Width="30" Height="30">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18" Text="{Binding num}"></TextBlock>
+                                </Grid>
+                                <StackPanel Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <TextBlock Foreground="{ThemeResource KuGou-Front1}" Margin="0,0,0,5" Text="{Binding songname}"></TextBlock>
+                                    <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singername}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Add" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
+                                    <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Download" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
+                                    <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListViewItem>
+                        <Grid Width="278" Height="45" VerticalAlignment="Top">
+                            <Grid HorizontalAlignment="Left" Width="30" Height="30">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Front1}" FontSize="18">1</TextBlock>
+                            </Grid>
+                            <StackPanel Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <TextBlock Foreground="{ThemeResource KuGou-Front1}" Margin="0,0,0,5">牧星者</TextBlock>
+                                <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}">星尘</TextBlock>
+                            </StackPanel>
+                            <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Like" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
+                                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Download" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
+                                <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
+                            </StackPanel>
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+        <ProgressBar x:Name="LoadProgress" Visibility="Collapsed" IsIndeterminate="True" VerticalAlignment="Top" Background="{x:Null}"></ProgressBar>
+    </Grid>
+</UserControl>

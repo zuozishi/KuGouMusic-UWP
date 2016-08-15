@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Data.Json;
+using Windows.Data.Xml.Dom;
 using Windows.Media;
 using Windows.Media.Playback;
 using Windows.Storage;
+using Windows.UI.Notifications;
 
 namespace mediaservice
 {
@@ -21,7 +23,6 @@ namespace mediaservice
         SystemMediaTransportControls stmp= null;
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            
             BackgroundMediaPlayer.MessageReceivedFromForeground += BackgroundMediaPlayer_MessageReceivedFromForeground;
             mediaplayer.CurrentStateChanged += Mediaplayer_CurrentStateChanged;
             taskInstance.Canceled += TaskInstance_Canceled;
@@ -55,6 +56,7 @@ namespace mediaservice
                 var nowplay = new NowPlay();
                 nowplay.title = obj.GetNamedString("title");
                 nowplay.singername = obj.GetNamedString("singername");
+                nowplay.imgurl= obj.GetNamedString("imgurl");
                 return nowplay;
             }
             catch (Exception)
@@ -159,6 +161,7 @@ namespace mediaservice
                 var file = await Windows.Storage.StorageFile.GetFileFromPathAsync(path);
                 mediaplayer.SetFileSource(file);
             }
+            UpdateTitle();
         }
 
         private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
@@ -336,6 +339,7 @@ namespace mediaservice
                         {
                             mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                         }
+                        UpdateTitle();
                         break;
                     case PlayList.cycling.列表循环:
                         if (now == list.SongList.Count - 1)
@@ -362,6 +366,7 @@ namespace mediaservice
                             mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                         }
                         await Windows.Storage.FileIO.WriteTextAsync(playlistfile, PlayList.ToJsonData(list));
+                        UpdateTitle();
                         break;
                     case PlayList.cycling.随机播放:
                             now = new Random().Next(0, list.SongList.Count);
@@ -380,7 +385,8 @@ namespace mediaservice
                             {
                                 mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                             }
-                            await Windows.Storage.FileIO.WriteTextAsync(playlistfile, PlayList.ToJsonData(list));
+                        await Windows.Storage.FileIO.WriteTextAsync(playlistfile, PlayList.ToJsonData(list));
+                        UpdateTitle();
                         break;
                     default:
                         break;
@@ -417,6 +423,7 @@ namespace mediaservice
                         {
                             mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                         }
+                        UpdateTitle();
                         break;
                     case PlayList.cycling.列表循环:
                         if (now == 0)
@@ -443,6 +450,7 @@ namespace mediaservice
                             mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                         }
                         await Windows.Storage.FileIO.WriteTextAsync(playlistfile, PlayList.ToJsonData(list));
+                        UpdateTitle();
                         break;
                     case PlayList.cycling.随机播放:
                         now = new Random().Next(0, list.SongList.Count);
@@ -462,6 +470,7 @@ namespace mediaservice
                             mediaplayer.SetFileSource(await Windows.Storage.StorageFile.GetFileFromPathAsync(list.SongList[now].url));
                         }
                         await Windows.Storage.FileIO.WriteTextAsync(playlistfile, PlayList.ToJsonData(list));
+                        UpdateTitle();
                         break;
                     default:
                         break;
@@ -471,6 +480,16 @@ namespace mediaservice
             {
 
             }
+        }
+
+        private static async void UpdateTitle()
+        {
+            var datafolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Data");
+            var nowplayfile = await datafolder.GetFileAsync("nowplay.json");
+            var json = await Windows.Storage.FileIO.ReadTextAsync(nowplayfile);
+            datafolder = await Windows.Storage.KnownFolders.MusicLibrary.CreateFolderAsync("kugoudata", CreationCollisionOption.OpenIfExists);
+            nowplayfile=await datafolder.CreateFileAsync("nowplay.json", CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(nowplayfile, json);
         }
     }
 }
