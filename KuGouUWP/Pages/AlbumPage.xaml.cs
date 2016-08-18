@@ -62,7 +62,7 @@ namespace KuGouUWP.Pages
         {
             LoadProcess.IsActive = true;
             var list = sender as ListView;
-            if(list.SelectedItem!=null)
+            if(list.SelectedItem!=null&&list.SelectionMode==ListViewSelectionMode.Single&&list.SelectedItems.Count==0)
             {
                 var song = list.SelectedItem as SongData;
                 await song.AddToPlayList(true);
@@ -321,6 +321,7 @@ namespace KuGouUWP.Pages
                 {
                     SongList.SelectedItems.Clear();
                     SongList.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
                     MoreSongBox.Hidden();
                 }
             }
@@ -339,6 +340,10 @@ namespace KuGouUWP.Pages
                             var song = item as SongData;
                             await song.AddToPlayList(false);
                         }
+                        SongList.SelectedItems.Clear();
+                        SongList.SelectionMode = ListViewSelectionMode.Single;
+                        MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                        MoreSongBox.Hidden();
                         break;
                     case UserControlClass.SongMultipleBox.BtnType.Download:
                         foreach (var item in SongList.SelectedItems)
@@ -346,6 +351,10 @@ namespace KuGouUWP.Pages
                             var song = item as SongData;
                             await song.AddToDownloadList();
                         }
+                        SongList.SelectedItems.Clear();
+                        SongList.SelectionMode = ListViewSelectionMode.Single;
+                        MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                        MoreSongBox.Hidden();
                         break;
                     case UserControlClass.SongMultipleBox.BtnType.AddToList:
                         break;

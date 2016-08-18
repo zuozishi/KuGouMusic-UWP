@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Navigation;
 using KuGouUWP.Class;
 using ImageUtility;
 using Windows.ApplicationModel.Resources;
+using Windows.ApplicationModel.DataTransfer;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -143,6 +144,7 @@ namespace KuGouUWP.Pages
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 await statusBar.HideAsync();
             }
+            DataTransferManager.GetForCurrentView().DataRequested += PlayePage_DataRequested;
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
@@ -153,6 +155,7 @@ namespace KuGouUWP.Pages
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 await statusBar.ShowAsync();
             }
+            DataTransferManager.GetForCurrentView().DataRequested -= PlayePage_DataRequested;
         }
 
         private async void Cyc_Btn_Click(object sender, RoutedEventArgs e)
@@ -412,14 +415,43 @@ namespace KuGouUWP.Pages
             }
         }
 
+        private async void PlayePage_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            try
+            {
+                var deferral = args.Request.GetDeferral();
+                var httpclient = new System.Net.Http.HttpClient();
+                var geturl = string.Format("http://www.kugou.com/clientshare/app/?md5={0}&cmid=5&pid=android&hash={1}&url=http%3A%2F%2Fm.kugou.com%2Fweibo%2F%3Faction%3Dsingle%26filename%3D{2}%26hash%3D{1}", MD5.GetMd5String("kgclientshare" + nowplay.hash), nowplay.hash, nowplay.singername + "-" + nowplay.title);
+                var json = await httpclient.GetStringAsync(geturl);
+                var url = Windows.Data.Json.JsonObject.Parse(json)["data"].GetString();
+                args.Request.Data.SetText("我正在听:" + nowplay.singername + "-" + nowplay.title + "   ---来自酷狗音乐UWP客户端" + Environment.NewLine + url);
+                args.Request.Data.Properties.Title = "酷狗音乐UWP";
+                args.Request.Data.Properties.Description = "分享音乐";
+                deferral.Complete();
+            }
+            catch (Exception)
+            {
+                await new Windows.UI.Popups.MessageDialog("分享失败,请检查网络连接").ShowAsync();
+            }
+        }
+
         private async void ToolBtnClicked(object sender, RoutedEventArgs e)
         {
             var btn = sender as AppBarButton;
             switch (btn.TabIndex)
             {
                 case 0:
+                    await new Windows.UI.Popups.MessageDialog("正在建设").ShowAsync();
                     break;
                 case 1:
+                    if (nowplay != null && nowplay.url.Contains("http://")&&nowplay.hash!=null&&nowplay.hash!="")
+                    {
+                        DataTransferManager.ShowShareUI();
+                    }
+                    else
+                    {
+                        await new Windows.UI.Popups.MessageDialog("本地歌曲无法分享").ShowAsync();
+                    }
                     break;
                 case 2:
                     LoadProgress.Visibility = Visibility.Visible;

@@ -495,12 +495,26 @@ namespace KuGouUWP.Class
                     var list = new PlayList();
                     var json = await Windows.Storage.FileIO.ReadTextAsync(listfile);
                     list = Class.data.DataContractJsonDeSerialize<PlayList>(json);
-                    list.SongList.Add(nowplay);
-                    Class.Model.History.Add(nowplay);
-                    await Windows.Storage.FileIO.WriteTextAsync(listfile,Class.data.ToJsonData(list));
+                    bool isadd = true;
+                    int playindex = 0;
+                    for (int i = 0; i < list.SongList.Count; i++)
+                    {
+                        if (list.SongList[i].url == nowplay.url)
+                        {
+                            isadd = false;
+                            playindex = i;
+                        }
+                    }
+                    if (isadd)
+                    {
+                        list.SongList.Add(nowplay);
+                        Class.Model.History.Add(nowplay);
+                        playindex = list.SongList.Count - 1;
+                        await Windows.Storage.FileIO.WriteTextAsync(listfile, Class.data.ToJsonData(list));
+                    }
                     if (isplay)
                     {
-                        PlayAt(list.SongList.Count-1);
+                        PlayAt(playindex);
                     }
                 }
                 catch (Exception)

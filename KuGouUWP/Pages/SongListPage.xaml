@@ -19,7 +19,7 @@
             </Button>
         </Grid>
         <Grid Margin="0,50,0,63">
-            <Button x:Name="TopMoreBtn" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="TopMoreBtn" Background="{x:Null}" Click="MoreBtn_Clicked" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Foreground="{ThemeResource KuGou-Foreground}" Margin="0,0,5,0" Symbol="Edit"></SymbolIcon>
                     <TextBlock Foreground="{ThemeResource KuGou-Foreground}">对多首歌曲进行操作</TextBlock>
@@ -58,6 +58,7 @@
             </ScrollViewer>
             <ProgressRing Width="100" Height="100" x:Name="LoadProcess"></ProgressRing>
         </Grid>
+        <user:SongMultipleBox x:Name="MoreSongBox" Margin="0,0,0,63" Height="60" VerticalAlignment="Bottom"></user:SongMultipleBox>
         <user:PlayerSmall Height="63" VerticalAlignment="Bottom"></user:PlayerSmall>
     </Grid>
 </Page>

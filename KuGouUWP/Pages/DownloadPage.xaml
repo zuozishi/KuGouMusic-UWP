@@ -154,7 +154,7 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Height="55" Background="White" Margin="0,2,0,2">
+                                        <Grid Height="55" Background="{ThemeResource KuGou-List-Background}" Margin="0,2,0,2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition />
                                                 <ColumnDefinition Width="50"/>

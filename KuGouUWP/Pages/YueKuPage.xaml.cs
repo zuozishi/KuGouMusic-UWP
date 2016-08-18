@@ -603,5 +603,19 @@ namespace KuGouUWP.Pages
                 Frame.Navigate(typeof(Pages.SongListPage), new string[] { data.specialid,data.specialname});
             }
         }
+
+        private async void NewThingsList_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as ListView;
+            if (list.SelectedIndex != -1)
+            {
+                await new Windows.UI.Popups.MessageDialog("正在施工").ShowAsync();
+            }
+        }
+
+        private async void TopBarBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            await new Windows.UI.Popups.MessageDialog("正在施工").ShowAsync();
+        }
     }
 }

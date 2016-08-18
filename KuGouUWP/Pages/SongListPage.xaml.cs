@@ -52,7 +52,7 @@ namespace KuGouUWP.Pages
         {
             LoadProcess.IsActive = true;
             var list = sender as ListView;
-            if (list.SelectedItem != null)
+            if (list.SelectedItem != null&&list.SelectionMode==ListViewSelectionMode.Single)
             {
                 if (list.SelectionMode == ListViewSelectionMode.Single)
                 {
@@ -119,7 +119,9 @@ namespace KuGouUWP.Pages
                 {
                     if (hash != "")
                     {
-                        switch (Class.Setting.Qu.GetType())
+                        var type = Class.Setting.Qu.GetType();
+                        type = Class.Setting.Qu.Type.low;
+                        switch (type)
                         {
                             case Class.Setting.Qu.Type.low:
                                 return await Class.kugou.get_musicurl_by_hash(hash);
@@ -165,7 +167,6 @@ namespace KuGouUWP.Pages
                     var music = new Class.Model.Player.NowPlay();
                     music.title = filename;
                     music.url = await GetUrl();
-                    music.hash = hash;
                     if (album_id != "0"&& album_id != "")
                     {
                         music.albumid = album_id;
@@ -221,7 +222,8 @@ namespace KuGouUWP.Pages
                 {
                     if (hash != "")
                     {
-                        switch (Class.Setting.DownQu.GetType())
+                        
+                        switch (Class.Setting.DownQu.Type.low)
                         {
                             case Class.Setting.DownQu.Type.low:
                                 return await Class.kugou.get_musicurl_by_hash(hash);
@@ -282,6 +284,72 @@ namespace KuGouUWP.Pages
         private void BackBtn_Clicked(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
+        }
+
+        private void MoreBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (SongListView.ItemsSource != null)
+            {
+                if (SongListView.SelectionMode == ListViewSelectionMode.Single)
+                {
+                    SongListView.SelectionMode = ListViewSelectionMode.Multiple;
+                    MoreSongBox.Show();
+                    MoreSongBox.BtnClickedEvent += MoreSongBox_BtnClickedEvent;
+                }
+                else
+                {
+                    SongListView.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.Hidden();
+                    MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                }
+            }
+        }
+
+        private async void MoreSongBox_BtnClickedEvent(UserControlClass.SongMultipleBox.BtnType type)
+        {
+            LoadProcess.IsActive = true;
+            switch (type)
+            {
+                case UserControlClass.SongMultipleBox.BtnType.NextPlay:
+                    foreach (var item in SongListView.SelectedItems)
+                    {
+                        var music = item as SongLsitData.SongData;
+                        await music.AddToPlayList(false);
+                    }
+                    await new MessageDialog("已添加到播放列表").ShowAsync();
+                    SongListView.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.Hidden();
+                    MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                    break;
+                case UserControlClass.SongMultipleBox.BtnType.Download:
+                    foreach (var item in SongListView.SelectedItems)
+                    {
+                        var music = item as SongLsitData.SongData;
+                        await music.AddToDownloadList();
+                    }
+                    await new MessageDialog("已添加到下载列表").ShowAsync();
+                    SongListView.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.Hidden();
+                    MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                    break;
+                case UserControlClass.SongMultipleBox.BtnType.AddToList:
+                    SongListView.SelectionMode = ListViewSelectionMode.Single;
+                    MoreSongBox.Hidden();
+                    MoreSongBox.BtnClickedEvent -= MoreSongBox_BtnClickedEvent;
+                    break;
+                case UserControlClass.SongMultipleBox.BtnType.SelectAll:
+                    if (SongListView.SelectedItems.Count == 0)
+                    {
+                        SongListView.SelectAll();
+                    }else
+                    {
+                        SongListView.SelectedItems.Clear();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            LoadProcess.IsActive = false;
         }
     }
 }

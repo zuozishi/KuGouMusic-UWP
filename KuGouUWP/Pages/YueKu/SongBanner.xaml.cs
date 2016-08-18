@@ -55,7 +55,7 @@ namespace KuGouUWP.Pages.YueKu
             var list = sender as ListView;
             if(list.SelectedIndex!=-1)
             {
-                if (list.SelectionMode != ListViewSelectionMode.Multiple && list.SelectedItem != null)
+                if (list.SelectionMode != ListViewSelectionMode.Multiple && list.SelectedItem != null&&list.SelectedItems.Count==0)
                 {
                     var data = list.SelectedItem as SongData;
                     await data.AddToPlayList(true);

@@ -11,7 +11,7 @@
         <Grid Height="50" VerticalAlignment="Top">
             <TextBlock Margin="10,0,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14">当前播放列表</TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <AppBarButton Height="50" Width="50" Icon="Add" Foreground="White"></AppBarButton>
+                <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Add" Foreground="White"></AppBarButton>
                 <AppBarButton x:Name="Cyc_Btn" Height="50" Width="50" Icon="RepeatOne" Foreground="White" Click="Cyc_Btn_Click"></AppBarButton>
                 <AppBarButton x:Name="ClearBtn" Height="50" Width="50" Icon="Delete" Foreground="White" Click="ClearBtn_Click"></AppBarButton>
             </StackPanel>
@@ -38,7 +38,7 @@
                                     <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}" Text="{Binding singername}"></TextBlock>
                                 </StackPanel>
                                 <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Add" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
+                                    <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Add" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
                                     <AppBarButton Visibility="{Binding isplay}" Height="50" Width="50" Icon="Download" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
                                     <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
                                 </StackPanel>
@@ -55,8 +55,10 @@
                                 <TextBlock FontSize="14" Foreground="{ThemeResource KuGou-Front2}">星尘</TextBlock>
                             </StackPanel>
                             <StackPanel Height="50" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                <!--
                                 <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Like" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="0"></AppBarButton>
                                 <AppBarButton Visibility="Collapsed" Height="50" Width="50" Icon="Download" Foreground="White" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="1"></AppBarButton>
+                                -->
                                 <AppBarButton Height="50" Width="50" Icon="Delete" Foreground="{ThemeResource KuGou-Front1}" DataContext="{Binding}" Click="MoreBtnClicked" TabIndex="2"></AppBarButton>
                             </StackPanel>
                         </Grid>

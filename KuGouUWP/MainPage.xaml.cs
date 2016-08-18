@@ -433,5 +433,10 @@ namespace KuGouUWP
         {
             Frame.Navigate(typeof(Pages.HistoryPage));
         }
+
+        private async void RadioBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            await new MessageDialog("正在施工").ShowAsync();
+        }
     }
 }

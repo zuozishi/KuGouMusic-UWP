@@ -44,7 +44,7 @@
                 <TextBlock Margin="3,0,0,0" Foreground="{ThemeResource KuGou-Foreground}">对多首歌曲进行操作</TextBlock>
             </StackPanel>
         </Button>
-        <ScrollViewer Margin="10,195,10,63">
+        <ScrollViewer Margin="10,200,10,63">
             <ListView x:Name="SongList"  Background="{x:Null}" CanReorderItems="True" SelectionMode="Single">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -77,7 +77,7 @@
             </ListView>
         </ScrollViewer>
         <ProgressRing x:Name="LoadProcess" Width="100" Height="100"></ProgressRing>
-        <usercon:SongMultipleBox Height="60" x:Name="MoreSongBox" VerticalAlignment="Bottom"></usercon:SongMultipleBox>
+        <usercon:SongMultipleBox Height="60" Margin="0,0,0,63" x:Name="MoreSongBox" VerticalAlignment="Bottom"></usercon:SongMultipleBox>
         <usercon:PlayerSmall VerticalAlignment="Bottom"></usercon:PlayerSmall>
     </Grid>
 </Page>

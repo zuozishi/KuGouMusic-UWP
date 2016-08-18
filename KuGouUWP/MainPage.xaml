@@ -312,7 +312,7 @@
                                     <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">乐库</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button Margin="2,0,0,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
+                            <Button Click="RadioBtn_Clicked" Margin="2,0,0,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD6EEF8">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <SymbolIcon Width="30" Height="50" Foreground="{ThemeResource KuGou-BackgroundColor}" Symbol="World" VerticalAlignment="Center"></SymbolIcon>
                                     <TextBlock Foreground="{ThemeResource KuGou-BackgroundColor2}" VerticalAlignment="Center" FontSize="18">电台</TextBlock>

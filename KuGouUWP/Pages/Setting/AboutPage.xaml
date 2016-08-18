@@ -14,55 +14,57 @@
             </Button>
             <TextBlock Margin="55,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource KuGou-Foreground}" FontSize="18">关于</TextBlock>
         </Grid>
-        <ScrollViewer Margin="10,50,10,10" Background="#7FFFFFFF">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                    <Image Source="ms-appx:///Assets/StoreLogo.scale-100.png" Width="100" Height="100"></Image>
+        <Grid Margin="0,50,0,0" Background="#4CFFFFFF">
+            <ScrollViewer Margin="10,010,10,10">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Image Source="ms-appx:///Assets/NewStoreLogo.scale-400.png" Width="100" Height="100"></Image>
+                        <StackPanel>
+                            <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">酷狗音乐 第三方UWP Beta</TextBlock>
+                            <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}" x:Name="ver_text"></TextBlock>
+                            <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" Foreground="{ThemeResource KuGou-Front1}">@座子狮(zuozishi)</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
                     <StackPanel>
-                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">酷狗音乐 第三方UWP Beta</TextBlock>
-                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}" x:Name="ver_text"></TextBlock>
-                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Margin="5" Foreground="{ThemeResource KuGou-Front1}">@座子狮(zuozishi)</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">说明及联系</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">本程序开源，不用于商业用途，仅做学习交流</TextBlock>
+                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">交流群：192101837</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">如果侵犯您的合法权益，请及时联系本人第一时间删除</TextBlock>
+                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">Email:wwb123123@outlook.com</TextBlock>
+                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">QQ:992601314</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <HyperlinkButton NavigateUri="mailto:wwb123123@outlook.com" Margin="0,0,15,0">给我发邮件</HyperlinkButton>
+                            <HyperlinkButton NavigateUri="https://github.com/zuozishi/KuGouMusic-UWP">访问Github</HyperlinkButton>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">捐赠及支持</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">如果觉得好用请给我点支持</TextBlock>
+                        <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">支付宝：wwb123123@outlook.com,**斌</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">哔哩哔哩ID：<Hyperlink NavigateUri="http://space.bilibili.com/9974235">技术菌座子狮</Hyperlink></TextBlock>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">感谢</TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">诚挚感谢以下小伙伴的帮助(排名不分先后)</TextBlock>
+                        <HyperlinkButton NavigateUri="ms-windows-store://pdp/?ProductId=9nblggh5p9h6" Margin="0,0,15,0">逍遥橙子(哔哩哔哩第三方UWP开发者)</HyperlinkButton>
+                        <StackPanel Orientation="Horizontal">
+                            <HyperlinkButton NavigateUri="ms-windows-store://pdp/?ProductId=9nblggh4sls6" Margin="0,0,15,0">Loyie King（Key4WiFi开发者）</HyperlinkButton>
+                            <HyperlinkButton>布忍直士(UI设计)</HyperlinkButton>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <HyperlinkButton NavigateUri="9nblggh4vm4l">Dev. Michael.E.(破墙者开发者)</HyperlinkButton>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">引用及参考</TextBlock>
+                        <HyperlinkButton NavigateUri="http://www.kugou.com/" Margin="0,0,15,0">酷狗音乐/源数据</HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://windows.sc/" Margin="0,0,15,0">九幽/反馈SDK</HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://windows.sc/" Margin="0,0,15,0">九幽/统计SDK</HyperlinkButton>
+                        <HyperlinkButton NavigateUri="https://github.com/xiaoyaocz/BiliBili-UWP" Margin="0,0,15,0">逍遥橙子/bilibili UWP</HyperlinkButton>
+                        <HyperlinkButton  NavigateUri="http://www.newtonsoft.com/json" Content="Newtonsoft/JSON.NET"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">说明及联系</TextBlock>
-                    <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">本程序开源，不用于商业用途，仅做学习交流</TextBlock>
-                    <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">交流群：192101837</TextBlock>
-                    <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">如果侵犯您的合法权益，请及时联系本人第一时间删除</TextBlock>
-                    <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">Email:wwb123123@outlook.com</TextBlock>
-                    <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">QQ:992601314</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <HyperlinkButton NavigateUri="mailto:wwb123123@outlook.com" Margin="0,0,15,0">给我发邮件</HyperlinkButton>
-                        <HyperlinkButton NavigateUri="https://github.com/zuozishi/KuGouMusic-UWP">访问Github</HyperlinkButton>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">捐赠及支持</TextBlock>
-                    <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">如果觉得好用请给我点支持</TextBlock>
-                    <TextBlock IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">支付宝：wwb123123@outlook.com,**斌</TextBlock>
-                    <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">哔哩哔哩ID：<Hyperlink NavigateUri="http://space.bilibili.com/9974235">技术菌座子狮</Hyperlink></TextBlock>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">感谢</TextBlock>
-                    <TextBlock TextWrapping="WrapWholeWords" Foreground="{ThemeResource KuGou-Front2}">诚挚感谢以下小伙伴的帮助(排名不分先后)</TextBlock>
-                    <HyperlinkButton NavigateUri="ms-windows-store://pdp/?ProductId=9nblggh5p9h6" Margin="0,0,15,0">逍遥橙子(哔哩哔哩第三方UWP开发者)</HyperlinkButton>
-                    <StackPanel Orientation="Horizontal">
-                        <HyperlinkButton NavigateUri="ms-windows-store://pdp/?ProductId=9nblggh4sls6" Margin="0,0,15,0">Loyie King（Key4WiFi开发者）</HyperlinkButton>
-                        <HyperlinkButton>布忍直士(UI设计)</HyperlinkButton>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <HyperlinkButton NavigateUri="9nblggh4vm4l">Dev. Michael.E.(破墙者开发者)</HyperlinkButton>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Margin="5" FontSize="18" Foreground="{ThemeResource KuGou-Front1}">引用及参考</TextBlock>
-                    <HyperlinkButton NavigateUri="http://www.kugou.com/" Margin="0,0,15,0">酷狗音乐/源数据</HyperlinkButton>
-                    <HyperlinkButton NavigateUri="http://windows.sc/" Margin="0,0,15,0">九幽/反馈SDK</HyperlinkButton>
-                    <HyperlinkButton NavigateUri="http://windows.sc/" Margin="0,0,15,0">九幽/统计SDK</HyperlinkButton>
-                    <HyperlinkButton NavigateUri="https://github.com/xiaoyaocz/BiliBili-UWP" Margin="0,0,15,0">逍遥橙子/bilibili UWP</HyperlinkButton>
-                    <HyperlinkButton  NavigateUri="http://www.newtonsoft.com/json" Content="Newtonsoft/JSON.NET"/>
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>
